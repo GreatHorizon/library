@@ -2,7 +2,10 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from datetime import datetime, date, time, timezone
-from registerNewUser import *
+from RegisterNewUser import *
+from AdminAuthorizationPage import AdminAuthorizationPage
+from StudentAuthorizationPage import StudentAuthorizationPage
+from StartPage import StartPage
 import psycopg2
 
 class Window(tk.Tk):
@@ -20,7 +23,10 @@ class Window(tk.Tk):
 
         self.frames = {}
 
-        for F in (MainPage, NewStudentRegistrationPage):
+        for F in (StartPage
+        , StudentAuthorizationPage
+        , AdminAuthorizationPage
+        , NewStudentRegistrationPage):
 
             frame = F(container, self)
 
@@ -28,53 +34,15 @@ class Window(tk.Tk):
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(MainPage)
+        self.show_frame(StartPage)
 
     def show_frame(self, cont):
 
         frame = self.frames[cont]
         frame.tkraise()
 
-class MainPage(tk.Frame):
-
-    def FindUser(self, studentId) :
-        connection = psycopg2.connect(dbname='postgres', user='postgres', password='postgres', host='localhost')
-        cursor = connection.cursor()
-        cursor.execute('SELECT * FROM student WHERE id_student = ' + studentId)
-        if cursor.rowcount == 1:
-            messagebox.showinfo("Hi", [row[1] for row in cursor])
-        else :
-            messagebox.showinfo("Fail", "Incorrect user id")
-            
-    
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Start Page")
-        label.pack(pady=10,padx=10)
 
 
-        lb1 = Label(self,text="Student ID", fg='black')
-        lb1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
-
-        studentIdField = Entry(self, width = 30)
-        studentIdField.place(relx = 0.35, rely = 0.15, relwidth = 0.3, relheight = 0.08)
-
-        lb2 = Label(self,text="Password", fg='black')
-        lb2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
-
-        passwordField = Entry(self, width = 30)
-        passwordField.place(relx = 0.35, rely = 0.25, relwidth = 0.3, relheight = 0.08)
-
-        button = tk.Button(self, text="Go to page with student registration",
-                            command=lambda: self.SignInStudent(studentIdField.get(), passwordField.get(), controller))
-        
-        button.place(relx=0.35, rely=0.35, relwidth=0.3, relheight=0.1)
-
-    def SignInStudent(self, id, password, controller) :
-        if ((id == "admin") and (password == "admin3355")):
-            controller.show_frame(NewStudentRegistrationPage)
-        else:
-            self.FindUser(id)
 
 class NewStudentRegistrationPage(tk.Frame):
 

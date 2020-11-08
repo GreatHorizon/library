@@ -10,12 +10,13 @@ def RegisterStudent(id, firstName, lastName,  dateOfBirth, phone, email) :
     date = datetime.strptime(dateOfBirth, "%Y-%m-%d").date()
 
     try:
-        cursor.execute("INSERT INTO student(id_student, first_name, last_name, date_of_birth, phone_number, email)"
+        cursor.execute("INSERT INTO student(id_student, first_name, last_name, birthday, phone, email)"
         + "VALUES (%s, %s, %s, %s, %s, %s)"
         , (id, firstName, lastName, date, phone, email))
         conn.commit()
         messagebox.showinfo('Success', "Student added successfully")
-    except:
+    except Exception as e:
+        print(e)
         messagebox.showinfo('Failed', "Data cant be written into db")
 
 
