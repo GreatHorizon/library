@@ -6,6 +6,7 @@ from RegisterNewUser import *
 from AdminAuthorizationPage import AdminAuthorizationPage
 from StudentAuthorizationPage import StudentAuthorizationPage
 from StartPage import StartPage
+
 import psycopg2
 
 class Window(tk.Tk):

@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import psycopg2
-from database.database import *
+from Database.database import *
 
 class StudentAuthorizationPage(tk.Frame):
   
