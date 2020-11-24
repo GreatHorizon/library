@@ -1,7 +1,14 @@
+import sys
+import os
 import psycopg2
 from tkinter import messagebox
 
-from .. import PasswordUtil
+sys.path.append(os.path.abspath('Utils'))
+sys.path.append(os.path.abspath('Errors'))
+
+from PasswordUtil import *
+from AuthorizationErrors import *
+
 
 class DatabaseManager:
     def __init__(self):
@@ -18,11 +25,11 @@ class DatabaseManager:
     def VerifyAdmin(self, adminId, password):
         self.__cursor.execute('SELECT * FROM admin WHERE id_admin = ' + adminId)
         if self.__cursor.rowcount == 0:
-            raise ValueError("Incorrect id specified")
-        actualPassword = [row[1] for row in self.__cursor]
-        encodedPassword = GetEncodedPassword(password, actualPassword[:32])
-        if (actualPassword != encodedPassword):
-            raise ValueError("Incorrect password specified")
+            raise LoginError("Incorrect id specified")
+        actualPassword = bytes(self.__cursor.fetchone()[0])
+        encodedPassword = GetEncodedPassword(password,  GetSaltPart(actualPassword))
+        if (GetPasswordPart(actualPassword) != encodedPassword):
+            raise PasswordError("Incorrect password specified")
 
   
     def __del__(self):

@@ -1,5 +1,6 @@
 import hashlib
 import os
+import psycopg2
 
 def GenerateEncodedPassword(password):
     salt = os.urandom(32)
@@ -15,15 +16,9 @@ def GetEncodedPassword(key, salt):
     )
     return new_key
 
-# new = GenerateEncodedPassword("admin")
-# print(new.decode("utf-16"))
-# salt = new[:32]
-# res = GetEncodedPassword("admin", salt)
-# print(new[32:])
-# print("------------------------")
-# print(res)
+def GetSaltPart(encodedPassword):
+    return encodedPassword[:32]
 
-# def test_PYTHONPATH():
-#   print("path is: ", os.environ.get('PYTHONPATH'))
+def GetPasswordPart(encodedPassword):
+    return encodedPassword[32:]
 
-# test_PYTHONPATH()
