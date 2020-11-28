@@ -25,11 +25,11 @@ class DatabaseManager:
     def VerifyAdmin(self, adminId, password):
         self.__cursor.execute('SELECT * FROM admin WHERE id_admin = ' + adminId)
         if self.__cursor.rowcount == 0:
-            raise LoginError("Incorrect id specified")
+            raise AuthorizationError("Incorrect login or password")
         actualPassword = bytes(self.__cursor.fetchone()[0])
         encodedPassword = GetEncodedPassword(password,  GetSaltPart(actualPassword))
         if (GetPasswordPart(actualPassword) != encodedPassword):
-            raise PasswordError("Incorrect password specified")
+            raise AuthorizationError("Incorrect login or password")
 
   
     def __del__(self):

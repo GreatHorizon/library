@@ -1,10 +1,12 @@
 import tkinter as tk
 from tkinter import *
+from Controllers.RegisterStudentController import RegisterStudentController
 
-class AdminPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+class RegisterStudentPage(tk.Frame):
+    def __init__(self, parent, window, model):
+        tk.Frame.__init__(self, parent) 
+        self._model = model
+        self._controller = RegisterStudentController(window, self._model, self)
 
         label = tk.Label(self, text="Page for librarian with new student registration")
         label.pack(pady=10,padx=10)
@@ -50,7 +52,6 @@ class AdminPage(tk.Frame):
         studentDateOfBirthField.get(), studentPhoneField.get(), studentEmailField.get()))
         SubmitBtn.place(relx=0.4, rely=0.75, relwidth=0.2,relheight=0.1)
 
-        from StartPage import StartPage
         button = tk.Button(self, text="<<",
-        command=lambda: controller.show_frame())
+        command=lambda:self._controller.BackToAdminPage())
         button.place(relx=0.4, rely=0.85, relwidth=0.2,relheight=0.1)

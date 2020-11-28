@@ -28,7 +28,7 @@ class StudentAuthorizationPage(tk.Frame):
                             command=lambda: self.SignInStudent(studentIdField.get(), passwordField.get(), controller))
         button.place(relx=0.35, rely=0.35, relwidth=0.3, relheight=0.1)
 
-        from StartPage import StartPage
+        from Views.StartPage import StartPage
         button = tk.Button(self, text="Back to start page",
                             command=lambda: controller.show_frame(StartPage))
         button.place(relx = 0.42, rely = 0.5, relheight = 0.08)
