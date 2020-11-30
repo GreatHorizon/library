@@ -21,4 +21,4 @@ def GetSaltPart(encodedPassword):
 
 def GetPasswordPart(encodedPassword):
     return encodedPassword[32:]
-
+ 

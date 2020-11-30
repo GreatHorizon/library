@@ -1,12 +1,16 @@
 import tkinter as tk
 from tkinter import *
 from Controllers.RegisterStudentController import RegisterStudentController
+from tkcalendar import *
+  
 
 class RegisterStudentPage(tk.Frame):
     def __init__(self, parent, window, model):
         tk.Frame.__init__(self, parent) 
         self._model = model
         self._controller = RegisterStudentController(window, self._model, self)
+        self._model.Register(self)
+
 
         label = tk.Label(self, text="Page for librarian with new student registration")
         label.pack(pady=10,padx=10)
@@ -29,29 +33,52 @@ class RegisterStudentPage(tk.Frame):
         lb6 = Label(self, text="Email", fg='black')
         lb6.place(relx = 0.25, rely = 0.65, relheight = 0.08)
 
-        studentIdField = Entry(self)
-        studentIdField.place(relx = 0.35, rely = 0.15, relwidth = 0.3, relheight = 0.05)
+        self.studentIdField = Entry(self)
+        self.studentIdField.place(relx = 0.35, rely = 0.15, relwidth = 0.3, relheight = 0.05)
 
-        studentFirstNameField = Entry(self)
-        studentFirstNameField.place(relx = 0.35, rely = 0.25, relwidth = 0.3, relheight = 0.05)
+        self.studentFirstNameField = Entry(self)
+        self.studentFirstNameField.place(relx = 0.35, rely = 0.25, relwidth = 0.3, relheight = 0.05)
 
-        studentLastNameField = Entry(self)
-        studentLastNameField.place(relx = 0.35, rely = 0.35, relwidth = 0.3, relheight = 0.05)
+        self.studentLastNameField = Entry(self)
+        self.studentLastNameField.place(relx = 0.35, rely = 0.35, relwidth = 0.3, relheight = 0.05)
+        
+        self.birthdayField = DateEntry(self, date_pattern='dd-mm-y')
+        self.birthdayField.drop_down()
+        self.birthdayField.place(relx = 0.35, rely = 0.45, relwidth = 0.3, relheight = 0.05)
 
-        studentDateOfBirthField = Entry(self)
-        studentDateOfBirthField.place(relx = 0.35, rely = 0.45, relwidth = 0.3, relheight = 0.05)
+        self.studentPhoneField = Entry(self)
+        self.studentPhoneField.place(relx = 0.35, rely = 0.55, relwidth = 0.3, relheight = 0.05)
 
-        studentPhoneField = Entry(self)
-        studentPhoneField.place(relx = 0.35, rely = 0.55, relwidth = 0.3, relheight = 0.05)
+        self.studentEmailField = Entry(self)
+        self.studentEmailField.place(relx = 0.35, rely = 0.65, relwidth = 0.3, relheight = 0.05)
 
-        studentEmailField = Entry(self)
-        studentEmailField.place(relx = 0.35, rely = 0.65, relwidth = 0.3, relheight = 0.05)
 
-        SubmitBtn = Button(self, text="Register student",bg='#d1ccc0', fg='black',
-        command=lambda:RegisterStudent(studentIdField.get(), studentFirstNameField.get(), studentLastNameField.get(),
-        studentDateOfBirthField.get(), studentPhoneField.get(), studentEmailField.get()))
-        SubmitBtn.place(relx=0.4, rely=0.75, relwidth=0.2,relheight=0.1)
+        self.message = Label(self)
+        self.message.place(relx = 0.35, rely = 0.72, relheight = 0.05)
+        
+        SubmitBtn = Button(self, text="Register student", fg='black',
+        command=lambda:self._controller.RegisterStudent(self.studentIdField.get(), self.studentFirstNameField.get(), self.studentLastNameField.get(),
+        self.birthdayField.get(), self.studentPhoneField.get(), self.studentEmailField.get()))
+        SubmitBtn.place(relx=0.4, rely=0.8, relwidth=0.25,relheight=0.1)
 
         button = tk.Button(self, text="<<",
         command=lambda:self._controller.BackToAdminPage())
-        button.place(relx=0.4, rely=0.85, relwidth=0.2,relheight=0.1)
+        button.place(relx = 0.35, rely = 0.8, relheight = 0.1)
+
+    def Notify(self):
+        if(self._model._isRegistrated):
+            self.ClearFields()
+            self.message.config(text=self._model._message, fg='green')
+        else:
+            self.message.config(text=self._model._message, fg='red')
+        
+
+    def ClearFields(self):
+        self.studentIdField.delete(0, len(self.studentIdField.get()))
+        self.studentEmailField.delete(0, len(self.studentEmailField.get()))
+        self.studentPhoneField.delete(0, len(self.studentPhoneField.get()))
+        self.studentFirstNameField.delete(0, len(self.studentFirstNameField.get()))
+        self.studentLastNameField.delete(0, len(self.studentLastNameField.get()))
+
+    def ClearMessageLabel(self):
+        self.message.config(text='')

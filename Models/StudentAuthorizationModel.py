@@ -6,12 +6,13 @@ from database import DatabaseManager
 from AuthorizationErrors import *
 from Utils.VerificaitionUtil import VerifyId
 
-class AdminAuthorizationModel:
+
+class StudentAuthorizationModel:
     def __init__(self):
         self._observers = set()
         self._isAuthorizated = False
         self._message = ''
-
+        
     def Register(self, listener):
         self._observers.add(listener)
 
@@ -19,11 +20,11 @@ class AdminAuthorizationModel:
         for obs in self._observers:
             obs.Notify()
 
-    def VerifyAdmin(self, id, password):
+    def VerifyStudent(self, id, password):
         db = DatabaseManager()
         try:
             VerifyId(id)
-            db.VerifyAdmin(id, password)
+            db.VerifyStudent(id, password)
             self._isAuthorizated = True
         except (AuthorizationError) as e:
             self._message = e.message
@@ -32,5 +33,3 @@ class AdminAuthorizationModel:
             self._message = e
             self._isAuthorizated = False
         self.Notify()
-
-    

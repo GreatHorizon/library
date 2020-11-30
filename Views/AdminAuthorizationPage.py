@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 import sys
 import os
-
 sys.path.append(os.path.abspath('Views'))
 from Controllers.AdminAuthorizationController import AdminAuthorizationController
 
@@ -46,7 +45,7 @@ class AdminAuthorizationPage(tk.Frame):
             self._controller.OpenAdminPage()
             self.ClearErrorLabel()
         else:
-            self.error.config(text=self._model._description)
+            self.error.config(text=self._model._message)
         self.ClearFields()
 
     def ClearFields(self):

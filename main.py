@@ -9,12 +9,16 @@ from Views.StartPage import StartPage
 from Views.AdminPage import AdminPage
 from Views.RegisterStudentPage import RegisterStudentPage
 from Views.AddBookPage import AddBookPage
+from Views.StudentAuthorizationPage import StudentAuthorizationPage
+from Views.StudentPage import StudentPage
 
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.StartPageModel import StartPageModel
 from Models.AdminPageModel import AdminPageModel
 from Models.RegisterStudentModel import RegisterStudentModel
 from Models.AddBookModel import AddBookModel
+from Models.StudentAuthorizationModel import StudentAuthorizationModel
+from Models.StudentPageModel import StudentPageModel
 
 class Window(tk.Tk):
 
@@ -33,7 +37,10 @@ class Window(tk.Tk):
             AdminAuthorizationPage: AdminAuthorizationModel,
             AdminPage: AdminPageModel,
             RegisterStudentPage: RegisterStudentModel,
-            AddBookPage: AddBookModel
+            AddBookPage: AddBookModel,
+            StudentAuthorizationPage : StudentAuthorizationModel,
+            RegisterStudentPage: RegisterStudentModel,
+            StudentPage: StudentPageModel
         }
 
         self.frames = {}
@@ -41,7 +48,9 @@ class Window(tk.Tk):
                 , AdminAuthorizationPage
                 , AdminPage
                 , RegisterStudentPage
-                , AddBookPage):
+                , AddBookPage
+                , StudentAuthorizationPage
+                , StudentPage):
 
             model = self.models[F]
             frame = F(self.container, self, model())

@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import messagebox
-import sys
-import os
 from Controllers.StartPageController import StartPageController
 
 class StartPage(tk.Frame):
