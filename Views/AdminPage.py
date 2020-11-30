@@ -28,7 +28,7 @@ class AdminPage(tk.Frame):
 
 
         addBookBtn = Button(self, text="Add Book",bg='#d1ccc0', fg='black',
-        command=lambda:self.Flex())
+        command=lambda:self._controller.OpenAddBookPage())
         addBookBtn.place(relx=0.4, rely=0.55, relwidth=0.2,relheight=0.1)
 
         regStudBtn = Button(self, text="Register student",bg='#d1ccc0', fg='black',
@@ -41,3 +41,4 @@ class AdminPage(tk.Frame):
 
     def Flex(self):
         pass
+

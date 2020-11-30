@@ -8,11 +8,13 @@ from Views.StudentAuthorizationPage import StudentAuthorizationPage
 from Views.StartPage import StartPage
 from Views.AdminPage import AdminPage
 from Views.RegisterStudentPage import RegisterStudentPage
+from Views.AddBookPage import AddBookPage
 
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.StartPageModel import StartPageModel
 from Models.AdminPageModel import AdminPageModel
 from Models.RegisterStudentModel import RegisterStudentModel
+from Models.AddBookModel import AddBookModel
 
 class Window(tk.Tk):
 
@@ -30,13 +32,16 @@ class Window(tk.Tk):
             StartPage: StartPageModel,
             AdminAuthorizationPage: AdminAuthorizationModel,
             AdminPage: AdminPageModel,
-            RegisterStudentPage: RegisterStudentModel
+            RegisterStudentPage: RegisterStudentModel,
+            AddBookPage: AddBookModel
         }
+
         self.frames = {}
         for F in (StartPage
                 , AdminAuthorizationPage
                 , AdminPage
-                , RegisterStudentPage):
+                , RegisterStudentPage
+                , AddBookPage):
 
             model = self.models[F]
             frame = F(self.container, self, model())

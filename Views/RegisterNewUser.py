@@ -16,7 +16,6 @@ def RegisterStudent(id, firstName, lastName,  dateOfBirth, phone, email) :
         conn.commit()
         messagebox.showinfo('Success', "Student added successfully")
     except Exception as e:
-        print(e)
         messagebox.showinfo('Failed', "Data cant be written into db")
 
 
