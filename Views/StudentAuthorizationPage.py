@@ -42,6 +42,7 @@ class StudentAuthorizationPage(tk.Frame):
 
     def Notify(self):
         if (self._model._isAuthorizated):
+            self._controller.SendData(id=self._model._userId)
             self._controller.OpenStudentPage()
             self.ClearErrorLabel()
         else:
@@ -52,4 +53,4 @@ class StudentAuthorizationPage(tk.Frame):
         self.studentIdField.delete(0, len(self.studentIdField.get()))
         self.passwordField.delete(0, len(self.passwordField.get()))
     def ClearErrorLabel(self):
-        self.error.config(text='')
+        self.error.config(text='') 

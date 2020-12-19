@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 from datetime import datetime, date, time, timezone
 
-from Views.RegisterNewUser import *
 from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.StudentAuthorizationPage import StudentAuthorizationPage
 from Views.StartPage import StartPage
@@ -11,6 +10,8 @@ from Views.RegisterStudentPage import RegisterStudentPage
 from Views.AddBookPage import AddBookPage
 from Views.StudentAuthorizationPage import StudentAuthorizationPage
 from Views.StudentPage import StudentPage
+from Views.ChangeStudentPasswordPage import ChangeStudentPasswordPage
+from Views.BookIssuePage import BookIssuePage
 
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.StartPageModel import StartPageModel
@@ -19,6 +20,9 @@ from Models.RegisterStudentModel import RegisterStudentModel
 from Models.AddBookModel import AddBookModel
 from Models.StudentAuthorizationModel import StudentAuthorizationModel
 from Models.StudentPageModel import StudentPageModel
+from Models.ChangeStudentPasswordModel import ChangeStudentPasswordModel
+from Models.BookIssueModel import BookIssueModel
+
 
 class Window(tk.Tk):
 
@@ -40,7 +44,9 @@ class Window(tk.Tk):
             AddBookPage: AddBookModel,
             StudentAuthorizationPage : StudentAuthorizationModel,
             RegisterStudentPage: RegisterStudentModel,
-            StudentPage: StudentPageModel
+            StudentPage: StudentPageModel,
+            ChangeStudentPasswordPage: ChangeStudentPasswordModel,
+            BookIssuePage: BookIssueModel
         }
 
         self.frames = {}
@@ -50,7 +56,10 @@ class Window(tk.Tk):
                 , RegisterStudentPage
                 , AddBookPage
                 , StudentAuthorizationPage
-                , StudentPage):
+                , StudentPage
+                , ChangeStudentPasswordPage
+                , BookIssuePage
+                ):
 
             model = self.models[F]
             frame = F(self.container, self, model())
@@ -61,9 +70,14 @@ class Window(tk.Tk):
 
         self.show_frame(StartPage)
 
-    def show_frame(self, cont):
-        frame = self.frames[cont]
+    def show_frame(self, page):
+        frame = self.frames[page]
         frame.tkraise()
+
+    def send_data(self, page, **data):
+        frame = self.frames[page]
+        frame.recieve_data(**data)
+
 
 app = Window()
 app.mainloop()

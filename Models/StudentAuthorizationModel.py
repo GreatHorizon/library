@@ -12,6 +12,7 @@ class StudentAuthorizationModel:
         self._observers = set()
         self._isAuthorizated = False
         self._message = ''
+        self._userId = int()
         
     def Register(self, listener):
         self._observers.add(listener)
@@ -26,7 +27,8 @@ class StudentAuthorizationModel:
             VerifyId(id)
             db.VerifyStudent(id, password)
             self._isAuthorizated = True
-        except (AuthorizationError) as e:
+            self._userId = id
+        except AuthorizationError as e:
             self._message = e.message
             self._isAuthorizated = False
         except LoginFormatError as e:

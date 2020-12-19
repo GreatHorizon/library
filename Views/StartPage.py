@@ -7,6 +7,7 @@ class StartPage(tk.Frame):
     def __init__(self, parent, window, model):
         tk.Frame.__init__(self, parent)
         self._controller = StartPageController(window, model, self)
+        
         label1 = tk.Label(self, text="Start Page")
         label1.pack(pady=20,padx=20)
 

@@ -19,13 +19,8 @@ class AdminPage(tk.Frame):
         returnBookBtn.place(relx=0.4, rely=0.35, relwidth=0.2,relheight=0.1)
 
         issueBookBtn = Button(self, text="Issue Book",bg='#d1ccc0', fg='black',
-        command=lambda:self.Flex())
+        command=lambda:self._controller.OpenBookIssuePage())
         issueBookBtn.place(relx=0.4, rely=0.45, relwidth=0.2,relheight=0.1)
-
-        issueBookBtn = Button(self, text="Issue Book",bg='#d1ccc0', fg='black',
-        command=lambda:self.Flex())
-        issueBookBtn.place(relx=0.4, rely=0.45, relwidth=0.2,relheight=0.1)
-
 
         addBookBtn = Button(self, text="Add Book",bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenAddBookPage())

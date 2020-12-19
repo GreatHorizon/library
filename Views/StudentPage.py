@@ -14,7 +14,15 @@ class StudentPage(tk.Frame):
         label1 = tk.Label(self, text="Student Page")
         label1.pack(pady=20, padx=20)  
 
+        changePassBtn = Button(self, text="Change password", bg='#d1ccc0', fg='black',
+        command=lambda:self._controller.OpenChangePasswordPage())
+        changePassBtn.place(relx=0.4, rely=0.65, relwidth=0.2,relheight=0.1)
+
 
         button = tk.Button(self, text="<<",
         command=lambda:self._controller.BackToStudentAuthorizationPage())
         button.place(relx=0.4, rely=0.85, relwidth=0.2,relheight=0.1)
+
+
+    def recieve_data(self, **data):
+        self._controller.SaveData(data['id'])

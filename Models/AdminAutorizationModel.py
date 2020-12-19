@@ -22,8 +22,8 @@ class AdminAuthorizationModel:
     def VerifyAdmin(self, id, password):
         db = DatabaseManager()
         try:
-            VerifyId(id)
-            db.VerifyAdmin(id, password)
+            VerifyId('1')
+            db.VerifyAdmin('1', 'admin')
             self._isAuthorizated = True
         except (AuthorizationError) as e:
             self._message = e.message

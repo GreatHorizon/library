@@ -19,3 +19,7 @@ def HasEmptyFields(id, name, surname, birthday, phone, email):
         or IsEmpty(phone)
         or IsEmpty(email)):
         raise EmptyFieldError("There are empty fields")
+
+def IsEuqalsPasswords(password1, password2):
+    if (password1 != password2):
+        raise NotEqualsPasswords("Passwords aren't equals")

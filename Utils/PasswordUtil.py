@@ -5,7 +5,7 @@ import psycopg2
 def GenerateEncodedPassword(password):
     salt = os.urandom(32)
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
-    return salt + key
+    return bytes(salt + key).hex()
 
 def GetEncodedPassword(key, salt):
     new_key = hashlib.pbkdf2_hmac(
@@ -22,3 +22,5 @@ def GetSaltPart(encodedPassword):
 def GetPasswordPart(encodedPassword):
     return encodedPassword[32:]
  
+
+

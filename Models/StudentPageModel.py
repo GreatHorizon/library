@@ -2,6 +2,7 @@
 
 class StudentPageModel:
     def __init__(self):
-        self._observers = set()
-        self._isAuthorizated = False
-        self._message = ''
+        self._studentId = int()
+
+    def SaveStudentId(self, id):
+        self._studentId = id

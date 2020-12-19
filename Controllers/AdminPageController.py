@@ -2,6 +2,7 @@
 from Views.RegisterStudentPage import RegisterStudentPage
 from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.AddBookPage import AddBookPage
+from Views.BookIssuePage import BookIssuePage 
 
 class AdminPageController:
     def __init__(self, window, model, view):
@@ -17,3 +18,6 @@ class AdminPageController:
 
     def BackToAdminAuthorizationPage(self):
         self._window.show_frame(AdminAuthorizationPage)
+
+    def OpenBookIssuePage(self):
+        self._window.show_frame(BookIssuePage)
