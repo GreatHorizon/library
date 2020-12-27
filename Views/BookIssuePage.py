@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import *
-
+from CustomWidets.ComboboxAutocomplete import Combobox_Autocomplete 
 from Controllers.BookIssueController import BookIssueController
+from tkcalendar import *
 
 class BookIssuePage(tk.Frame):
     def __init__(self, parent, window, model):
@@ -9,42 +10,63 @@ class BookIssuePage(tk.Frame):
         self._model = model
         self._controller = BookIssueController(window, self._model, self)
 
-        label1 = tk.Label(self, text="book issue")
-        label1.pack(pady=20, padx=20)  
+        label1 = tk.Label(self, text="Book issue")
+        label1.pack(pady=20, padx=10)  
 
         self.create_widgets()
         
     def create_widgets(self):
-        scrollbar = Scrollbar(self)
-        scrollbar.pack(side=RIGHT,fill="y")
+        label1 = tk.Label(self, text="Select student by id")
+        label1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
+        userSelect = Combobox_Autocomplete(self, self._controller.GetStudentsId(), highlightthickness=1)
+        userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
+        userSelect.focus()
 
-        self.search_var = StringVar()
-        self.search_var.trace("w", self.update_list)
-        self.entry = Entry(self, textvariable=self.search_var, width=13)
-        self.entry.pack()
-        self.lbox = Listbox(self, width=45, height=5)
-        self.lbox.pack(side=LEFT, fill="both", expand=True)
-        scrollbar.config(command=self.lbox.yview)
-        self.lbox.config(yscrollcommand=scrollbar.set)
-        #self.lbox.bind('<Double-1>', print(self.lbox.get())) 
-        #self.entry.grid(row=0, column=0, padx=10, pady=3)
-        #self.lbox.grid(row=1, column=0, padx=10, pady=3)
-        self.entry.pack()
-        self.lbox.pack()
+        label2 = tk.Label(self, text="Select author")
+        label2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
+        authorSelect = Combobox_Autocomplete(self, self._controller.GetAuthors(), highlightthickness=1)
+        authorSelect.place(relx = 0.38, rely = 0.265, relheight = 0.05, relwidth = 0.25)
+        authorSelect.focus()
 
-        # Function for updating the list/doing the search.
-        # It needs to be called here to populate the listbox.
-        self.update_list()
+        label3 = tk.Label(self, text="Select book")
+        label3.place(relx = 0.25, rely = 0.35, relheight = 0.08)
+        bookSelect = Combobox_Autocomplete(self, self._controller.GetStudentsId(), highlightthickness=1)
+        bookSelect.place(relx = 0.38, rely = 0.365, relheight = 0.05, relwidth = 0.25)
+        bookSelect.focus()
 
-    def update_list(self, *args):
-        search_term = self.search_var.get()
+        label4 = tk.Label(self, text="Select book copy")
+        label4.place(relx = 0.25, rely = 0.45, relheight = 0.08)
+        copySelect = Combobox_Autocomplete(self, self._controller.GetStudentsId(), highlightthickness=1)
+        copySelect.place(relx = 0.38, rely = 0.465, relheight = 0.05, relwidth = 0.25)
+        copySelect.focus()
 
-        # Just a generic list to populate the listbox
-        lbox_list = ['Adam(123)', 'Lucy', 'Barry', 'Bob',
-                    'James', 'Frank', 'Susan(8)', 'Amanda', 'Christie']
+        label4 = tk.Label(self, text="Select book copy")
+        label4.place(relx = 0.25, rely = 0.45, relheight = 0.08)
+        copySelect = Combobox_Autocomplete(self, self._controller.GetStudentsId(), highlightthickness=1)
+        copySelect.place(relx = 0.38, rely = 0.465, relheight = 0.05, relwidth = 0.25)
+        copySelect.focus()
 
-        self.lbox.delete(0, END)
 
-        for item in lbox_list:
-                if search_term.lower() in item.lower():
-                    self.lbox.insert(END, item)
+        label4 = tk.Label(self, text="Issue start date")
+        label4.place(relx = 0.25, rely = 0.54, relheight = 0.08)
+        self.startDate = DateEntry(self, date_pattern='dd-mm-y')
+        self.startDate.drop_down()
+        self.startDate.place(relx = 0.38, rely = 0.55, relheight = 0.05, relwidth = 0.25)
+
+
+        label4 = tk.Label(self, text="Issue end date")
+        label4.place(relx = 0.25, rely = 0.64, relheight = 0.08)
+        self.endDate = DateEntry(self, date_pattern='dd-mm-y')
+        self.endDate.drop_down()
+        self.endDate.place(relx = 0.38, rely = 0.65, relheight = 0.05, relwidth = 0.25)
+
+
+        button = tk.Button(self, text="Create issue",
+            command=lambda:print('hi'))
+        button.place(relx=0.4, rely=0.8, relwidth=0.23, relheight=0.1)
+
+        button = tk.Button(self, text="<<",
+                            command=lambda:self._controller.BackToAdminPage())
+        button.place(relx = 0.35, rely = 0.8, relheight = 0.1)
+
+

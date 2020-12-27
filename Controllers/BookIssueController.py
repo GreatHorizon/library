@@ -4,6 +4,17 @@ class BookIssueController:
         self._window = window
         self._model = model
 
-    def OpenIssueBookPage(self):
-        from Views.BookIssuePage import BookIssuePage 
-        self._window.show_frame(BookIssuePage)
+    def GetStudentsId(self):
+        studentsList = self._model.GetStudentsList()
+        return studentsList
+    
+    def GetAuthors(self):
+        booksList = self._model.GetAuthorList()
+        return booksList
+
+    def GetAuthorsBookByName(self, name):
+        booksList = self._model.GetBooksByAuthorName
+
+    def BackToAdminPage(self):
+        from Views.AdminPage import AdminPage
+        self._window.show_frame(AdminPage)

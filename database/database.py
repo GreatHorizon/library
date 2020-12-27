@@ -58,8 +58,9 @@ class DatabaseManager:
                 raise AddBookError("There is book with this isbn, but different name")
             bookId = row[1]  
 
-        self.__cursor.execute("INSERT INTO copy (id_book, page_count, publisher) VALUES (%s, %s, %s)", (str(bookId), str(pageCount), str(publisher)))
+        self.__cursor.execute("INSERT INTO copy (id_book,page_count, is_available, publisher) VALUES (%s, %s, 1, %s)", (str(bookId), str(pageCount), str(publisher)))
         self.__connection.commit()
+
     def InsertStudent(self, id, name, surname, birthday, phone, email):
         self.__cursor.execute('SELECT id_student FROM student WHERE id_student = %s', (id,))
         if (self.__cursor.rowcount != 0):
@@ -93,6 +94,14 @@ class DatabaseManager:
             self.__connection.commit()
         else:
             raise IncorrectPassword('Old password is wrong')
+
+    def GetStudentsId(self):
+        self.__cursor.execute('SELECT id_student FROM student')
+        return self.__cursor.fetchall()
+
+    def GetAuthorList(self):
+        self.__cursor.execute('SELECT name FROM author')
+        return self.__cursor.fetchall()
 
     def __del__(self):
         self.__cursor.close()

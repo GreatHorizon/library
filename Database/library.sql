@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS copy
     id_copy SERIAL NOT NULL PRIMARY KEY,
     id_book SERIAL NOT NULL,
     page_count INT NOT NULL,
+    is_available SMALLINT NOT NULL,
     publisher VARCHAR(50),
     CONSTRAINT copy_book_id_book_fk
 		FOREIGN KEY (id_book) 
@@ -53,6 +54,24 @@ CREATE TABLE IF NOT EXISTS author_has_book
 		FOREIGN KEY (id_author) 
 			REFERENCES author(id_author)
 				ON UPDATE CASCADE ON DELETE CASCADE      
+);
+
+
+CREATE TABLE IF NOT EXISTS issue 
+(
+    id_issue SERIAL NOT NULL PRIMARY KEY,
+    id_student INT NOT NULL,
+    id_copy INT NOT NULL,
+    "start" DATE NOT NULL,
+    "end" DATE NOT NULL,
+    CONSTRAINT issue_student_id_student_fk
+		FOREIGN KEY(id_student) 
+			REFERENCES student(id_student)
+				ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT issue_copy_id_copy_fk
+		FOREIGN KEY (id_copy) 
+			REFERENCES copy(id_copy)
+				ON UPDATE CASCADE ON DELETE CASCADE   
 );
 
 
