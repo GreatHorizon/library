@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from ttkwidgets import Table
 import psycopg2
 # from Database.database import *
 from Controllers.StudentIssuancePageController import StudentIssuancePageController
@@ -36,53 +37,35 @@ class StudentIssuancePage(tk.Frame):
         self._controller = StudentIssuancePageController(master, self._model, self)
         self._model.Register(self)
                 
-        issuanceList = self._controller.GetStudentIssuance(1180501039)
-        print(issuanceList)
+        issuanceList = self._controller.GetStudentIssuance()
+
         labelFrame = Frame(self,bg='black')
         labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
-        Label(labelFrame, text="%-30s%-60s%-50s%-50s"%('Book ID','Title','Author','Deadline'),bg='black',fg='white').place(relx=0.07,rely=0.05)
-        Label(labelFrame, text="--------------------------------------------------------------------------------------------------------------------------------",
-        bg='black',fg='white').place(relx=0.05,rely=0.2)
+        columns = ["Author name", "Book name", "Id copy", "Start", "End"]
+        table = Table(labelFrame, columns=columns, sortable=False, drag_cols=False, drag_rows=False)
+        
+        for col in columns:
+            table.heading(col, text=col)
+            table.column(col, width=140, stretch=True)
 
-        y = 0.3
-        for issuance in issuanceList:
-            Label(labelFrame, text="%-30s%-50s%-50s%-50s"%(issuance[0], issuance[1], issuance[2], issuance[3]),bg='black',fg='white').place(relx=0.07,rely=y)
-            y += 0.1
+        for i in range(len(issuanceList)):
+            table.insert('', 'end', iid=i,
+                        values=(issuanceList[i][2], issuanceList[i][1], issuanceList[i][0], issuanceList[i][3], issuanceList[i][4]))
 
-        # self._controller.GetStudentIssuance(1)
+        # add scrollbars
+        sx = tk.Scrollbar(labelFrame, orient='horizontal', command=table.xview)
+        sy = tk.Scrollbar(labelFrame, orient='vertical', command=table.yview)
+        table.configure(yscrollcommand=sy.set, xscrollcommand=sx.set)
 
-        button = tk.Button(self, text="<<",
-                            command=lambda:self._controller.BackToStudentPage())
-        button.place(relx = 0.35, rely = 0.80, relheight = 0.1)
+        table.grid(sticky='ewns')
+        sx.grid(row=1, column=0, sticky='ew')
+        sy.grid(row=0, column=1, sticky='ns')
 
-        button = tk.Button(self, text="Sumbit",
-            command=lambda:self._controller.GetStudentIssuance(self.id))
+        button = tk.Button(self, text="Back",
+            command=lambda:self._controller.BackToStudentPage())
         button.place(relx=0.4, rely=0.80, relwidth=0.25, relheight=0.1)
-
-
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("11111111111", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.3)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.4)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.5)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.6)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.7)
-        #         Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.4)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.5)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.6)
-        # Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=0.7)
-
-        # y = 0.3
-        # for i in range(20) :
-        #     Label(labelFrame, text="%-10s%-30s%-30s%-20s"%("asdasd", "asdasd", "asdasd", "asdasd"),bg='black',fg='white').place(relx=0.07,rely=y)
-        #     y += 0.1
-
             
-
-
-
-
-
-
     # def Notify(self):
     #     if (self._model._isAuthorizated):
     #         self._controller.SendData(id=self._model._userId)

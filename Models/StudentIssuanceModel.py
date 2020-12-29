@@ -10,11 +10,10 @@ class StudentIssuanceModel(AbstractModel):
         self._observers = set()
         self._isAuthorizated = False
         self._message = ''
-        self._userId = int()
+        self._studentId = int()
 
     def Save(self, data):
-        self._userId = data[0]
-        print(self._userId)
+        self._studentId = data[0]
         
     def Register(self, listener):
         self._observers.add(listener)
@@ -30,10 +29,11 @@ class StudentIssuanceModel(AbstractModel):
         print(list, 'parse one tuple')
         return list
 
-    def GetStudentIssuance(self, id):
+    def GetStudentIssuance(self):
+        print(self._studentId)
         try:
             db = DatabaseManager()
-            issuanceList = db.GetStudentIssuance(id)
+            issuanceList = db.GetStudentIssuance(self._studentId)
             print(issuanceList)
             formatedList = []
             for issuance in issuanceList:

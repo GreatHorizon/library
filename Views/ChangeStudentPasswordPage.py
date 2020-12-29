@@ -12,7 +12,6 @@ class ChangeStudentPasswordPage(tk.Frame):
         label = tk.Label(self, text="Change student password")
         label.pack(pady=10, padx=10)
 
-
         lb1 = Label(self,text="Old password", fg='black')
         lb1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
 

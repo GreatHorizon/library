@@ -19,8 +19,7 @@ class StudentPageController:
         self._master.switch_frame(ChangeStudentPasswordPage, ChangeStudentPasswordModel, self._model._studentId)
 
     def OpenStudentIssuanceList(self):
-        self._master.switch_frame(StudentIssuancePage, StudentIssuanceModel)
-        # StudentIssuancePage.updateView(self)
+        self._master.switch_frame(StudentIssuancePage, StudentIssuanceModel, self._model._studentId)
 
     def GetStudentIssuance(self, id):
         return self._model.GetStudentIssuance(id)
