@@ -94,11 +94,25 @@ class DatabaseManager:
             self.__connection.commit()
         else:
             raise IncorrectPassword('Old password is wrong')
+    
+    def DeleteCopy(self, idCopy) :
+        self.__cursor.execute('DELETE FROM copy WHERE id_copy = %s RETURNING id_copy', (idCopy,))
+        self.__connection.commit()
+        if self.__cursor.rowcount == 0:
+            raise NonExistentBook("Book does not exitst")
 
     def GetStudentsId(self):
         self.__cursor.execute('SELECT id_student FROM student')
         return self.__cursor.fetchall()
-
+    
+    def GetStudentIssuance(self, id):
+        self.__cursor.execute('SELECT copy.id_copy, book.name, author.name, start, "end" FROM student ' +
+            'INNER JOIN issue ON %s = issue.id_student ' +
+            'INNER JOIN copy ON copy.id_copy = issue.id_copy ' +
+            'INNER JOIN book ON copy.id_book = book.id_book ' +
+            'INNER JOIN author_has_book on author_has_book.id_book = book.id_book ' +
+            'INNER JOIN  author ON author_has_book.id_author = author.id_author ', (id,))
+        return self.__cursor.fetchall()
     def GetAuthorList(self):
         self.__cursor.execute('SELECT name FROM author')
         return self.__cursor.fetchall()

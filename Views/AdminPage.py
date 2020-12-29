@@ -12,19 +12,23 @@ class AdminPage(tk.Frame):
 
         studentDebtsBtn = Button(self, text="Student Debts",bg='#d1ccc0', fg='black',
         command=lambda:self.Flex())
-        studentDebtsBtn.place(relx=0.4, rely=0.25, relwidth=0.2,relheight=0.1)
+        studentDebtsBtn.place(relx=0.4, rely=0.15, relwidth=0.2,relheight=0.1)
 
         returnBookBtn = Button(self, text="Return Book",bg='#d1ccc0', fg='black',
         command=lambda:self.Flex())
-        returnBookBtn.place(relx=0.4, rely=0.35, relwidth=0.2,relheight=0.1)
+        returnBookBtn.place(relx=0.4, rely=0.25, relwidth=0.2,relheight=0.1)
 
         issueBookBtn = Button(self, text="Issue Book",bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenBookIssuePage())
-        issueBookBtn.place(relx=0.4, rely=0.45, relwidth=0.2,relheight=0.1)
+        issueBookBtn.place(relx=0.4, rely=0.35, relwidth=0.2,relheight=0.1)
 
         addBookBtn = Button(self, text="Add Book",bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenAddBookPage())
-        addBookBtn.place(relx=0.4, rely=0.55, relwidth=0.2,relheight=0.1)
+        addBookBtn.place(relx=0.4, rely=0.45, relwidth=0.2,relheight=0.1)
+
+        deleteBookBtn = Button(self, text="Delete book",bg='#d1ccc0', fg='black',
+        command=lambda:self._controller.OpenDeleteBookPage())
+        deleteBookBtn.place(relx=0.4, rely=0.55, relwidth=0.2,relheight=0.1)
 
         regStudBtn = Button(self, text="Register student",bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenStudentRegistrationPage())

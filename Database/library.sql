@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS copy
 				ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+drop table copy cascade
+
 CREATE TABLE IF NOT EXISTS author
 (
     id_author SERIAL NOT NULL PRIMARY KEY,
@@ -75,7 +77,20 @@ CREATE TABLE IF NOT EXISTS issue
 );
 
 
+SELECT copy.id_copy, book.name, author.name, start, "end" FROM student
+INNER JOIN issue ON student.id_student = issue.id_student
+INNER JOIN copy ON copy.id_copy = issue.id_copy
+INNER JOIN book ON copy.id_book = book.id_book
+INNER JOIN author_has_book on author_has_book.id_book = book.id_book
+INNER JOIN  author ON author_has_book.id_author = author.id_author
 
 
 
+
+insert into issue (id_student, id_copy, start, "end") values (1180501039, 1, '27-12-2020', '5-01-2021')
+
+
+DELETE FROM copy WHERE id_copy = 2
+
+drop table issue cascade
 

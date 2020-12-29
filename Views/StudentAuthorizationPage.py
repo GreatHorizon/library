@@ -6,7 +6,7 @@ from Database.database import *
 from Controllers.StudentAuthorizationController import StudentAuthorizationController
 
 class StudentAuthorizationPage(tk.Frame):
-  
+
     def __init__(self, parent, window, model):
         tk.Frame.__init__(self, parent)
         self._model = model

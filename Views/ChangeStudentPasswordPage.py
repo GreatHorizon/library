@@ -33,8 +33,7 @@ class ChangeStudentPasswordPage(tk.Frame):
 
         self.message = Label(self)
         self.message.place(relx = 0.35, rely = 0.54, relheight = 0.05)
-
-
+        
         button = tk.Button(self, text="Sumbit",
             command=lambda:self._controller.ChangePassword(self.id, self.oldPassField.get(),
             self.newPassField.get(), self.confirmPassField.get()))
