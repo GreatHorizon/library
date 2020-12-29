@@ -53,19 +53,8 @@ class AddBookPage(tk.Frame):
         self.authorNameField.get(), self.pageCountField.get(), self.publisherField.get()))
         SubmitBtn.place(relx=0.4, rely=0.75, relwidth=0.2,relheight=0.1)
 
-    def ClearFields(self):
-        self.pageCountField.delete(0, len(self.pageCountField.get()))
-        self.bookIdField.delete(0, len(self.bookIdField.get()))
-        self.bookNameField.delete(0, len(self.bookNameField.get()))
-        self.authorNameField.delete(0, len(self.authorNameField.get()))
-        self.publisherField.delete(0, len(self.publisherField.get()))
-
     def Notify(self):
         if self._model._addedSuccessfuly:
             self.message.config(text=self._model._description, fg='green')
-            self.ClearFields()
         else:
             self.message.config(text=self._model._description, fg='red')
-
-    def ClearErrorLabel(self):
-        self.message.config(text='')

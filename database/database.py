@@ -42,19 +42,34 @@ class DatabaseManager:
     def InsertBook(self, isbn, bookName, author, pageCount, publisher) :
         self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
         if self.__cursor.rowcount == 0:
+            # if author does not exists, we need to create him
             self.__cursor.execute("INSERT INTO author (name) VALUES (%s)", (str(author),))
             self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
         authorId = self.__cursor.fetchone()[0]
 
+        # need to check, if author has book with this name but different isbn
+        self.__cursor.execute('SELECT isbn FROM book ' +
+            'INNER JOIN author_has_book on book.id_book = author_has_book.id_book ' +
+            'INNER JOIN author on author.id_author = author_has_book.id_author ' + 
+            'WHERE author.id_author = %s AND book.name = %s', (str(authorId), str(bookName)))
+
+        if self.__cursor.rowcount != 0:
+           if self.__cursor.fetchone()[0] != isbn:
+               raise AddBookError("Author cant have books with same names and different isbn")
+
         self.__cursor.execute('SELECT name, id_book FROM book WHERE isbn = %s', (str(isbn),))
         if self.__cursor.rowcount == 0:
+            #if book does not exists we ned to create it
             self.__cursor.execute("INSERT INTO book (isbn, name) VALUES (%s, %s)", (str(isbn), str(bookName)))
             self.__cursor.execute('SELECT id_book FROM book WHERE isbn = %s', (str(isbn),))
             bookId = self.__cursor.fetchone()[0] 
             self.__cursor.execute("INSERT INTO author_has_book (id_book, id_author) VALUES (%s, %s)", (str(bookId), str(authorId)))
+            return
         else:
+            # if book name already exists
             row = self.__cursor.fetchone()
             if  row[0] != bookName:
+                #if book with different name and this isbn already exists - we cant create
                 raise AddBookError("There is book with this isbn, but different name")
             bookId = row[1]  
 

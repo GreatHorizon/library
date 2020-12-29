@@ -94,3 +94,9 @@ DELETE FROM copy WHERE id_copy = 2
 
 drop table issue cascade
 
+
+
+select isbn from book
+inner join author_has_book on book.id_book = author_has_book.id_book
+inner join author a on author_has_book.id_author = a.id_author
+where a.id_author = 6 and book.name = 'Цветы на чердаке'
