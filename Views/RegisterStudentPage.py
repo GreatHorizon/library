@@ -5,10 +5,10 @@ from tkcalendar import *
   
 
 class RegisterStudentPage(tk.Frame):
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent) 
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master) 
         self._model = model
-        self._controller = RegisterStudentController(window, self._model, self)
+        self._controller = RegisterStudentController(master, self._model, self)
         self._model.Register(self)
 
 
@@ -44,6 +44,7 @@ class RegisterStudentPage(tk.Frame):
         
         self.birthdayField = DateEntry(self, date_pattern='dd-mm-y')
         self.birthdayField.drop_down()
+        self.birthdayField.focus()
         self.birthdayField.place(relx = 0.35, rely = 0.45, relwidth = 0.3, relheight = 0.05)
 
         self.studentPhoneField = Entry(self)

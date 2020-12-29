@@ -1,18 +1,18 @@
-# import sys
-# import os
-# sys.path.append(os.path.abspath('Views'))
+
 from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.StudentAuthorizationPage import StudentAuthorizationPage
+from Models.AdminAutorizationModel import AdminAuthorizationModel
+from Models.StudentAuthorizationModel import StudentAuthorizationModel
 
 
 class StartPageController:
-    def __init__(self, window, model, view):
+    def __init__(self, master, model, view):
         self._view = view
-        self._window = window
         self._model = model
+        self._master = master
 
     def openAdminAuthorizationPage(self):
-        self._window.show_frame(AdminAuthorizationPage)
+        self._master.switch_frame(AdminAuthorizationPage, AdminAuthorizationModel)
     
     def openStudentAuthorizationPage(self):
-        self._window.show_frame(StudentAuthorizationPage)
+        self._master.switch_frame(StudentAuthorizationPage, StudentAuthorizationModel)

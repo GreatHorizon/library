@@ -5,10 +5,10 @@ from Controllers.AdminPageController import AdminPageController
 
 class AdminPage(tk.Frame):
 
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = AdminPageController(window, self._model, self)
+        self._controller = AdminPageController(master, self._model, self)
 
         studentDebtsBtn = Button(self, text="Student Debts",bg='#d1ccc0', fg='black',
         command=lambda:self.Flex())

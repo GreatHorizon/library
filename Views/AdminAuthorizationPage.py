@@ -7,10 +7,10 @@ from Controllers.AdminAuthorizationController import AdminAuthorizationControlle
 
 class AdminAuthorizationPage(tk.Frame):
 
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = AdminAuthorizationController(window, self._model, self)
+        self._controller = AdminAuthorizationController(master, self._model, self)
         self._model.Register(self)
 
         label = tk.Label(self, text="Admin authorization page")
@@ -43,10 +43,8 @@ class AdminAuthorizationPage(tk.Frame):
     def Notify(self):
         if (self._model._isAuthorizated):
             self._controller.OpenAdminPage()
-            self.ClearErrorLabel()
         else:
             self.error.config(text=self._model._message)
-        self.ClearFields()
 
     def ClearFields(self):
         self.adminIdField.delete(0, len(self.adminIdField.get()))

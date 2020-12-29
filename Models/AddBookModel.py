@@ -30,6 +30,7 @@ class AddBookModel:
             self.CheckFields(fieldsMap)
             db.InsertBook(isbn, bookName, author, pageCount, publisher)
             self._addedSuccessfuly = True
+            self._description = "Book successfully added."
         except (FormatError) as e:
             self._description = e
             self._addedSuccessfuly = False
@@ -48,7 +49,7 @@ class AddBookModel:
             raise FormatError('ISBN should be number with 10 or 13 digits')
         
         if int(fieldsMap['pageCount']) > 10000 :
-            raise FormatError('Page count cant be more than 100000')
+            raise FormatError('Page count cant be more than 10000')
 
         
                 

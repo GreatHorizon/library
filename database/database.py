@@ -102,6 +102,27 @@ class DatabaseManager:
     def GetAuthorList(self):
         self.__cursor.execute('SELECT name FROM author')
         return self.__cursor.fetchall()
+    
+    def GetAuthorBooks(self, name):
+        self.__cursor.execute("""
+                SELECT book_name FROM author
+                INNER JOIN author_has_book ON author.id_author = author_has_book.id_author
+                INNER JOIN
+                (SELECT id_book,name AS book_name FROM book) AS book
+                ON book.id_book = author_has_book.id_book
+                WHERE name = %s
+            """, 
+            (name,))
+        return self.__cursor.fetchall()
+
+    def GetCopies(self, name):
+        self.__cursor.execute("""
+                SELECT id_copy FROM copy
+                INNER JOIN (SELECT id_book, isbn, name FROM book) AS book ON book.id_book = copy.id_book
+                WHERE name = %s AND is_available = 1
+        """,
+        (name,))
+        return self.__cursor.fetchall()
 
     def __del__(self):
         self.__cursor.close()

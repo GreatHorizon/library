@@ -4,10 +4,10 @@ from tkinter import *
 from Controllers.AddBookController import AddBookController
 
 class AddBookPage(tk.Frame):
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = AddBookController(window, self._model, self)
+        self._controller = AddBookController(master, self._model, self)
         self._model.Register(self)
 
         lb1 = Label(self,text="Book name", fg='black')
@@ -41,8 +41,8 @@ class AddBookPage(tk.Frame):
         self.publisherField = Entry(self)
         self.publisherField.place(relx = 0.35, rely = 0.55, relwidth = 0.3, relheight = 0.05)
 
-        self.error = Label(self, text='', fg='red')
-        self.error.place(relx = 0.35, rely = 0.60, relheight = 0.05)
+        self.message = Label(self, text='', fg='red')
+        self.message.place(relx = 0.35, rely = 0.60, relheight = 0.05)
 
         button = tk.Button(self, text="<<",
         command=lambda:self._controller.BackToAdminPage())
@@ -62,10 +62,10 @@ class AddBookPage(tk.Frame):
 
     def Notify(self):
         if self._model._addedSuccessfuly:
-            self.ClearErrorLabel()
+            self.message.config(text=self._model._description, fg='green')
             self.ClearFields()
         else:
-            self.error.config(text=self._model._description)
+            self.message.config(text=self._model._description, fg='red')
 
     def ClearErrorLabel(self):
-        self.error.config(text='')
+        self.message.config(text='')

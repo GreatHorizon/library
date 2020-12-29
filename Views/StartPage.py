@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import *
+
 from Controllers.StartPageController import StartPageController
 
 class StartPage(tk.Frame):
     
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
-        self._controller = StartPageController(window, model, self)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
+        self._controller = StartPageController(master, model, self)
         
         label1 = tk.Label(self, text="Start Page")
         label1.pack(pady=20,padx=20)
