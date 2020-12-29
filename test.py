@@ -200,9 +200,9 @@ class Combobox_Autocomplete(Entry, object):
     def _update_entry_from_listbox(self, event):
         if self._listbox is not None:
             current_selection = self._listbox.curselection()
-            
             if current_selection:
                 text = self._listbox.get(current_selection)
+                print(text)
                 self._set_var(text)
 
             self._listbox.master.destroy()
@@ -257,10 +257,6 @@ class Combobox_Autocomplete(Entry, object):
                 self._listbox.activate(index)
         return "break"
 
-def matches(fieldValue, acListEntry):
-    pattern = re.compile(re.escape(fieldValue) + '.*', re.IGNORECASE)
-    return re.match(pattern, acListEntry)
-
 if __name__ == '__main__':
     try:
         from Tkinter import Tk
@@ -276,5 +272,13 @@ if __name__ == '__main__':
     combobox_autocomplete.pack()
     
     combobox_autocomplete.focus()
+
+    var = StringVar()
+    def callback(a,b,c):
+        print(var.get())
+
+    var.trace('w', callback)
+    passwordField = Entry(root, width = 30, textvariable=var)
+    passwordField.place(relx = 0.35, rely = 0.3, relwidth = 0.3, relheight = 0.08)
     
     root.mainloop()

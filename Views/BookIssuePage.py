@@ -23,10 +23,14 @@ class BookIssuePage(tk.Frame):
         userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
         userSelect.focus()
 
+        def callback(a,b,c):
+            print(self.mvar.get())
 
         label2 = tk.Label(self, text="Select author")
         label2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
-        authorSelect = Combobox_Autocomplete(self, self._controller.GetAuthors())
+        self.mvar = tk.StringVar()
+        self.mvar.trace('w', callback)
+        authorSelect = Combobox_Autocomplete(self, self._controller.GetAuthors(), textvariable=self.mvar)
         authorSelect.place(relx = 0.38, rely = 0.265, relheight = 0.05, relwidth = 0.25)
         authorSelect.focus()
 
@@ -77,6 +81,10 @@ class BookIssuePage(tk.Frame):
     
     def EnableCopiesListAndFillValues(self, values):
         self.copySelect.configure(state='readonly', values=values)
+
+    
+    def Update(self, data):
+        pass
     
 
 

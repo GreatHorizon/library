@@ -2,7 +2,7 @@
 # Version: 0.8
 
 import re
-
+from abc import ABC, abstractmethod
 try:
     from Tkinter import StringVar, Entry, Frame, Listbox, Scrollbar
     from Tkconstants import *
@@ -20,9 +20,27 @@ def autoscroll(sbar, first, last):
         sbar.grid()
     sbar.set(first, last)
 
+class Observable(ABC):
+    def __init__(self):
+        self._observers = set()
 
-class Combobox_Autocomplete(Entry, object):
+    def RegisterObserver(self, observer):
+        print('registrated')
+        self._observers.add(observer)
+
+    def NotifyObservers(self):
+        for observer in self._observers:
+            print(self.GetData())
+            observer.Update(self.GetData())
+
+    @abstractmethod
+    def GetData(self) -> None:
+        pass
+
+
+class Combobox_Autocomplete(Entry, Observable):
     def __init__(self, master, list_of_items=None, autocomplete_function=None, listbox_width=None, listbox_height=7, ignorecase_match=False, startswith_match=False, vscrollbar=True, hscrollbar=False, **kwargs):
+        Observable.__init__(self)
         if hasattr(self, "autocomplete_function"):
             if autocomplete_function is not None:
                 raise ValueError("Combobox_Autocomplete subclass has 'autocomplete_function' implemented")
@@ -183,6 +201,9 @@ class Combobox_Autocomplete(Entry, object):
     def get_value(self):
         return self._entry_var.get()
 
+    def GetData(self):
+        return self.get_value()
+
     def set_value(self, text, close_dialog=False):
         self._set_var(text)
 
@@ -211,7 +232,7 @@ class Combobox_Autocomplete(Entry, object):
             self.focus()
             self.icursor(END)
             self.xview_moveto(1.0)
-            
+           
         return "break"
 
     def _previous(self, event):
