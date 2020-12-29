@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from CustomWidets.ComboboxAutocomplete import AutocompleteEntry
+from CustomWidets.ComboboxAutocomplete import Combobox_Autocomplete
 from Controllers.BookIssueController import BookIssueController
 from tkcalendar import *
 from tkinter import ttk 
@@ -19,14 +19,14 @@ class BookIssuePage(tk.Frame):
     def create_widgets(self):
         label1 = tk.Label(self, text="Select student by id")
         label1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
-        userSelect = AutocompleteEntry(self, self._controller.GetStudentsId(), None, listboxLength=6, width=37)
+        userSelect = Combobox_Autocomplete(self, self._controller.GetStudentsId())
         userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
         userSelect.focus()
 
 
         label2 = tk.Label(self, text="Select author")
         label2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
-        authorSelect = AutocompleteEntry(self, self._controller.GetAuthors(), self._controller.EnableBooksList, listboxLength=6, width=37)
+        authorSelect = Combobox_Autocomplete(self, self._controller.GetAuthors())
         authorSelect.place(relx = 0.38, rely = 0.265, relheight = 0.05, relwidth = 0.25)
         authorSelect.focus()
 

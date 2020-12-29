@@ -21,7 +21,6 @@ class StudentPageController:
     def OpenStudentIssuanceList(self):
         self._master.switch_frame(StudentIssuancePage, StudentIssuanceModel)
         # StudentIssuancePage.updateView(self)
-        self._master.send_data(self._model._studentId)
 
     def GetStudentIssuance(self, id):
         return self._model.GetStudentIssuance(id)
