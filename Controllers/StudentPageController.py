@@ -4,6 +4,7 @@ from Views.ChangeStudentPasswordPage import ChangeStudentPasswordPage
 from Views.StudentIssuancePage import StudentIssuancePage
 from Models.StudentAuthorizationModel import StudentAuthorizationModel
 from Models.StudentIssuanceModel import StudentIssuanceModel
+from Models.ChangeStudentPasswordModel import ChangeStudentPasswordModel
 
 class StudentPageController:
     def __init__(self, master, model, view):
@@ -15,8 +16,7 @@ class StudentPageController:
         self._master.switch_frame(StudentAuthorizationPage, StudentAuthorizationModel)
 
     def OpenChangePasswordPage(self):
-        self._master.show_frame(ChangeStudentPasswordPage)
-        self._master.send_data(ChangeStudentPasswordPage, id=self._model._studentId)
+        self._master.switch_frame(ChangeStudentPasswordPage, ChangeStudentPasswordModel, self._model._studentId)
 
     def OpenStudentIssuanceList(self):
         self._master.switch_frame(StudentIssuancePage, StudentIssuanceModel)

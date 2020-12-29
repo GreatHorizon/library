@@ -31,9 +31,6 @@ class Window(tk.Tk):
         self._frame.grid_rowconfigure(0, weight=1)
         self._frame.grid_columnconfigure(0, weight=1)
 
-    def send_data(self, *data):
-        self._model.Save(data)
-
 
 app = Window()
 app.mainloop()

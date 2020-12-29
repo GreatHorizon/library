@@ -12,6 +12,10 @@ class ChangeStudentPasswordModel(AbstractModel):
         self._observers = set()
         self._isChanged= False
         self._message = ''
+        self._studentId = int()
+
+    def Save(self, data):
+        self._studentId = data[0]
 
     def Register(self, listener):
         self._observers.add(listener)
@@ -20,11 +24,13 @@ class ChangeStudentPasswordModel(AbstractModel):
         for obs in self._observers:
             obs.Notify()  
 
-    def SetNewPassword(self, id, old, new, conf):
+    def SetNewPassword(self, old, new, conf):
         db = DatabaseManager()
         try:
-            db.UpdatePassword(id, old, new)
-            IsEuqalsPasswords(new, conf)
+            db.CheckOldPassword(self._studentId, old)
+            IsEqualsPasswords(new, conf)
+            IsCorrectLegnth(conf)
+            db.UpdatePassword(self._studentId, new)
             self._isChanged = True
             self._message = "Password changed successfully"
         except IncorrectPassword as e:

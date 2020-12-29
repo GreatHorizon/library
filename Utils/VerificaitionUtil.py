@@ -11,6 +11,10 @@ def VerifyId(id):
 def IsEmpty(str):
     return not str
 
+def IsCorrectLegnth(pswrd):
+    if (len(pswrd) < 6):
+        raise IncorrectPassword("New password length should be greater than 6 symbols")
+
 def HasEmptyFields(id, name, surname, birthday, phone, email):
     if (IsEmpty(id)
         or IsEmpty(name)
@@ -20,6 +24,6 @@ def HasEmptyFields(id, name, surname, birthday, phone, email):
         or IsEmpty(email)):
         raise EmptyFieldError("There are empty fields")
 
-def IsEuqalsPasswords(password1, password2):
+def IsEqualsPasswords(password1, password2):
     if (password1 != password2):
         raise NotEqualsPasswords("Passwords aren't equals")

@@ -3,10 +3,10 @@ from tkinter import *
 from Controllers.ChangeStudentPasswordController import ChangeStudentPasswordController
 
 class ChangeStudentPasswordPage(tk.Frame):
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = ChangeStudentPasswordController(window, self._model, self)
+        self._controller = ChangeStudentPasswordController(master, self._model, self)
         self._model.Register(self)
 
         label = tk.Label(self, text="Change student password")
@@ -35,7 +35,7 @@ class ChangeStudentPasswordPage(tk.Frame):
         self.message.place(relx = 0.35, rely = 0.54, relheight = 0.05)
         
         button = tk.Button(self, text="Sumbit",
-            command=lambda:self._controller.ChangePassword(self.id, self.oldPassField.get(),
+            command=lambda:self._controller.ChangePassword(self.oldPassField.get(),
             self.newPassField.get(), self.confirmPassField.get()))
         button.place(relx=0.4, rely=0.6, relwidth=0.25, relheight=0.1)
 
@@ -61,7 +61,5 @@ class ChangeStudentPasswordPage(tk.Frame):
     def ClearMessageLabel(self):
         self.message.config(text='')
 
-    def recieve_data(self, **data):
-        self.id = data['id']
 
 

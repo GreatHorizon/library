@@ -43,7 +43,6 @@ class StudentAuthorizationPage(tk.Frame):
     def Notify(self):
         if (self._model._isAuthorizated):
             self._controller.OpenStudentPage()
-            #self._controller.SendDataToStudentPage()
         else:
             self.error.config(text=self._model._message)
 

@@ -84,15 +84,16 @@ class DatabaseManager:
         if (GetPasswordPart(actualPassword) != encodedPassword):
             raise AuthorizationError("Incorrect login or password")
 
-    def UpdatePassword(self, id, password, newPassword):
+    def UpdatePassword(self, id, newPassword):
+        newEncodedPass = GenerateEncodedPassword(newPassword)
+        self.__cursor.execute('UPDATE student SET password = decode(%s, \'hex\') WHERE id_student = %s', (newEncodedPass, id))
+        self.__connection.commit()
+
+    def CheckOldPassword(self, id, password):
         self.__cursor.execute('SELECT password FROM student WHERE id_student = ' + id)
         actualPassword = bytes(self.__cursor.fetchone()[0])
         encodedPassword = GetEncodedPassword(password,  GetSaltPart(actualPassword))
-        if (GetPasswordPart(actualPassword) == encodedPassword):
-            newEncodedPass = GenerateEncodedPassword(newPassword)
-            self.__cursor.execute('UPDATE student SET password = decode(%s, \'hex\')', (newEncodedPass,))
-            self.__connection.commit()
-        else:
+        if (GetPasswordPart(actualPassword) != encodedPassword):
             raise IncorrectPassword('Old password is wrong')
     
     def DeleteCopy(self, idCopy) :
