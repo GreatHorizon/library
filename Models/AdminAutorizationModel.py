@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
 from AuthorizationErrors import *
 from Utils.VerificaitionUtil import VerifyId
+from Models.AbstractModel import AbstractModel
 
 class AdminAuthorizationModel:
     def __init__(self):

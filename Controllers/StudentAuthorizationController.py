@@ -1,22 +1,23 @@
+from Models.StartPageModel import StartPageModel
+from Models.StudentPageModel import StudentPageModel
+
 class StudentAuthorizationController:
-    def __init__(self, window, model, view):
-        self._window = window
+    def __init__(self, master, model, view):
+        self._master = master
         self._model = model
         self._view = view
 
     def BackToStartPage(self):
         from Views.StartPage import StartPage
-        self._window.show_frame(StartPage)
-        self._view.ClearFields()
-        self._view.ClearErrorLabel()
+        self._master.switch_frame(StartPage, StartPageModel)
 
     def SignInStudent(self, id , password):
         self._model.VerifyStudent(id, password)
 
     def OpenStudentPage(self):
         from Views.StudentPage import StudentPage
-        self._window.show_frame(StudentPage)
+        self._master.switch_frame(StudentPage, StudentPageModel, self._model._userId)
 
     def SendData(self, **data):
         from Views.StudentPage import StudentPage
-        self._window.send_data(StudentPage, **data)
+        self._master.send_data(StudentPage, **data)

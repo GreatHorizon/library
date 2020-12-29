@@ -1,8 +1,9 @@
 
 from Database.database import DatabaseManager
 from AuthorizationErrors import *
+from Models.AbstractModel import AbstractModel
 
-class DeleteCopyModel:
+class DeleteCopyModel(AbstractModel):
     def __init__(self):
         self._observers = set()
         self._isDeleted = False

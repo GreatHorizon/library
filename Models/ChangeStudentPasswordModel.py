@@ -5,8 +5,9 @@ sys.path.append(os.path.abspath('Errors'))
 sys.path.append(os.path.abspath('Utils'))
 from AuthorizationErrors import *
 from VerificaitionUtil import *
+from Models.AbstractModel import AbstractModel
 
-class ChangeStudentPasswordModel:
+class ChangeStudentPasswordModel(AbstractModel):
     def __init__(self):
         self._observers = set()
         self._isChanged= False

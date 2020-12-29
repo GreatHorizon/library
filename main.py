@@ -18,14 +18,21 @@ class Window(tk.Tk):
 
         self.switch_frame(StartPage, StartPageModel)
 
-    def switch_frame(self, frame_class, model):
-        new_frame = frame_class(self, model())
+    def switch_frame(self, frame_class, model, *data):
+        self._model = model()
+        if (len(data) != 0):
+            print(data)
+            self._model.Save(data) 
+        new_frame = frame_class(self, self._model)
         if self._frame is not None:
             self._frame.destroy()
         self._frame = new_frame
         self._frame.pack(side="top", fill="both", expand = True)
         self._frame.grid_rowconfigure(0, weight=1)
         self._frame.grid_columnconfigure(0, weight=1)
+
+    def send_data(self, *data):
+        self._model.Save(data)
 
 
 app = Window()

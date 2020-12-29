@@ -7,10 +7,10 @@ from Controllers.StudentAuthorizationController import StudentAuthorizationContr
 
 class StudentAuthorizationPage(tk.Frame):
 
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = StudentAuthorizationController(window, self._model, self)
+        self._controller = StudentAuthorizationController(master, self._model, self)
         self._model.Register(self)
 
         label = tk.Label(self, text="Student authorization page")
@@ -42,15 +42,14 @@ class StudentAuthorizationPage(tk.Frame):
 
     def Notify(self):
         if (self._model._isAuthorizated):
-            self._controller.SendData(id=self._model._userId)
             self._controller.OpenStudentPage()
-            self.ClearErrorLabel()
+            #self._controller.SendDataToStudentPage()
         else:
             self.error.config(text=self._model._message)
-        self.ClearFields()
 
     def ClearFields(self):
         self.studentIdField.delete(0, len(self.studentIdField.get()))
         self.passwordField.delete(0, len(self.passwordField.get()))
+
     def ClearErrorLabel(self):
         self.error.config(text='') 

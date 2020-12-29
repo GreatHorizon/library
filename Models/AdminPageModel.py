@@ -1,5 +1,6 @@
 
 
+from Models.AbstractModel import AbstractModel
 
-class AdminPageModel:
+class AdminPageModel(AbstractModel):
     pass

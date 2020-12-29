@@ -30,14 +30,12 @@ class ScrollableFrame(ttk.Frame):
 
 class StudentIssuancePage(tk.Frame):
 
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = StudentIssuancePageController(window, self._model, self)
+        self._controller = StudentIssuancePageController(master, self._model, self)
         self._model.Register(self)
-        
-
-        
+                
         issuanceList = self._controller.GetStudentIssuance(1180501039)
         print(issuanceList)
         labelFrame = Frame(self,bg='black')

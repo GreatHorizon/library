@@ -3,14 +3,18 @@ import os
 sys.path.append(os.path.abspath('Database'))
 from database import DatabaseManager
 from AuthorizationErrors import *
+from Models.AbstractModel import AbstractModel
 
-
-class StudentIssuanceModel:
+class StudentIssuanceModel(AbstractModel):
     def __init__(self):
         self._observers = set()
         self._isAuthorizated = False
         self._message = ''
         self._userId = int()
+
+    def Save(self, data):
+        self._userId = data[0]
+        print(self._userId)
         
     def Register(self, listener):
         self._observers.add(listener)

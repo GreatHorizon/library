@@ -1,8 +1,9 @@
 
+from Models.AbstractModel import AbstractModel
 
-class StudentPageModel:
+class StudentPageModel(AbstractModel):
     def __init__(self):
         self._studentId = int()
 
-    def SaveStudentId(self, id):
-        self._studentId = id
+    def Save(self, data):
+        self._studentId = data[0]

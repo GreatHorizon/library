@@ -6,8 +6,9 @@ from database import DatabaseManager
 from RegistationError import *
 from Utils.VerificaitionUtil import HasEmptyFields
 from psycopg2.errors import UniqueViolation
+from Models.AbstractModel import AbstractModel
 
-class RegisterStudentModel:
+class RegisterStudentModel(AbstractModel):
     def __init__(self):
         self._isRegistrated = False
         self._message = ''

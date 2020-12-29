@@ -2,27 +2,26 @@
 from Views.StudentAuthorizationPage import StudentAuthorizationPage
 from Views.ChangeStudentPasswordPage import ChangeStudentPasswordPage
 from Views.StudentIssuancePage import StudentIssuancePage
+from Models.StudentAuthorizationModel import StudentAuthorizationModel
+from Models.StudentIssuanceModel import StudentIssuanceModel
 
 class StudentPageController:
-    def __init__(self, window, model, view):
-        self._window = window
+    def __init__(self, master, model, view):
+        self._master = master
         self._model = model
         self._view = view
 
     def BackToStudentAuthorizationPage(self):
-        self._window.show_frame(StudentAuthorizationPage)
+        self._master.switch_frame(StudentAuthorizationPage, StudentAuthorizationModel)
 
     def OpenChangePasswordPage(self):
-        self._window.show_frame(ChangeStudentPasswordPage)
-        self._window.send_data(ChangeStudentPasswordPage, id=self._model._studentId)
+        self._master.show_frame(ChangeStudentPasswordPage)
+        self._master.send_data(ChangeStudentPasswordPage, id=self._model._studentId)
 
-    def OpenStudentIssuanceList(self) :
-        self._window.show_frame(StudentIssuancePage)
+    def OpenStudentIssuanceList(self):
+        self._master.switch_frame(StudentIssuancePage, StudentIssuanceModel)
         # StudentIssuancePage.updateView(self)
-        self._window.send_data(StudentIssuancePage, id=self._model._studentId)
-
-    def SaveData(self, id):
-        self._model.SaveStudentId(id)
+        self._master.send_data(self._model._studentId)
 
     def GetStudentIssuance(self, id):
         return self._model.GetStudentIssuance(id)
