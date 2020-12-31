@@ -4,11 +4,13 @@ from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.AddBookPage import AddBookPage
 from Views.BookIssuePage import BookIssuePage 
 from Views.ReturnBookPage import ReturnBookPage
+from Views.DeleteCopyPage import DeleteCopyPage
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.RegisterStudentModel import RegisterStudentModel
 from Models.AddBookModel import AddBookModel
 from Models.BookIssueModel import BookIssueModel
 from Models.ReturnBookModel import ReturnBookModel
+from Models.DeleteCopyModel import DeleteCopyModel
 
 class AdminPageController:
     def __init__(self, master, model, view):
