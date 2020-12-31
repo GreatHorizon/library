@@ -188,7 +188,28 @@ class DatabaseManager:
                 UPDATE copy SET is_available = 0 WHERE id_copy = %s
         """,
         (copy,))
+
+    def UpdateCopyStateToAvailable(self, idCopy):
+        self.__cursor.execute("""
+                UPDATE copy SET is_available = 1 WHERE id_copy = %s RETURNING id_copy
+        """,
+        (idCopy,))
+        return self.__cursor.fetchone()
+
+    def GetCopyState(self, idCopy):
+        self.__cursor.execute("""
+           SELECT is_available FROM copy WHERE id_copy = %s
+        """,
+        (idCopy,))
+        return self.__cursor.fetchone()
         
+
+    def DeleteStudentIssue(self, idCopy):
+        self.__cursor.execute("""
+                DELETE FROM issue WHERE id_copy = %s
+        """,
+        (idCopy,))
+
 
     def CommitChanges(self):
         self.__connection.commit()

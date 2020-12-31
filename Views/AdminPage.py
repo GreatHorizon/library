@@ -9,6 +9,10 @@ class AdminPage(tk.Frame):
         tk.Frame.__init__(self, master)
         self._model = model
         self._controller = AdminPageController(master, self._model, self)
+        
+        
+        label1 = tk.Label(self, text="Admin page")
+        label1.pack(pady=20,padx=20)
 
         studentDebtsBtn = Button(self, text="Student Debts",bg='#d1ccc0', fg='black',
         command=lambda:self.Flex())

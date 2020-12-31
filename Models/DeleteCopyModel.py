@@ -2,7 +2,7 @@
 from Database.database import DatabaseManager
 from AuthorizationErrors import *
 from Models.AbstractModel import AbstractModel
-
+from psycopg2.errors import *
 class DeleteCopyModel(AbstractModel):
     def __init__(self):
         self._observers = set()
@@ -17,7 +17,7 @@ class DeleteCopyModel(AbstractModel):
             obs.Notify()
 
     def DeleteCopy(self, copyId):
-        if (copyId and copyId.isnumeric()) :
+        if (copyId and copyId.isnumeric()):
             try:
                 db = DatabaseManager()
                 db.DeleteCopy(copyId)
@@ -25,6 +25,9 @@ class DeleteCopyModel(AbstractModel):
                 self._isDeleted = True
             except NonExistentBook as e:
                 self._message = e.message
+                self._isDeleted = False
+            except NumericValueOutOfRange:
+                self._message = "Too big id copy value"
                 self._isDeleted = False
         else: 
             self._message = "Book id should be numeric string"

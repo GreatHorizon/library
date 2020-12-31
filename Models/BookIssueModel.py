@@ -54,14 +54,9 @@ class BookIssueModel(AbstractModel):
             raise NonExistentStudent("Student doesn't exists")
         if db.GetAuthorByName(author) is None:
             raise NonExistentAuthor("Author doesn't exists")
-        try:
-            db.UpdateCopyStateToUnavailable(copy)
-            db.InsertIssuance(studentId, copy, start, end)
-            db.CommitChanges() 
-        except (Exception) as e:
-            print(e)
-            raise e
-
+        db.UpdateCopyStateToUnavailable(copy)
+        db.InsertIssuance(studentId, copy, start, end)
+        db.CommitChanges() 
 
 
 def CheckEmptyFields(studentId, author, book, copy, start, end):

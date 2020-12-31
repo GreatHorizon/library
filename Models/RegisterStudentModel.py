@@ -8,6 +8,7 @@ from RegistationError import *
 from Models.AbstractModel import AbstractModel
 from Utils.VerificaitionUtil import *
 import re
+from psycopg2.errors import *
 
 class RegisterStudentModel(AbstractModel):
     def __init__(self):
@@ -41,6 +42,9 @@ class RegisterStudentModel(AbstractModel):
         except BaseFormatError as e:
             self._isRegistrated = False
             self._message = e.message
+        except NumericValueOutOfRange:
+            self._isRegistrated = False
+            self._message = "Too big id student value"
         self.Notify()
 
 def HasEmptyFields(id, name, surname, birthday, phone, email):

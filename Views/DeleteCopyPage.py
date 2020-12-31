@@ -10,7 +10,9 @@ class DeleteCopyPage(tk.Frame):
         self._controller = DeleteCopyController(master, self._model, self)
         self._model.Register(self)
 
-        
+        label1 = tk.Label(self, text="Delete book copy page")
+        label1.pack(pady=20,padx=20)
+ 
         lb1 = Label(self,text="Book id", fg='black')
         lb1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
 
@@ -18,7 +20,7 @@ class DeleteCopyPage(tk.Frame):
         self.copyIdField.place(relx = 0.35, rely = 0.15, relwidth = 0.3, relheight = 0.08)
     
         self.message = Label(self, text='', fg='red')
-        self.message.place(relx = 0.35, rely = 0.30, relheight = 0.05)
+        self.message.place(relx = 0.35, rely = 0.25, relheight = 0.05)
 
         button = tk.Button(self, text="Sumbit",
             command=lambda:self._controller.DeleteCopy(self.copyIdField.get()))
