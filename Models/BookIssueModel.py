@@ -49,7 +49,7 @@ class BookIssueModel(AbstractModel):
     def CreateIssue(self, studentId, author, book, copy, start, end):
         CheckEmptyFields(studentId, author, book, copy, start, end)
         db = DatabaseManager()
-        VerifyId(studentId)
+        IsNumber(studentId)
         if db.GetStudentById(studentId) is None:
             raise NonExistentStudent("Student doesn't exists")
         if db.GetAuthorByName(author) is None:
