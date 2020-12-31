@@ -59,12 +59,11 @@ class DatabaseManager:
 
         self.__cursor.execute('SELECT name, id_book FROM book WHERE isbn = %s', (str(isbn),))
         if self.__cursor.rowcount == 0:
-            #if book does not exists we ned to create it
+            #if book does not exists we need to create it
             self.__cursor.execute("INSERT INTO book (isbn, name) VALUES (%s, %s)", (str(isbn), str(bookName)))
             self.__cursor.execute('SELECT id_book FROM book WHERE isbn = %s', (str(isbn),))
             bookId = self.__cursor.fetchone()[0] 
             self.__cursor.execute("INSERT INTO author_has_book (id_book, id_author) VALUES (%s, %s)", (str(bookId), str(authorId)))
-            return
         else:
             # if book name already exists
             row = self.__cursor.fetchone()
@@ -74,6 +73,7 @@ class DatabaseManager:
             bookId = row[1]  
 
         self.__cursor.execute("INSERT INTO copy (id_book,page_count, is_available, publisher) VALUES (%s, %s, 1, %s)", (str(bookId), str(pageCount), str(publisher)))
+        print('Book inserted')
         self.__connection.commit()
 
     def InsertStudent(self, id, name, surname, birthday, phone, email):

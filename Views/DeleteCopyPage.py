@@ -4,10 +4,10 @@ from Controllers.DeleteCopyController import DeleteCopyController
 
 
 class DeleteCopyPage(tk.Frame):
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self, master)
         self._model = model
-        self._controller = DeleteCopyController(window, self._model, self)
+        self._controller = DeleteCopyController(master, self._model, self)
         self._model.Register(self)
 
         

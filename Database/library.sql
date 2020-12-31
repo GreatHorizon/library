@@ -88,6 +88,7 @@ INNER JOIN  author ON author_has_book.id_author = author.id_author
 
 
 insert into issue (id_student, id_copy, start, "end") values (1180501039, 1, '27-12-2020', '5-01-2021')
+truncate table copy cascade
 
 
 DELETE FROM copy WHERE id_copy = 2

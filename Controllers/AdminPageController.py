@@ -3,10 +3,12 @@ from Views.RegisterStudentPage import RegisterStudentPage
 from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.AddBookPage import AddBookPage
 from Views.BookIssuePage import BookIssuePage 
+from Views.DeleteCopyPage import DeleteCopyPage
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.RegisterStudentModel import RegisterStudentModel
 from Models.AddBookModel import AddBookModel
 from Models.BookIssueModel import BookIssueModel
+from Models.DeleteCopyModel import DeleteCopyModel
 
 class AdminPageController:
     def __init__(self, master, model, view):
@@ -25,5 +27,6 @@ class AdminPageController:
 
     def OpenBookIssuePage(self):
         self._master.switch_frame(BookIssuePage, BookIssueModel)
-
     
+    def OpenDeleteBookPage(self):
+        self._master.switch_frame(DeleteCopyPage, DeleteCopyModel)

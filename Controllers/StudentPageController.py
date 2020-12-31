@@ -6,6 +6,8 @@ from Models.StudentAuthorizationModel import StudentAuthorizationModel
 from Models.StudentIssuanceModel import StudentIssuanceModel
 from Models.ChangeStudentPasswordModel import ChangeStudentPasswordModel
 
+
+
 class StudentPageController:
     def __init__(self, master, model, view):
         self._master = master
@@ -23,5 +25,7 @@ class StudentPageController:
 
     def GetStudentIssuance(self, id):
         return self._model.GetStudentIssuance(id)
+
+
 
     
