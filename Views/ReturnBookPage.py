@@ -1,14 +1,13 @@
 import tkinter as tk
 from tkinter import *
-from Controllers.DeleteCopyController import DeleteCopyController
+from Controllers.ReturnBookController import ReturnBookController
 
 
 class ReturnBookPage(tk.Frame):
-    def __init__(self, parent, window, model):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master, model):
+        tk.Frame.__init__(self,master)
         self._model = model
-        self._controller = DeleteCopyController(window, self._model, self)
-        self._model.Register(self)
+        self._controller = ReturnBookController(master, self._model, self)
 
         
         lb1 = Label(self,text="Book id", fg='black')
@@ -21,7 +20,7 @@ class ReturnBookPage(tk.Frame):
         self.message.place(relx = 0.35, rely = 0.30, relheight = 0.05)
 
         button = tk.Button(self, text="Sumbit",
-            command=lambda:self._controller.DeleteCopy(self.copyIdField.get()))
+            command=lambda:self._controller.ReturnBook(self.copyIdField.get()))
         button.place(relx=0.4, rely=0.35, relwidth=0.25, relheight=0.1)
 
         button = tk.Button(self, text="<<",
