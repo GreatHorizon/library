@@ -12,7 +12,11 @@ class StudentPage(tk.Frame):
         self._controller = StudentPageController(master, self._model, self)
 
         label1 = tk.Label(self, text="Student Page")
-        label1.pack(pady=20, padx=20)  
+        label1.pack(pady=20, padx=20)
+
+        searchBookBtn = Button(self, text="Search book", bg='#d1ccc0', fg='black',
+        command=lambda:self._controller.OpenBookSearchPage())
+        searchBookBtn.place(relx=0.4, rely=0.45, relwidth=0.2,relheight=0.1)
 
         showIssuanceBtn = Button(self, text="My issuance", bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenStudentIssuanceList())

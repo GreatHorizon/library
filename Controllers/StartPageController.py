@@ -1,8 +1,10 @@
 
 from Views.AdminAuthorizationPage import AdminAuthorizationPage
 from Views.StudentAuthorizationPage import StudentAuthorizationPage
+from Views.BookSearchPage import BookSearchPage
 from Models.AdminAutorizationModel import AdminAuthorizationModel
 from Models.StudentAuthorizationModel import StudentAuthorizationModel
+from Models.BookSearchModel import BookSearchModel
 
 
 class StartPageController:
@@ -16,3 +18,7 @@ class StartPageController:
     
     def openStudentAuthorizationPage(self):
         self._master.switch_frame(StudentAuthorizationPage, StudentAuthorizationModel)
+
+
+    def OpenBookSearchPage(self):
+        self._master.switch_frame(BookSearchPage, BookSearchModel)
