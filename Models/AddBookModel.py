@@ -18,6 +18,8 @@ class AddBookModel(AbstractModel):
             obs.Notify()
 
     def AddBook(self, isbn, bookName, author, pageCount, publisher):
+        author = author.strip()
+        bookName = bookName.strip()
         db = DatabaseManager()
         fieldsMap = {
             'isbn': isbn,
@@ -29,9 +31,9 @@ class AddBookModel(AbstractModel):
 
         try:
             self.CheckFields(fieldsMap)
-            db.InsertBook(isbn, bookName, author, pageCount, publisher)
+            idCopy = db.InsertBook(isbn, bookName, author, pageCount, publisher)
             self._addedSuccessfuly = True
-            self._description = "Book successfully added."
+            self._description = "Book successfully added. Id copy = " + str(idCopy)
         except (FormatError) as e:
             self._description = e
             self._addedSuccessfuly = False

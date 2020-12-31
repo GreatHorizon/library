@@ -35,8 +35,6 @@ CREATE TABLE IF NOT EXISTS copy
 				ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-drop table copy cascade
-
 CREATE TABLE IF NOT EXISTS author
 (
     id_author SERIAL NOT NULL PRIMARY KEY,
@@ -57,7 +55,6 @@ CREATE TABLE IF NOT EXISTS author_has_book
 			REFERENCES author(id_author)
 				ON UPDATE CASCADE ON DELETE CASCADE      
 );
-
 
 CREATE TABLE IF NOT EXISTS issue 
 (
@@ -84,16 +81,14 @@ INNER JOIN book ON copy.id_book = book.id_book
 INNER JOIN author_has_book on author_has_book.id_book = book.id_book
 INNER JOIN  author ON author_has_book.id_author = author.id_author
 
-
-
-
 insert into issue (id_student, id_copy, start, "end") values (1180501039, 1, '27-12-2020', '5-01-2021')
-truncate table copy cascade
 
+truncate table copy cascade
 
 DELETE FROM copy WHERE id_copy = 2
 
 drop table issue cascade
+drop table copy cascade
 
 
 

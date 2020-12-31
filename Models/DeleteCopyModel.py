@@ -1,6 +1,6 @@
 
 from Database.database import DatabaseManager
-from AuthorizationErrors import *
+from DeleteBookErrors import *
 from Models.AbstractModel import AbstractModel
 from psycopg2.errors import *
 class DeleteCopyModel(AbstractModel):
@@ -23,7 +23,7 @@ class DeleteCopyModel(AbstractModel):
                 db.DeleteCopy(copyId)
                 self._message = "Book successfully removed"
                 self._isDeleted = True
-            except NonExistentBook as e:
+            except BaseDeleteBookError as e:
                 self._message = e.message
                 self._isDeleted = False
             except NumericValueOutOfRange:

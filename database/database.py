@@ -13,6 +13,7 @@ from PasswordUtil import *
 from AuthorizationErrors import *
 from RegistationError import *
 from Config import DEFAULT_PASSWORD
+from DeleteBookErrors import *
 
 from dotenv import load_dotenv
 project_folder = os.path.expanduser('../library')
@@ -72,9 +73,12 @@ class DatabaseManager:
                 raise AddBookError("There is book with this isbn, but different name")
             bookId = row[1]  
 
-        self.__cursor.execute("INSERT INTO copy (id_book,page_count, is_available, publisher) VALUES (%s, %s, 1, %s)", (str(bookId), str(pageCount), str(publisher)))
-        print('Book inserted')
+        self.__cursor.execute("INSERT INTO copy (id_book,page_count, is_available, publisher)" + 
+        "VALUES (%s, %s, 1, %s) RETURNING id_copy", (str(bookId), str(pageCount), str(publisher)))
+        addedCopyId = self.__cursor.fetchone()[0]
         self.__connection.commit()
+        return addedCopyId
+        
 
     def InsertStudent(self, id, name, surname, birthday, phone, email):
         self.__cursor.execute('SELECT id_student FROM student WHERE id_student = %s', (id,))
@@ -112,10 +116,16 @@ class DatabaseManager:
             raise IncorrectPassword('Old password is wrong')
     
     def DeleteCopy(self, idCopy) :
+        self.__cursor.execute('SELECT is_available FROM copy WHERE id_copy = %s', (idCopy,))
+        copyStatus = self.__cursor.fetchone()
+        if copyStatus is None:
+            raise NonExistentBook("Book does not exitst")
+
+        if copyStatus[0] == 0 :
+            raise BookIsNotAvailable("Book now is in issue")
+
         self.__cursor.execute('DELETE FROM copy WHERE id_copy = %s RETURNING id_copy', (idCopy,))
         self.__connection.commit()
-        if self.__cursor.rowcount == 0:
-            raise NonExistentBook("Book does not exitst")
 
     def GetStudentsInfoPart(self, textPart):
         print(textPart)
