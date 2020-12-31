@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from Controllers.BookSearchController import  
+from Controllers.BookSearchController import BookSearchController
 
 class BookSearchPage(tk.Frame):
     def __init__(self, master, model):

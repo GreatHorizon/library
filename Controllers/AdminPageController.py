@@ -25,3 +25,5 @@ class AdminPageController:
 
     def OpenBookIssuePage(self):
         self._master.switch_frame(BookIssuePage, BookIssueModel)
+
+    

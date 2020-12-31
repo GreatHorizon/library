@@ -29,7 +29,7 @@ class ChangeStudentPasswordModel(AbstractModel):
         try:
             db.CheckOldPassword(self._studentId, old)
             IsEqualsPasswords(new, conf)
-            IsCorrectLegnth(conf)
+            IsCorrectPasswordLength(conf)
             db.UpdatePassword(self._studentId, new)
             self._isChanged = True
             self._message = "Password changed successfully"
@@ -40,3 +40,12 @@ class ChangeStudentPasswordModel(AbstractModel):
             self._message = e.message
             self._isChanged = False
         self.Notify()
+
+
+def IsCorrectPasswordLength(pswrd):
+    if (len(pswrd) < 6):
+        raise IncorrectPassword("New password length should be greater than 6 symbols")
+
+def IsEqualsPasswords(password1, password2):
+    if (password1 != password2):
+        raise NotEqualsPasswords("Passwords aren't equals")

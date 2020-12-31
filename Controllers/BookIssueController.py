@@ -1,4 +1,10 @@
 from  Models.AdminPageModel import AdminPageModel
+import sys
+import os
+sys.path.append(os.path.abspath('Errors'))
+from FormatErrors import BaseFormatError
+from IssuanceErrors import *
+
 
 class BookIssueController:
     def __init__(self, master, model, view):
@@ -6,13 +12,13 @@ class BookIssueController:
         self._master = master
         self._model = model
 
-    def GetStudentsId(self):
-        studentsList = self._model.GetStudentsList()
+    def GetStudentsInfo(self, text):
+        studentsList = self._model.GetStudentsList(text)
         print(studentsList)
         return studentsList
     
-    def GetAuthors(self):
-        booksList = self._model.GetAuthorList()
+    def GetAuthors(self, text):
+        booksList = self._model.GetAuthorList(text)
         return booksList
 
     # def GetAuthorsBookByName(self, name):
@@ -26,12 +32,27 @@ class BookIssueController:
     def EnableBooksList(self, authorName):
         if (not authorName):
             self._view.DisableBooksList()
+            self._view.DisableCopiesList()
         booksList = self._model.GetAuthorBooksByName(authorName)
         self._view.EnableBooksListAndFillValues(booksList)
 
     def EnableCopiesList(self, event):
+        self._view.ClearMessageLabel()
         copies = self._model.GetBookCopies(event.widget.get())
+        if (len(copies) == 0):
+            self._view.DisableCopiesList()
+            self._view.SetErrorMessage("There are no copies in library. Try another book.")
         self._view.EnableCopiesListAndFillValues(copies)
 
     def CreateIssue(self, studentId, author, book, copy, start, end):
-        self._model.CreateIssue(studentId, author, book, copy, start, end)
+        try:
+            self._model.CreateIssue(studentId, author, book, copy, start, end)
+            self._view.SetSuccessMessage("Issue successfully created")
+            self._view.ClearFields()
+        except BaseIssuanceError as e:
+            self._view.SetErrorMessage(e.message)
+        except BaseFormatError as e:
+            self._view.SetErrorMessage(e.message)
+        except Exception as e:
+            print(e)
+            self._view.SetErrorMessage("Unexpected Error")

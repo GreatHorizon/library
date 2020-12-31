@@ -38,52 +38,21 @@ class Observable(ABC):
         pass
 
 
+
+
 class Combobox_Autocomplete(Entry, Observable):
-    def __init__(self, master, list_of_items=None, autocomplete_function=None, listbox_width=None, listbox_height=7, ignorecase_match=False, startswith_match=False, vscrollbar=True, hscrollbar=False, **kwargs):
-        Observable.__init__(self)
-        if hasattr(self, "autocomplete_function"):
-            if autocomplete_function is not None:
-                raise ValueError("Combobox_Autocomplete subclass has 'autocomplete_function' implemented")
+    def __init__(self, master, searchCallback=None,callbackOnSelection=None, listbox_width=None, listbox_height=7, vscrollbar=True, hscrollbar=False, **kwargs):
+
+
+        if callbackOnSelection is None:
+            self.callbackOnSelection = lambda text:None
         else:
-            if autocomplete_function is not None:
-                self.autocomplete_function = autocomplete_function
-            else:
-                if list_of_items is None:
-                    raise ValueError("If not guiven complete function, list_of_items can't be 'None'")
-
-                if ignorecase_match:
-                    if startswith_match:
-                        def matches_function(entry_data, item):
-                            return item.startswith(entry_data)
-                    else:
-                        def matches_function(entry_data, item):
-                            return item in entry_data
-
-                    self.autocomplete_function = lambda entry_data: [item for item in self.list_of_items if matches_function(entry_data, item)]
-                else:
-                    if startswith_match:
-                        def matches_function(escaped_entry_data, item):
-                            if re.match(escaped_entry_data, item, re.IGNORECASE):
-                                return True
-                            else:
-                                return False
-                    else:
-                        def matches_function(escaped_entry_data, item):
-                            if re.search(escaped_entry_data, item, re.IGNORECASE):
-                                return True
-                            else:
-                                return False
-                    
-                    def autocomplete_function(entry_data):
-                        escaped_entry_data = re.escape(entry_data)
-                        return [item for item in self.list_of_items if matches_function(escaped_entry_data, item)]
-
-                    self.autocomplete_function = autocomplete_function
+            self.callbackOnSelection = callbackOnSelection
 
         self._listbox_height = int(listbox_height)
         self._listbox_width = listbox_width
 
-        self.list_of_items = list_of_items
+        self.searchCallback = searchCallback
         
         self._use_vscrollbar = vscrollbar
         self._use_hscrollbar = hscrollbar
@@ -120,9 +89,11 @@ class Combobox_Autocomplete(Entry, Observable):
 
         if entry_data == '':
             self.unpost_listbox()
+            self.callbackOnSelection('')
+            print('callbackOnSelection')
             self.focus()
         else:
-            values = self.autocomplete_function(entry_data)
+            values = self.searchCallback(entry_data)
             if values:
                 if self._listbox is None:
                     self._build_listbox(values)
@@ -133,8 +104,7 @@ class Combobox_Autocomplete(Entry, Observable):
                     self._listbox.configure(height=height)
 
                     for item in values:
-                        self._listbox.insert(END, item)
-                
+                        self._listbox.insert(END, item)              
             else:
                 self.unpost_listbox()
                 self.focus()
@@ -189,7 +159,7 @@ class Combobox_Autocomplete(Entry, Observable):
         entry_data = self._entry_var.get()
         if entry_data == '': return
 
-        values = self.autocomplete_function(entry_data)
+        values = self.searchCallback(entry_data)
         if values:
             self._build_listbox(values)
 
@@ -224,6 +194,7 @@ class Combobox_Autocomplete(Entry, Observable):
             
             if current_selection:
                 text = self._listbox.get(current_selection)
+                self.callbackOnSelection(text)
                 self._set_var(text)
 
             self._listbox.master.destroy()

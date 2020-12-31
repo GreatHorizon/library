@@ -19,20 +19,18 @@ class BookIssuePage(tk.Frame):
     def create_widgets(self):
         label1 = tk.Label(self, text="Select student by id")
         label1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
-        userSelect = Combobox_Autocomplete(self, self._controller.GetStudentsId())
-        userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
-        userSelect.focus()
+        self.userSelect = Combobox_Autocomplete(self, searchCallback=self._controller.GetStudentsInfo)
+        self.userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
+        self.userSelect.focus()
 
-        def callback(a,b,c):
-            print(self.mvar.get())
 
         label2 = tk.Label(self, text="Select author")
         label2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
-        self.mvar = tk.StringVar()
-        self.mvar.trace('w', callback)
-        authorSelect = Combobox_Autocomplete(self, self._controller.GetAuthors(), textvariable=self.mvar)
-        authorSelect.place(relx = 0.38, rely = 0.265, relheight = 0.05, relwidth = 0.25)
-        authorSelect.focus()
+
+        self.authorSelect = Combobox_Autocomplete(self, searchCallback=self._controller.GetAuthors,
+                                            callbackOnSelection=self._controller.EnableBooksList)
+        self.authorSelect.place(relx = 0.38, rely = 0.265, relheight = 0.05, relwidth = 0.25)
+        self.authorSelect.focus()
 
         label3 = tk.Label(self, text="Select book")
         label3.place(relx = 0.25, rely = 0.35, relheight = 0.08)
@@ -43,8 +41,8 @@ class BookIssuePage(tk.Frame):
 
         label4 = tk.Label(self, text="Select book copy")
         label4.place(relx = 0.25, rely = 0.45, relheight = 0.08)
-        n2 = tk.StringVar() 
-        self.copySelect = ttk.Combobox(self, width = 27, textvariable = n2, state='disabled')
+        self.n2 = tk.StringVar() 
+        self.copySelect = ttk.Combobox(self, width = 27, textvariable = self.n2, state='disabled')
         self.copySelect.place(relx = 0.38, rely = 0.465, relheight = 0.05, relwidth = 0.25)
 
         label4 = tk.Label(self, text="Issue start date")
@@ -60,31 +58,50 @@ class BookIssuePage(tk.Frame):
         self.endDate.drop_down()
         self.endDate.place(relx = 0.38, rely = 0.65, relheight = 0.05, relwidth = 0.25)
 
+        self.message = Label(self)
+        self.message.place(relx = 0.38, rely = 0.72, relheight = 0.05)
+
 
         button = tk.Button(self, text="Create issue",
-            command=lambda:self._controller.CreateIssue(userSelect.get_value(),authorSelect.get_value(), authorSelect.get_value(), n2.get(),
-            self.startDate.get(), self.endDate.get()))
+            command=lambda:self._controller.CreateIssue(self.userSelect.get_value(), self.authorSelect.get_value(),
+                                                        self.bookSelect.get(), self.copySelect.get(),
+                                                        self.startDate.get(), self.endDate.get()))
         button.place(relx=0.4, rely=0.8, relwidth=0.23, relheight=0.1)
 
         button = tk.Button(self, text="<<",
                             command=lambda:self._controller.BackToAdminPage())
         button.place(relx = 0.35, rely = 0.8, relheight = 0.1)
 
+
     def EnableBooksListAndFillValues(self, values):
         self.bookSelect.configure(state='readonly', values=values)
+
+    def SetSuccessMessage(self, text):
+        self.message.config(text=text, fg='green')
+
+    def SetErrorMessage(self, text):
+        self.message.config(text=text, fg='red')  
     
     def DisableBooksList(self):
         self.bookSelect.set('')
+        self.bookSelect.configure(state='disable', values=[])
+
+    def DisableCopiesList(self):
         self.copySelect.set('')
-        self.bookSelect.configure(state='disabled', values=[])
         self.copySelect.configure(state='disabled', values=[])
-    
+  
     def EnableCopiesListAndFillValues(self, values):
         self.copySelect.configure(state='readonly', values=values)
 
-    
-    def Update(self, data):
-        pass
+    def ClearMessageLabel(self):
+        self.message.config(text='') 
+
+    def ClearFields(self):
+        self.userSelect.set_value('')
+        self.authorSelect.set_value('')
+        self.DisableBooksList()
+        self.DisableCopiesList()
+
     
 
 

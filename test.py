@@ -257,28 +257,98 @@ class Combobox_Autocomplete(Entry, object):
                 self._listbox.activate(index)
         return "break"
 
+# if __name__ == '__main__':
+#     try:
+#         from Tkinter import Tk
+#     except ImportError:
+#         from tkinter import Tk
+
+#     list_of_items = ["Cordell Cannata", "Lacey Naples", "Zachery Manigault", "Regan Brunt", "Mario Hilgefort", "Austin Phong", "Moises Saum", "Willy Neill", "Rosendo Sokoloff", "Salley Christenberry", "Toby Schneller", "Angel Buchwald", "Nestor Criger", "Arie Jozwiak", "Nita Montelongo", "Clemencia Okane", "Alison Scaggs", "Von Petrella", "Glennie Gurley", "Jamar Callender", "Titus Wenrich", "Chadwick Liedtke", "Sharlene Yochum", "Leonida Mutchler", "Duane Pickett", "Morton Brackins", "Ervin Trundy", "Antony Orwig", "Audrea Yutzy", "Michal Hepp", "Annelle Hoadley", "Hank Wyman", "Mika Fernandez", "Elisa Legendre", "Sade Nicolson", "Jessie Yi", "Forrest Mooneyhan", "Alvin Widell", "Lizette Ruppe", "Marguerita Pilarski", "Merna Argento", "Jess Daquila", "Breann Bevans", "Melvin Guidry", "Jacelyn Vanleer", "Jerome Riendeau", "Iraida Nyquist", "Micah Glantz", "Dorene Waldrip", "Fidel Garey", "Vertie Deady", "Rosalinda Odegaard", "Chong Hayner", "Candida Palazzolo", "Bennie Faison", "Nova Bunkley", "Francis Buckwalter", "Georgianne Espinal", "Karleen Dockins", "Hertha Lucus", "Ike Alberty", "Deangelo Revelle", "Juli Gallup", "Wendie Eisner", "Khalilah Travers", "Rex Outman", "Anabel King", "Lorelei Tardiff", "Pablo Berkey", "Mariel Tutino", "Leigh Marciano", "Ok Nadeau", "Zachary Antrim", "Chun Matthew", "Golden Keniston", "Anthony Johson", "Rossana Ahlstrom", "Amado Schluter", "Delila Lovelady", "Josef Belle", "Leif Negrete", "Alec Doss", "Darryl Stryker", "Michael Cagley", "Sabina Alejo", "Delana Mewborn", "Aurelio Crouch", "Ashlie Shulman", "Danielle Conlan", "Randal Donnell", "Rheba Anzalone", "Lilian Truax", "Weston Quarterman", "Britt Brunt", "Leonie Corbett", "Monika Gamet", "Ingeborg Bello", "Angelique Zhang", "Santiago Thibeau", "Eliseo Helmuth"]
+
+#     root = Tk()
+#     root.geometry("300x200")
+
+#     combobox_autocomplete = Combobox_Autocomplete(root, list_of_items, highlightthickness=1)
+#     combobox_autocomplete.pack()
+    
+#     combobox_autocomplete.focus()
+
+
+#     def callback(event):
+#         print(event.widget.get(ACTIVE))
+
+
+#     var = StringVar()
+#     var.trace('w', callback)
+
+#     Lb1 = Listbox(root, listvariable=var)
+#     Lb1.insert(1, "Python")
+#     Lb1.insert(2, "Perl")
+#     Lb1.insert(3, "C")
+#     Lb1.insert(4, "PHP")
+#     Lb1.insert(5, "JSP")
+#     Lb1.insert(6, "Ruby")
+
+#     Lb1.bind('<<ListboxSelect>>', callback)
+
+#     Lb1.pack()
+
+#     root.mainloop()
+
+import tkinter as tk # Python 3 tkinter modules
+import tkinter.ttk as ttk
+
+class App(ttk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        # 1. Initialise Frame
+        ttk.Frame.__init__(self, parent)
+        self.parent = parent
+
+        def callback(event):
+            print(event)
+
+        # Method1
+        name1 = ['Peter', 'Scotty', 'Walter', 'Scott', 'Mary']
+        self.lb1_values = tk.StringVar(value=name1)
+        self.lb1_values.trace('w', callback)
+        self.listbox1 = tk.Listbox(self, listvariable=self.lb1_values)
+
+        # Method2
+        self.listbox2 = tk.Listbox(self)
+        name2 = ['Sarah', 'Sean', 'Mora', 'Mori', 'Mary']
+        for item in name2:
+            self.listbox2.insert(tk.END, item)
+
+        self.listbox1.grid(in_=self, row=0, column=0, sticky='nsew')
+        self.listbox2.grid(in_=self, row=0, column=1, sticky='nsew')
+
+        # Extract values from listbox and covert to a list
+        e1 = self.lb1_values.get()
+        print('e1 = ', e1)
+        print('type(e1) = ', type(e1))
+        e1 = e1.strip(',')
+        print('e1 = ', e1)
+
+        e2 = self.listbox1.cget('listvariable')
+        print('\ne2 = ', e2)
+        print('type(e2) = ', type(e2))
+        e2 = e2.split(',')
+        print('e2 = ', e2)
+
+        e3 = self.listbox2.cget('listvariable')
+        print('\ne3 = ', e3)
+        print('type(e3) = ', type(e3))
+
+        e4 = self.listbox2.get(0, tk.END)
+        print('\ne4 = ', e4)
+        print('type(e4) = ', type(e4))
+        e4 = list(e4)
+        print('e4 = ', e4)    
+
+
 if __name__ == '__main__':
-    try:
-        from Tkinter import Tk
-    except ImportError:
-        from tkinter import Tk
-
-    list_of_items = ["Cordell Cannata", "Lacey Naples", "Zachery Manigault", "Regan Brunt", "Mario Hilgefort", "Austin Phong", "Moises Saum", "Willy Neill", "Rosendo Sokoloff", "Salley Christenberry", "Toby Schneller", "Angel Buchwald", "Nestor Criger", "Arie Jozwiak", "Nita Montelongo", "Clemencia Okane", "Alison Scaggs", "Von Petrella", "Glennie Gurley", "Jamar Callender", "Titus Wenrich", "Chadwick Liedtke", "Sharlene Yochum", "Leonida Mutchler", "Duane Pickett", "Morton Brackins", "Ervin Trundy", "Antony Orwig", "Audrea Yutzy", "Michal Hepp", "Annelle Hoadley", "Hank Wyman", "Mika Fernandez", "Elisa Legendre", "Sade Nicolson", "Jessie Yi", "Forrest Mooneyhan", "Alvin Widell", "Lizette Ruppe", "Marguerita Pilarski", "Merna Argento", "Jess Daquila", "Breann Bevans", "Melvin Guidry", "Jacelyn Vanleer", "Jerome Riendeau", "Iraida Nyquist", "Micah Glantz", "Dorene Waldrip", "Fidel Garey", "Vertie Deady", "Rosalinda Odegaard", "Chong Hayner", "Candida Palazzolo", "Bennie Faison", "Nova Bunkley", "Francis Buckwalter", "Georgianne Espinal", "Karleen Dockins", "Hertha Lucus", "Ike Alberty", "Deangelo Revelle", "Juli Gallup", "Wendie Eisner", "Khalilah Travers", "Rex Outman", "Anabel King", "Lorelei Tardiff", "Pablo Berkey", "Mariel Tutino", "Leigh Marciano", "Ok Nadeau", "Zachary Antrim", "Chun Matthew", "Golden Keniston", "Anthony Johson", "Rossana Ahlstrom", "Amado Schluter", "Delila Lovelady", "Josef Belle", "Leif Negrete", "Alec Doss", "Darryl Stryker", "Michael Cagley", "Sabina Alejo", "Delana Mewborn", "Aurelio Crouch", "Ashlie Shulman", "Danielle Conlan", "Randal Donnell", "Rheba Anzalone", "Lilian Truax", "Weston Quarterman", "Britt Brunt", "Leonie Corbett", "Monika Gamet", "Ingeborg Bello", "Angelique Zhang", "Santiago Thibeau", "Eliseo Helmuth"]
-
-    root = Tk()
-    root.geometry("300x200")
-
-    combobox_autocomplete = Combobox_Autocomplete(root, list_of_items, highlightthickness=1)
-    combobox_autocomplete.pack()
-    
-    combobox_autocomplete.focus()
-
-    var = StringVar()
-    def callback(a,b,c):
-        print(var.get())
-
-    var.trace('w', callback)
-    passwordField = Entry(root, width = 30, textvariable=var)
-    passwordField.place(relx = 0.35, rely = 0.3, relwidth = 0.3, relheight = 0.08)
-    
+    root = tk.Tk()
+    root.title('App'), root.geometry('400x200')
+    app = App(root)
+    app.grid(row=0, column=0, sticky='nsew')
     root.mainloop()

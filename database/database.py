@@ -117,8 +117,12 @@ class DatabaseManager:
         if self.__cursor.rowcount == 0:
             raise NonExistentBook("Book does not exitst")
 
-    def GetStudentsId(self):
-        self.__cursor.execute('SELECT id_student FROM student')
+    def GetStudentsInfoPart(self, textPart):
+        print(textPart)
+        self.__cursor.execute("""
+                    SELECT id_student FROM student
+                    WHERE CAST(id_student AS VARCHAR) LIKE '%%{0}%%'
+                    """.format(textPart))
         return self.__cursor.fetchall()
     
     def GetStudentIssuance(self, id):
@@ -129,8 +133,12 @@ class DatabaseManager:
             'INNER JOIN author_has_book on author_has_book.id_book = book.id_book ' +
             'INNER JOIN  author ON author_has_book.id_author = author.id_author ', (id,))
         return self.__cursor.fetchall()
-    def GetAuthorList(self):
-        self.__cursor.execute('SELECT name FROM author')
+
+    def GetAuthorList(self, text):
+        print(text)
+        self.__cursor.execute("""
+                SELECT name FROM author WHERE name ILIKE '%%{0}%%'
+        """.format(text))
         return self.__cursor.fetchall()
     
     def GetAuthorBooks(self, name):
@@ -154,6 +162,38 @@ class DatabaseManager:
         (name,))
         return self.__cursor.fetchall()
 
+    def GetStudentById(self, id):
+        self.__cursor.execute("""
+                SELECT id_student FROM student WHERE id_student = %s
+        """,
+        (id,))
+        return self.__cursor.fetchone()
+
+    def GetAuthorByName(self, name):
+        self.__cursor.execute("""
+                SELECT name FROM author WHERE name = %s
+        """,
+        (name,))
+        return self.__cursor.fetchone()
+
+    def InsertIssuance(self, studentId, copy, start, end):
+        self.__cursor.execute("""
+                INSERT INTO issue VALUES(DEFAULT, %s, %s, %s, %s)
+        """,
+        (studentId, copy, start, end,))
+
+    def UpdateCopyStateToUnavailable(self, copy):
+        self.__cursor.execute("""
+                UPDATE copy SET is_available = 0 WHERE id_copy = %s
+        """,
+        (copy,))
+        
+
+    def CommitChanges(self):
+        self.__connection.commit()
+
+
     def __del__(self):
         self.__cursor.close()
+        self.__connection.commit()
         self.__connection.close()
