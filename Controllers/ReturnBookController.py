@@ -3,7 +3,7 @@ from Models.AdminPageModel import AdminPageModel
 import sys
 import os
 sys.path.append(os.path.abspath('Errors'))
-from AuthorizationErrors import NonExistentBook
+from DeleteBookErrors import NonExistentBook
 from psycopg2.errors import *
 
 

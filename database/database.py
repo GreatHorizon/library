@@ -142,7 +142,7 @@ class DatabaseManager:
             'INNER JOIN book ON copy.id_book = book.id_book ' +
             'INNER JOIN author_has_book on author_has_book.id_book = book.id_book ' +
             'INNER JOIN  author ON author_has_book.id_author = author.id_author ' +
-            'WHERE student.id_student = %s', (id,))
+            'WHERE copy.is_available = 0 AND student.id_student = %s', (id,))
         return self.__cursor.fetchall()
 
     def GetAuthorList(self, text):

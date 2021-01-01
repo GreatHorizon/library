@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath('Database'))
 sys.path.append(os.path.abspath('Errors'))
 from Database.database import DatabaseManager
-from AuthorizationErrors import NonExistentBook
+from DeleteBookErrors import NonExistentBook
 
 class ReturnBookModel:
     def __init__(self):
