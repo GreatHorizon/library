@@ -15,7 +15,7 @@ class AdminPage(tk.Frame):
         label1.pack(pady=20,padx=20)
 
         studentDebtsBtn = Button(self, text="Student Debts",bg='#d1ccc0', fg='black',
-        command=lambda:self.Flex())
+        command=lambda:self._controller.OpenStudentDebtsPage())
         studentDebtsBtn.place(relx=0.4, rely=0.15, relwidth=0.2,relheight=0.1)
 
         returnBookBtn = Button(self, text="Return Book",bg='#d1ccc0', fg='black',

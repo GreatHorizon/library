@@ -4,6 +4,7 @@ import sys
 import os
 sys.path.append(os.path.abspath('Errors'))
 from DeleteBookErrors import NonExistentBook
+from FormatErrors import BaseFormatError
 from psycopg2.errors import *
 
 
@@ -26,6 +27,8 @@ class ReturnBookController:
             self._view.SetMessageLabel(e.message, 'red')
         except NumericValueOutOfRange:
             self._view.SetMessageLabel("Too big id copy value", 'red')
+        except BaseFormatError as e:
+             self._view.SetMessageLabel(e.message, 'red')
         except Exception as e:
             print(e)
             self._view.SetMessageLabel("Unexpected error", 'red')
