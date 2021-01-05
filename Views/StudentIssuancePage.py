@@ -7,28 +7,6 @@ import psycopg2
 # from Database.database import *
 from Controllers.StudentIssuancePageController import StudentIssuancePageController
 
-class ScrollableFrame(ttk.Frame):
-    def __init__(self, container, *args, **kwargs):
-        super().__init__(container, *args, **kwargs)
-        canvas = tk.Canvas(self)
-        scrollbar = ttk.Scrollbar(self, orient="vertical", command=canvas.yview)
-        self.scrollable_frame = ttk.Frame(canvas)
-
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(
-                scrollregion=canvas.bbox("all")
-            )
-        )
-
-        canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-
-        canvas.configure(yscrollcommand=scrollbar.set)
-
-        canvas.pack(side="left", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
-
-
 class StudentIssuancePage(tk.Frame):
 
     def __init__(self, master, model):
@@ -42,7 +20,7 @@ class StudentIssuancePage(tk.Frame):
         labelFrame = Frame(self,bg='black')
         labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
-        columns = ["Author name", "Book name", "Id copy", "Start", "End"]
+        columns = ["Author name", "Book name", "Id copy", "Page count", "Publisher"]
         table = Table(labelFrame, columns=columns, sortable=False, drag_cols=False, drag_rows=False)
         
         for col in columns:
