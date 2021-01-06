@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from datetime import datetime, date, time, timezone
 
-
+                            
 from Views.StartPage import StartPage
 from Models.StartPageModel import StartPageModel
 
@@ -30,7 +30,5 @@ class Window(tk.Tk):
         self._frame.pack(side="top", fill="both", expand = True)
         self._frame.grid_rowconfigure(0, weight=1)
         self._frame.grid_columnconfigure(0, weight=1)
-
-
 app = Window()
 app.mainloop()
