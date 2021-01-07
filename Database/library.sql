@@ -99,26 +99,24 @@ where a.id_author = 6 and book.name = 'Цветы на чердаке'
 
 
 
-SELECT distinct copy.id_book, temp.name, author.name, copyCount, copy.page_count, copy.publisher FROM
-(SELECT book.id_book, book.isbn, book.name, count(book.id_book) as copyCount FROM book
+SELECT temp.id_book, temp.name, author.name, copyCount, temp.page_count, temp.publisher FROM
+(SELECT book.id_book, book.isbn, book.name, count(book.id_book) as copyCount, publisher, page_count FROM book
 INNER JOIN copy on book.id_book = copy.id_book
 INNER JOIN author_has_book on author_has_book.id_book = book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author
 WHERE book.name = 'Тихий дон' and is_available = 1
-GROUP BY book.id_book) AS temp
-INNER JOIN copy on copy.id_book = temp.id_book
-INNER JOIN author_has_book on copy.id_book = author_has_book.id_book
+GROUP BY book.id_book, publisher, page_count) AS temp
+INNER JOIN author_has_book on temp.id_book = author_has_book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author;
 
-SELECT distinct copy.id_book, temp.name, author.name, copyCount, copy.page_count, copy.publisher FROM
+SELECT temp.id_book, temp.name, author.name, copyCount, temp.page_count, temp.publisher FROM
 (
-SELECT book.id_book, book.isbn, book.name, count(book.id_book) as copyCount FROM author
+SELECT book.id_book, book.isbn, book.name, count(book.id_book) as copyCount, page_count, publisher FROM author
 INNER JOIN author_has_book on author.id_author = author_has_book.id_author
 INNER JOIN book on book.id_book = author_has_book.id_book
 INNER JOIN copy on book.id_book = copy.id_book
 WHERE author.name = 'Шолохов' and is_available = 1
-GROUP BY book.id_book
+GROUP BY book.id_book, publisher, page_count
 ) AS temp
-INNER JOIN copy on copy.id_book = temp.id_book
-INNER JOIN author_has_book on copy.id_book = author_has_book.id_book
+INNER JOIN author_has_book on temp.id_book = author_has_book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author
