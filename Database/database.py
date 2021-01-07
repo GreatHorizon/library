@@ -41,6 +41,15 @@ class DatabaseManager:
             raise AuthorizationError("Incorrect login or password")
 
     def InsertBook(self, isbn, bookName, author, pageCount, publisher) :
+
+        self.__cursor.execute('SELECT author.name FROM author ' + 
+            'INNER JOIN author_has_book on author.id_author = author_has_book.id_author ' +
+            'INNER JOIN book on book.id_book = author_has_book.id_book ' +
+            'WHERE isbn = %s', (str(isbn),))
+
+        if self.__cursor.rowcount != 0 and self.__cursor.fetchone()[0] != author:
+            raise AddBookError('This isbn already belongs to other author')
+
         self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
         if self.__cursor.rowcount == 0:
             # if author does not exists, we need to create him
@@ -79,7 +88,6 @@ class DatabaseManager:
         self.__connection.commit()
         return addedCopyId
         
-
     def InsertStudent(self, id, name, surname, birthday, phone, email):
         self.__cursor.execute('SELECT id_student FROM student WHERE id_student = %s', (id,))
         if (self.__cursor.rowcount != 0):

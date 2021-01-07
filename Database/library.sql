@@ -90,14 +90,10 @@ DELETE FROM copy WHERE id_copy = 2
 drop table issue cascade
 drop table copy cascade
 
-
-
 select isbn from book
 inner join author_has_book on book.id_book = author_has_book.id_book
 inner join author a on author_has_book.id_author = a.id_author
 where a.id_author = 6 and book.name = 'Цветы на чердаке'
-
-
 
 SELECT temp.id_book, temp.name, author.name, copyCount, temp.page_count, temp.publisher FROM
 (SELECT book.id_book, book.isbn, book.name, count(book.id_book) as copyCount, publisher, page_count FROM book
