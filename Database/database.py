@@ -253,6 +253,12 @@ class DatabaseManager:
         """,
         (idCopy,))
 
+    def GetStudentIdByIssuedCopyId(self, idCopy):
+        self.__cursor.execute("""
+                SELECT id_student FROM issue
+                WHERE id_copy = %s
+        """, (idCopy,))
+        return self.__cursor.fetchone()
 
     def CommitChanges(self):
         self.__connection.commit()

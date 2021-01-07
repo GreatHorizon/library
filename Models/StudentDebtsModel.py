@@ -7,7 +7,7 @@ from Models.AbstractModel import AbstractModel
 
 class StudentDebtsModel(AbstractModel):
     def __init__(self):
-        pass
+        self._idStudent = int()
 
      
     def GetStudentsList(self, text):
@@ -29,8 +29,18 @@ class StudentDebtsModel(AbstractModel):
         db = DatabaseManager()
         debtsArrayOfTuples = db.GetStudentIssuance(studentId)
         print(debtsArrayOfTuples)
-        formatedList = []
-        for issuance in debtsArrayOfTuples:
-            formatedList.append(self.ParseTuple(issuance))
-        print(formatedList)
-        return formatedList
+        #self._idStudent = debtsArrayOfTuples
+        return debtsArrayOfTuples
+
+    def ReturnBooks(self, idsArray):
+        db = DatabaseManager()
+        print('return book ', idsArray)
+        for id in idsArray:
+            db.UpdateCopyStateToAvailable(id)
+            db.DeleteStudentIssue(id)
+            db.CommitChanges()
+
+    def GetStudentId(self, idCopy):
+        db = DatabaseManager()
+        res = db.GetStudentIdByIssuedCopyId(idCopy)
+        return res[0]

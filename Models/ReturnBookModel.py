@@ -12,19 +12,17 @@ class ReturnBookModel:
         pass
 
     def ReturnBook(self, idCopy):
+        db = DatabaseManager()
         if (idCopy and idCopy.isnumeric()):
-            db = DatabaseManager()
             res = db.GetCopyState(idCopy)
             if (res is None):
                 raise NonExistentBook("Entered copy doesn't exist.")
             else:
-                print(res[0])
                 if res[0] == 1:
                     raise NonExistentBook("Book is available. Can't be returned to the library")
                 else:
                     res = db.UpdateCopyStateToAvailable(idCopy)
+            db.DeleteStudentIssue(idCopy)
+            db.CommitChanges()
         else:
             raise EmptyFieldError("Id copy should be a number")
-
-        db.DeleteStudentIssue(idCopy)
-        db.CommitChanges()

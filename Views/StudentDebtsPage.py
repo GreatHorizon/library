@@ -45,10 +45,17 @@ class StudentDebtsPage(tk.Frame):
         self.tree.grid(sticky='ewns')
         sx.grid(row=1, column=0, sticky='ew')
         sy.grid(row=0, column=1, sticky='ns')
+
+        self.message = Label(self, text='', fg='red')
+        self.message.place(relx = 0.35, rely = 0.82, relheight = 0.05)
+
+        button = tk.Button(self, text="Return selected books",
+                command=lambda: self._controller.ReturnBooks(self.GetCopiesIdFromTable()))
+        button.place(relx=0.4, rely=0.88, relwidth=0.25, relheight=0.1)
     
         button = tk.Button(self, text="<<",
         command=lambda:self._controller.BackToAdminPage())
-        button.place(relx = 0.35, rely = 0.85, relheight = 0.1)
+        button.place(relx = 0.35, rely = 0.88, relheight = 0.1)
 
 
     def FillTable(self, val):
@@ -59,5 +66,5 @@ class StudentDebtsPage(tk.Frame):
     def ClearTable(self):
         self.tree.delete(*self.tree.get_children())
 
-    def fn(self):
-        print('hello')
+    def SetMessageLabel(self, message, color):
+        self.message.config(text=message, fg=color)
