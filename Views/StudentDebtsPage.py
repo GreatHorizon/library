@@ -62,7 +62,14 @@ class StudentDebtsPage(tk.Frame):
         for i in range(len(val)):
             self.tree.insert('', 'end', iid=i, text = val[i][2],
             values=(val[i][1], val[i][0], val[i][3], val[i][4]))
-            
+
+    def GetCopiesIdFromTable(self):
+        selectedIndexes =self.tree.selection()
+        res = []
+        for it in range(len(selectedIndexes)):
+            res.append(self.tree.item(it)['values'][1])
+        return res
+
     def ClearTable(self):
         self.tree.delete(*self.tree.get_children())
 
