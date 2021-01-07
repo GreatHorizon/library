@@ -1,2 +1,2 @@
-## Desktop application for univerity library
+## Desktop application for university library
 
