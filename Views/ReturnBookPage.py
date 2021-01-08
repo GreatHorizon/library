@@ -10,6 +10,7 @@ class ReturnBookPage(tk.Frame):
         self._controller = ReturnBookController(master, self._model, self)
 
         label1 = tk.Label(self, text="Return book page")
+        label1.config(font=("Courier", 14))
         label1.pack(pady=20,padx=20)
         
         lb1 = Label(self,text="Book id", fg='black')

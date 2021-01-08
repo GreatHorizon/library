@@ -12,7 +12,18 @@ class StudentPage(tk.Frame):
         self._controller = StudentPageController(master, self._model, self)
 
         label1 = tk.Label(self, text="Student Page")
+        label1.config(font=("Courier", 16))
         label1.pack(pady=20, padx=20)
+
+
+        studentName = self._controller.GetStudentName()
+        nameLabel = tk.Label(self, text="Hi, " + studentName[0] + ' ' + studentName[1])
+        nameLabel.config(font=("Courier", 10))
+        nameLabel.place(relx=0.4, rely=0.20, relwidth=0.2,relheight=0.08)
+
+        editInfoBtn = Button(self, text="Edit your info", bg='#d1ccc0', fg='black',
+        command=lambda:self._controller.OpenEditInfoPage())
+        editInfoBtn.place(relx=0.4, rely=0.35, relwidth=0.2,relheight=0.1)
 
         searchBookBtn = Button(self, text="Search book", bg='#d1ccc0', fg='black',
         command=lambda:self._controller.OpenBookSearchPage())

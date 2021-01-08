@@ -11,6 +11,7 @@ class DeleteCopyPage(tk.Frame):
         self._model.Register(self)
 
         label1 = tk.Label(self, text="Delete book copy page")
+        label1.config(font=("Courier", 12))
         label1.pack(pady=20,padx=20)
  
         lb1 = Label(self,text="Book id", fg='black')

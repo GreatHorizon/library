@@ -12,6 +12,7 @@ class BookIssuePage(tk.Frame):
         self._controller = BookIssueController(master, self._model, self)
 
         label1 = tk.Label(self, text="Book issue")
+        label1.config(font=("Courier", 14))
         label1.pack(pady=20, padx=10)  
 
         self.create_widgets()

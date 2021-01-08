@@ -12,6 +12,7 @@ class AdminPage(tk.Frame):
         
         
         label1 = tk.Label(self, text="Admin page")
+        label1.config(font=("Courier", 18))
         label1.pack(pady=20,padx=20)
 
         studentDebtsBtn = Button(self, text="Student Debts",bg='#d1ccc0', fg='black',

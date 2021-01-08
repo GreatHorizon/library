@@ -212,6 +212,10 @@ class DatabaseManager:
         (name,))
         return self.__cursor.fetchall()
 
+    def GetStudentName(self, studentId):
+        self.__cursor.execute("SELECT first_name, last_name FROM student WHERE id_student = %s", (studentId,))
+        return self.__cursor.fetchone()
+
     def GetStudentById(self, id):
         self.__cursor.execute("""
                 SELECT id_student FROM student WHERE id_student = %s

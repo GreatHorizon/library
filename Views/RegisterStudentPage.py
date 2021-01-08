@@ -13,6 +13,7 @@ class RegisterStudentPage(tk.Frame):
 
 
         label = tk.Label(self, text="Page for librarian with new student registration")
+        label.config(font=("Courier", 12))
         label.pack(pady=10,padx=10)
 
         lb1 = Label(self,text="Student ID", fg='black')

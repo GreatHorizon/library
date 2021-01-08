@@ -14,6 +14,11 @@ class StudentIssuancePage(tk.Frame):
         self._model = model
         self._controller = StudentIssuancePageController(master, self._model, self)
         self._model.Register(self)
+
+        label1 = tk.Label(self, text="My issuance")
+        label1.config(font=("Courier", 18))
+        label1.pack(pady=20,padx=20)
+
                 
         issuanceList = self._controller.GetStudentIssuance()
 

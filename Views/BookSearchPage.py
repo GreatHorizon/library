@@ -13,11 +13,15 @@ class BookSearchPage(tk.Frame):
         self._model.Register(self)
         labelFrame = Frame(self,bg='black')
 
+        label = tk.Label(self, text="Search")
+        label.config(font=("Courier", 14))
+        label.pack(pady=10, padx=10)
+
         issuanceList = []
         labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
         label1 = tk.Label(self, text="Search by")
-        label1.place(relx = 0.30, rely = 0.09, relheight = 0.08)
+        label1.place(relx = 0.30, rely = 0.1, relheight = 0.08)
         self.bookSelect = ttk.Combobox(self, width = 27, values=["Book name", "Author"])
         self.bookSelect.bind("<<ComboboxSelected>>", self.SearchStrategySelectedCallback)
         self.bookSelect.place(relx = 0.38, rely = 0.10, relheight = 0.05, relwidth = 0.25)

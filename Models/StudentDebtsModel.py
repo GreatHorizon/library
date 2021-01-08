@@ -28,8 +28,6 @@ class StudentDebtsModel(AbstractModel):
     def GetStudentDebts(self, studentId):
         db = DatabaseManager()
         debtsArrayOfTuples = db.GetStudentIssuance(studentId)
-        print(debtsArrayOfTuples)
-        #self._idStudent = debtsArrayOfTuples
         return debtsArrayOfTuples
 
     def ReturnBooks(self, idsArray):

@@ -11,6 +11,7 @@ class StudentDebtsPage(tk.Frame):
         self._controller = StudentDebtsController(master, model, self)
         
         label1 = tk.Label(self, text="Student debts page")
+        label1.config(font=("Courier", 14))
         label1.pack(pady=20,padx=20)
 
         label2 = tk.Label(self, text="Select student by id")

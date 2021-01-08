@@ -14,6 +14,7 @@ class StudentAuthorizationPage(tk.Frame):
         self._model.Register(self)
 
         label = tk.Label(self, text="Student authorization page")
+        label.config(font=("Courier", 14))
         label.pack(pady=10,padx=10)
 
 

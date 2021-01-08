@@ -9,7 +9,8 @@ class ChangeStudentPasswordPage(tk.Frame):
         self._controller = ChangeStudentPasswordController(master, self._model, self)
         self._model.Register(self)
 
-        label = tk.Label(self, text="Change student password")
+        label = tk.Label(self, text="Change password")
+        label.config(font=("Courier", 18))
         label.pack(pady=10, padx=10)
 
         lb1 = Label(self,text="Old password", fg='black')

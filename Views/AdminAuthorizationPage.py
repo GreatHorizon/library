@@ -14,6 +14,7 @@ class AdminAuthorizationPage(tk.Frame):
         self._model.Register(self)
 
         label = tk.Label(self, text="Admin authorization page")
+        label.config(font=("Courier", 18))
         label.pack(pady=10, padx=10)
 
         lb1 = Label(self,text="Admin id", fg='black')
