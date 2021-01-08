@@ -38,6 +38,7 @@ class BookIssueController:
             self._view.DisableBooksList()
             self._view.SetErrorMessage("There are no books of this author in library. Try another book.")
         self._view.EnableBooksListAndFillValues(booksList)
+        self._view.SetErrorMessage("")
 
     def EnableCopiesList(self, event):
         self._view.ClearMessageLabel()

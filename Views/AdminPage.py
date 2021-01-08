@@ -39,6 +39,10 @@ class AdminPage(tk.Frame):
         command=lambda:self._controller.OpenStudentRegistrationPage())
         regStudBtn.place(relx=0.4, rely=0.65, relwidth=0.2,relheight=0.1)
 
+        editBookBtn = Button(self, text="Edit book",bg='#d1ccc0', fg='black',
+        command=lambda:self._controller.OpenEditBookPage())
+        editBookBtn.place(relx=0.4, rely=0.75, relwidth=0.2,relheight=0.1)
+
         button = tk.Button(self, text="<<",
         command=lambda:self._controller.BackToAdminAuthorizationPage())
         button.place(relx=0.4, rely=0.85, relwidth=0.2,relheight=0.1)
