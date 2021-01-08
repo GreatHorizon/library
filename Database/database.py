@@ -216,6 +216,21 @@ class DatabaseManager:
         self.__cursor.execute("SELECT first_name, last_name, birthday, email, phone FROM student WHERE id_student = %s", (studentId,))
         return self.__cursor.fetchone()
 
+    def UpdatePhone(self, studentId, newPhone):
+        self.__cursor.execute("SELECT id_student FROM student WHERE phone = %s", (str(newPhone),))
+
+        if self.__cursor.rowcount != 0 and int(self.__cursor.fetchone()[0]) != int(studentId):
+            raise UniquePhoneViolation("Phone is busy")
+        
+        self.__cursor.execute("UPDATE student SET phone = %s WHERE student.id_student = %s", (newPhone, studentId))
+
+    def UpdateEmail(self, studentId, newEmail):
+        self.__cursor.execute("SELECT id_student FROM student WHERE email = %s", (str(newEmail),))
+        if self.__cursor.rowcount != 0 and int(self.__cursor.fetchone()[0]) != int(studentId):
+            raise UniqueEmailViolation("Email is busy")
+
+        self.__cursor.execute("UPDATE student SET email = %s WHERE student.id_student = %s", (newEmail, studentId))
+
     def GetStudentById(self, id):
         self.__cursor.execute("""
                 SELECT id_student FROM student WHERE id_student = %s

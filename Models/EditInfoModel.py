@@ -4,6 +4,8 @@ import os
 sys.path.append(os.path.abspath('Database'))
 from database import DatabaseManager
 from Models.AbstractModel import AbstractModel
+from Utils.VerificaitionUtil import ValidateEmail, ValidatePhone
+from FormatErrors import *
 
 class EditInfoModel(AbstractModel):
     def __init__(self):
@@ -24,3 +26,19 @@ class EditInfoModel(AbstractModel):
         db = DatabaseManager()
         res = db.GetStudentInfo(self._studentId)
         return res
+
+    def ChangeInfo(self, newEmail, newPhone):
+        if (newEmail == '' and newPhone == ''):
+            raise EmptyFieldError('At least one of filled should be filled')
+
+        db = DatabaseManager()
+
+        if(newPhone != '') :
+            ValidatePhone(newPhone)
+            db.UpdatePhone(self._studentId, newPhone)
+
+        if(newEmail != '') :
+            ValidateEmail(newEmail)
+            db.UpdateEmail(self._studentId, newEmail)
+        
+    

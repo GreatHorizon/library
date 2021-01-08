@@ -116,3 +116,7 @@ GROUP BY book.id_book, publisher, page_count
 ) AS temp
 INNER JOIN author_has_book on temp.id_book = author_has_book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author
+
+
+UPDATE student SET phone = 89021089169
+WHERE student.id_student = '1180501039'

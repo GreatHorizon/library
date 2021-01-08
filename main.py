@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from datetime import datetime, date, time, timezone
-
-                            
+         
 from Views.StartPage import StartPage
 from Models.StartPageModel import StartPageModel
 

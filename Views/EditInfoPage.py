@@ -13,8 +13,6 @@ class EditInfoPage(tk.Frame):
         label.config(font=("Courier", 16))
         label.pack(pady=10, padx=10)
 
-        studentInfo = self._controller.GetStudentInfo()
-
         self.nameLabel = Label(self,text="", fg='black')
         self.nameLabel.config(font=("Courier", 10))
         self.nameLabel.place(relx = 0.4, rely = 0.12, relheight = 0.08)
@@ -31,7 +29,7 @@ class EditInfoPage(tk.Frame):
         self.emailLabel.config(font=("Courier", 10))
         self.emailLabel.place(relx = 0.4, rely = 0.30, relheight = 0.08)
 
-        self.ShowStudentInfo(studentInfo)
+        self.ShowStudentInfo()
 
         lb1 = Label(self,text="New email", fg='black')
         lb1.place(relx = 0.25, rely = 0.5, relheight = 0.08)
@@ -63,7 +61,9 @@ class EditInfoPage(tk.Frame):
     def Notify(self):
         pass
 
-    def ShowStudentInfo(self, studentInfo):
+    def ShowStudentInfo(self):
+        studentInfo = self._controller.GetStudentInfo()
+
         self.nameLabel.config(text='Name: ' + studentInfo[0] + ' ' + studentInfo[1])
         self.birthdayLabel.config(text='Birthday: ' + str(studentInfo[2]))
         self.emailLabel.config(text='Email: ' + studentInfo[3])

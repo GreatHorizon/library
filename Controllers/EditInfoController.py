@@ -15,4 +15,11 @@ class EditInfoController:
         return self._model.GetStudentInfo()
 
     def ChangeInfo(self, newEmail, newPhone):
-        print(newEmail, newPhone)
+        try:
+            self._model.ChangeInfo(newEmail, newPhone)
+            self._view.SetMessageLabel("Info successfully updated", "green")
+            self._view.ShowStudentInfo()
+        except Exception as e:
+            print(e)
+            self._view.SetMessageLabel(e, "red")
+
