@@ -8,7 +8,7 @@ class BookSearchController:
         
     def BackToStudentPage(self):
         from Views.StudentPage import StudentPage
-        self._master.switch_frame(StudentPage, StudentPageModel)
+        self._master.switch_frame(StudentPage, StudentPageModel, self._model._studentId)
 
     def SetSearchStrategy(self, event):
         self._view.searchSelect.set_value('')

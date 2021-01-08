@@ -17,7 +17,7 @@ class StudentPage(tk.Frame):
 
 
         studentName = self._controller.GetStudentInfo()
-        nameLabel = tk.Label(self, text="Hi, " + studentName[0] + ' ' + studentName[1])
+        nameLabel = tk.Label(self, text=("Hi, " + studentName[0] + ' ' + studentName[1]))
         nameLabel.config(font=("Courier", 10))
         nameLabel.place(relx=0.4, rely=0.20, relwidth=0.2,relheight=0.08)
 

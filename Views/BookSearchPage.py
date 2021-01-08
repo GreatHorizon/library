@@ -43,10 +43,10 @@ class BookSearchPage(tk.Frame):
         self.tree.column("four", width=140, minwidth=140, stretch=True)
 
         self.tree.heading("#0",text="Author name",anchor=tk.W)
-        self.tree.heading("one", text="Book name",anchor=tk.W)
-        self.tree.heading("two", text="Available copy count",anchor=tk.W)
-        self.tree.heading("three", text="Page count",anchor=tk.W)
-        self.tree.heading("four", text="Publisher",anchor=tk.W)
+        self.tree.heading("one", text="Book name",anchor=tk.W, command=lambda:sortStringColumn(self.tree, "one"))
+        self.tree.heading("two", text="Available copy count",anchor=tk.W, command=lambda:sortNumericColumn(self.tree, "two"))
+        self.tree.heading("three", text="Page count",anchor=tk.W, command=lambda:sortNumericColumn(self.tree, "three"))
+        self.tree.heading("four", text="Publisher",anchor=tk.W, command=lambda:sortStringColumn(self.tree, "four"))
 
         sx = tk.Scrollbar(self.tableFrame, orient='horizontal', command=self.tree.xview)
         sy = tk.Scrollbar(self.tableFrame, orient='vertical', command=self.tree.yview)
@@ -80,7 +80,31 @@ class BookSearchPage(tk.Frame):
     def FillTable(self, val):
         for i in range(len(val)):
             self.tree.insert('', 'end', iid=i, text = val[i][2],
-            values=(val[i][1], val[i][3], val[i][4], val[i][5]))
+            values=(val[i][1], val[i][3], int(val[i][4]), val[i][5]))
 
     def ClearTable(self):
         self.tree.delete(*self.tree.get_children())
+
+
+def sortStringColumn(tv, col, reverse=True):
+    l = [(tv.set(k, col), int(k)) for k in tv.get_children('')]
+    l.sort(reverse=reverse)
+
+    # rearrange items in sorted positions
+    for index, (val, k) in enumerate(l):
+        tv.move(k, '', index)
+
+    # reverse sort next time
+    tv.heading(col, command=lambda:sortStringColumn(tv, col, not reverse))
+
+
+
+def sortNumericColumn(tv, col, reverse=True):
+    l = [(int(tv.set(k, col)), int(k)) for k in tv.get_children('')]
+    l.sort(reverse=reverse)
+    # rearrange items in sorted positions
+    for index, (val, k) in enumerate(l):
+        tv.move(k, '', index)
+
+    # reverse sort next time
+    tv.heading(col, command=lambda:sortNumericColumn(tv, col, not reverse))
