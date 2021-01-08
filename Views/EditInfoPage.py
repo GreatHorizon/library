@@ -13,17 +13,25 @@ class EditInfoPage(tk.Frame):
         label.config(font=("Courier", 16))
         label.pack(pady=10, padx=10)
 
-        nameLabel = Label(self,text="Name: Stas Gaisin", fg='black')
-        nameLabel.place(relx = 0.45, rely = 0.12, relheight = 0.08)
+        studentInfo = self._controller.GetStudentInfo()
 
-        birthdayLabel = Label(self,text="Birthday: 30.11.2000", fg='black')
-        birthdayLabel.place(relx = 0.45, rely = 0.18, relheight = 0.08)
+        self.nameLabel = Label(self,text="", fg='black')
+        self.nameLabel.config(font=("Courier", 10))
+        self.nameLabel.place(relx = 0.4, rely = 0.12, relheight = 0.08)
+
+        self.birthdayLabel = Label(self,text="", fg='black')
+        self.birthdayLabel.config(font=("Courier", 10))
+        self.birthdayLabel.place(relx = 0.4, rely = 0.18, relheight = 0.08)
         
-        phoneLabel = Label(self,text="Phone: 89023333492", fg='black')
-        phoneLabel.place(relx = 0.45, rely = 0.24, relheight = 0.08)
+        self.phoneLabel = Label(self,text="", fg='black')
+        self.phoneLabel.config(font=("Courier", 10))
+        self.phoneLabel.place(relx = 0.4, rely = 0.24, relheight = 0.08)
 
-        emailLabel = Label(self,text="Email: stas@mail.ru", fg='black')
-        emailLabel.place(relx = 0.45, rely = 0.30, relheight = 0.08)
+        self.emailLabel = Label(self,text="", fg='black')
+        self.emailLabel.config(font=("Courier", 10))
+        self.emailLabel.place(relx = 0.4, rely = 0.30, relheight = 0.08)
+
+        self.ShowStudentInfo(studentInfo)
 
         lb1 = Label(self,text="New email", fg='black')
         lb1.place(relx = 0.25, rely = 0.5, relheight = 0.08)
@@ -41,8 +49,8 @@ class EditInfoPage(tk.Frame):
         self.message.place(relx = 0.35, rely = 0.75, relheight = 0.05)
         
         button = tk.Button(self, text="Sumbit",
-            command=lambda:self._controller.ChangePassword(self.oldPassField.get(),
-            self.newPassField.get(), self.confirmPassField.get()))
+            command=lambda:self._controller.ChangeInfo(self.newEmailField.get(),
+            self.newPhoneField.get()))
         button.place(relx=0.4, rely=0.80, relwidth=0.25, relheight=0.1)
 
         button = tk.Button(self, text="<<",
@@ -54,3 +62,9 @@ class EditInfoPage(tk.Frame):
 
     def Notify(self):
         pass
+
+    def ShowStudentInfo(self, studentInfo):
+        self.nameLabel.config(text='Name: ' + studentInfo[0] + ' ' + studentInfo[1])
+        self.birthdayLabel.config(text='Birthday: ' + str(studentInfo[2]))
+        self.emailLabel.config(text='Email: ' + studentInfo[3])
+        self.phoneLabel.config(text='Phone: ' + studentInfo[4])

@@ -10,3 +10,9 @@ class EditInfoController:
     def BackToStudentPage(self):
         from Views.StudentPage import StudentPage
         self._master.switch_frame(StudentPage, StudentPageModel, self._model._studentId)
+
+    def GetStudentInfo(self):
+        return self._model.GetStudentInfo()
+
+    def ChangeInfo(self, newEmail, newPhone):
+        print(newEmail, newPhone)

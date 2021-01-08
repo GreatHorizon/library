@@ -33,8 +33,8 @@ class StudentPageController:
     def OpenBookSearchPage(self):
         self._master.switch_frame(BookSearchPage, BookSearchModel, self._model._studentId)
 
-    def GetStudentName(self):
-        return self._model.GetStudentName()
+    def GetStudentInfo(self):
+        return self._model.GetStudentInfo()
 
 
 

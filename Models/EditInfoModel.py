@@ -1,4 +1,8 @@
 
+import sys
+import os
+sys.path.append(os.path.abspath('Database'))
+from database import DatabaseManager
 from Models.AbstractModel import AbstractModel
 
 class EditInfoModel(AbstractModel):
@@ -15,3 +19,8 @@ class EditInfoModel(AbstractModel):
     def Notify(self):
         for obs in self._observers:
             obs.Notify()  
+
+    def GetStudentInfo(self):        
+        db = DatabaseManager()
+        res = db.GetStudentInfo(self._studentId)
+        return res

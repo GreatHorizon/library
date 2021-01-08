@@ -12,8 +12,8 @@ class StudentPageModel(AbstractModel):
     def Save(self, data):
         self._studentId = data[0]
 
-    def GetStudentName(self):        
+    def GetStudentInfo(self):        
         db = DatabaseManager()
-        res = db.GetStudentName(self._studentId)
+        res = db.GetStudentInfo(self._studentId)
         return res
         
