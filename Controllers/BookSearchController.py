@@ -27,7 +27,12 @@ class BookSearchController:
     def SearchBooks(self, text):
         if (not text):
             self._view.ClearTable()
+            self._view.ShowNoBooksLabelWithText("No books found. Try search first.")
         else:
             self._view.ClearTable()
             books = self._model._showStrategy(text)
+            if (len(books) > 0):
+                self._view.HideNoBooksLabel()
+            else:
+                self._view.ShowNoBooksLabelWithText("There are no copies of this book. Try another book.")
             self._view.FillTable(books)

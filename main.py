@@ -21,7 +21,6 @@ class Window(tk.Tk):
     def switch_frame(self, frame_class, model, *data):
         self._model = model()
         if (len(data) != 0):
-            print(data)
             self._model.Save(data) 
         new_frame = frame_class(self, self._model)
         if self._frame is not None:

@@ -17,11 +17,19 @@ class StudentDebtsController:
         return studentsList
 
     def GetStudentDebtsAndShowTable(self, text):
+        self._view.HideUserInfo()
         if (not text):
             self._view.ClearTable()
+            self._view.ShowNoDataLabelWithText("No issues found. Select user first.")
         else:
             self._view.ClearTable()
+            info = self._model.GetStudentInfo(text)
+            self._view.ShowUserInfo(info[0], info[1], info[2], info[3])
             studentDebts = self._model.GetStudentDebts(text)
+            if (len(studentDebts) > 0):
+                self._view.HideNoDataLabel()
+            else:
+                self._view.ShowNoDataLabelWithText("Student don't have issues yet.")
             self._view.FillTable(studentDebts)
 
 

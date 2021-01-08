@@ -11,18 +11,18 @@ class BookSearchPage(tk.Frame):
         self._model = model
         self._controller = BookSearchController(master, self._model, self)
         self._model.Register(self)
-        labelFrame = Frame(self,bg='black')
+        self.tableFrame = Frame(self,bg='black')
 
         label = tk.Label(self, text="Search")
         label.config(font=("Courier", 14))
         label.pack(pady=10, padx=10)
 
         issuanceList = []
-        labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
+        self.tableFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
         label1 = tk.Label(self, text="Search by")
-        label1.place(relx = 0.30, rely = 0.1, relheight = 0.08)
-        self.bookSelect = ttk.Combobox(self, width = 27, values=["Book name", "Author"])
+        label1.place(relx = 0.30, rely = 0.09, relheight = 0.08)
+        self.bookSelect = ttk.Combobox(self, width = 27, values=["Book name", "Author"], state='readonly')
         self.bookSelect.bind("<<ComboboxSelected>>", self.SearchStrategySelectedCallback)
         self.bookSelect.place(relx = 0.38, rely = 0.10, relheight = 0.05, relwidth = 0.25)
 
@@ -31,10 +31,10 @@ class BookSearchPage(tk.Frame):
         self.searchSelect.place(relx = 0.38, rely = 0.20, relheight = 0.05, relwidth = 0.25)
         self.searchSelect.focus()
 
-        labelFrame = Frame(self)
-        labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
+        self.tableFrame = Frame(self)
+        self.tableFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
-        self.tree = ttk.Treeview(labelFrame)
+        self.tree = ttk.Treeview(self.tableFrame)
         self.tree["columns"]=("one","two","three", "four")
         self.tree.column("#0", width=140, minwidth=140, stretch=True)
         self.tree.column("one", width=140, minwidth=140, stretch=True)
@@ -48,23 +48,28 @@ class BookSearchPage(tk.Frame):
         self.tree.heading("three", text="Page count",anchor=tk.W)
         self.tree.heading("four", text="Publisher",anchor=tk.W)
 
-        sx = tk.Scrollbar(labelFrame, orient='horizontal', command=self.tree.xview)
-        sy = tk.Scrollbar(labelFrame, orient='vertical', command=self.tree.yview)
+        sx = tk.Scrollbar(self.tableFrame, orient='horizontal', command=self.tree.xview)
+        sy = tk.Scrollbar(self.tableFrame, orient='vertical', command=self.tree.yview)
         self.tree.configure(yscrollcommand=sy.set, xscrollcommand=sx.set)
 
         self.tree.grid(sticky='ewns')
         sx.grid(row=1, column=0, sticky='ew')
         sy.grid(row=0, column=1, sticky='ns')
 
-        button = tk.Button(self, text="Back",
+        self.noBooksLabel = tk.Label(self.tableFrame, background='white', text="No books found. Try search first.")
+        self.noBooksLabel.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+        button = tk.Button(self, text="<<",
             command=lambda:self._controller.BackToStudentPage())
-        button.place(relx=0.4, rely=0.80, relwidth=0.25, relheight=0.1)
+        button.place(relx=0.4, rely=0.85, relwidth=0.25, relheight=0.1)
 
-    def SetMessageLabel(self, message, color):
-        self.message.config(text=message, fg=color)
 
-    def Notify(self):
-        pass
+    def HideNoBooksLabel(self):
+        self.noBooksLabel.place_forget()
+
+    def ShowNoBooksLabelWithText(self, text):
+        self.noBooksLabel.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.noBooksLabel.config(text=text)
 
     def SearchStrategySelectedCallback(self, event):
         self._controller.SetSearchStrategy(event)

@@ -236,6 +236,13 @@ class DatabaseManager:
         """,
         (studentId, copy, start, end,))
 
+    def GetStudentInfoById(self, id):
+        self.__cursor.execute("""
+                SELECT first_name, last_name, email, phone FROM student WHERE id_student = %s
+        """,
+        (id, ))
+        return self.__cursor.fetchone()
+
     def UpdateCopyStateToUnavailable(self, copy):
         self.__cursor.execute("""
                 UPDATE copy SET is_available = 0 WHERE id_copy = %s

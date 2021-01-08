@@ -18,13 +18,6 @@ class StudentDebtsModel(AbstractModel):
             stArrayOfStrings.append(str(item[0]))
         return stArrayOfStrings
     
-    def ParseTuple(self, tuple):
-        list = []
-        for row in tuple:
-            list.append(str(row))
-        print(list, 'parse one tuple')
-        return list
-
     def GetStudentDebts(self, studentId):
         db = DatabaseManager()
         debtsArrayOfTuples = db.GetStudentIssuance(studentId)
@@ -32,11 +25,15 @@ class StudentDebtsModel(AbstractModel):
 
     def ReturnBooks(self, idsArray):
         db = DatabaseManager()
-        print('return book ', idsArray)
         for id in idsArray:
             db.UpdateCopyStateToAvailable(id)
             db.DeleteStudentIssue(id)
             db.CommitChanges()
+
+    def GetStudentInfo(self, id):
+        db = DatabaseManager()
+        info = db.GetStudentInfoById(id)
+        return info
 
     def GetStudentId(self, idCopy):
         db = DatabaseManager()

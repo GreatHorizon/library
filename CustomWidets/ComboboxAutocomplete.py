@@ -20,27 +20,8 @@ def autoscroll(sbar, first, last):
         sbar.grid()
     sbar.set(first, last)
 
-class Observable(ABC):
-    def __init__(self):
-        self._observers = set()
 
-    def RegisterObserver(self, observer):
-        print('registrated')
-        self._observers.add(observer)
-
-    def NotifyObservers(self):
-        for observer in self._observers:
-            print(self.GetData())
-            observer.Update(self.GetData())
-
-    @abstractmethod
-    def GetData(self) -> None:
-        pass
-
-
-
-
-class Combobox_Autocomplete(Entry, Observable):
+class Combobox_Autocomplete(Entry):
     def __init__(self, master, searchCallback=None,callbackOnSelection=None, listbox_width=None, listbox_height=7, vscrollbar=True, hscrollbar=False, **kwargs):
 
 
@@ -90,7 +71,6 @@ class Combobox_Autocomplete(Entry, Observable):
         if entry_data == '':
             self.unpost_listbox()
             self.callbackOnSelection('')
-            print('callbackOnSelection')
             self.focus()
         else:
             values = self.searchCallback(entry_data)
