@@ -2,8 +2,10 @@ from Database.database import DatabaseManager
 import sys
 import os
 sys.path.append(os.path.abspath('Errors'))
+sys.path.append(os.path.abspath('Utils'))
 from FormatErrors import *
 from IssuanceErrors import *
+from VerificaitionUtil import *
 
 class EditBookModel():
     def __init__(self):
@@ -38,7 +40,6 @@ class EditBookModel():
                 db.CommitChanges()
         else:
             existingAuthor = db.GetAuthorByName(newAuthorName)
-            print(existingAuthor)
             if not existingAuthor:
                 newAuthorId = db.InsertNewAuthor(newAuthorName)
                 oldAuthorId = db.GetAuthorByName(oldAuthorName)
@@ -58,4 +59,8 @@ class EditBookModel():
 
 
 def CheckEmptyFields(newAuthorName, oldAuthorName, newBookName, oldBookName):
-    pass
+    if (IsEmpty(newAuthorName)
+     or IsEmpty(oldAuthorName)
+     or IsEmpty(newBookName)
+     or IsEmpty(oldBookName)):
+        raise EmptyFieldError('There are empty fields')
