@@ -144,7 +144,7 @@ class DatabaseManager:
         return self.__cursor.fetchall()
     
     def GetStudentIssuance(self, id):
-        self.__cursor.execute('SELECT copy.id_copy, book.name, author.name, start, "end" FROM student ' +
+        self.__cursor.execute('SELECT author.name, book.name, copy.id_copy, start, "end" FROM student ' +
             'INNER JOIN issue ON student.id_student = issue.id_student ' +
             'INNER JOIN copy ON copy.id_copy = issue.id_copy ' +
             'INNER JOIN book ON copy.id_book = book.id_book ' +

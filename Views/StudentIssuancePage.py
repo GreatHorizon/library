@@ -4,8 +4,10 @@ from tkinter import messagebox
 from tkinter import ttk
 from ttkwidgets import Table
 import psycopg2
-# from Database.database import *
+from datetime import *
+
 from Controllers.StudentIssuancePageController import StudentIssuancePageController
+from Utils.SortingUtil import SortNumericColumn, SortStringColumn, SortDateColumn
 
 class StudentIssuancePage(tk.Frame):
 
@@ -19,54 +21,47 @@ class StudentIssuancePage(tk.Frame):
         label1.config(font=("Courier", 18))
         label1.pack(pady=20,padx=20)
 
-                
-        issuanceList = self._controller.GetStudentIssuance()
+        self.tableFrame = Frame(self)
+        self.tableFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
 
-        labelFrame = Frame(self,bg='black')
-        labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
+        self.tree = ttk.Treeview(self.tableFrame)
+        self.tree["columns"]=("one","two","three", "four", "five")
+        self.tree.column('#0', width=0, minwidth=140, stretch=False)
+        self.tree.column('one', width=140, minwidth=140, stretch=True)
+        self.tree.column('two', width=140, minwidth=140, stretch=True)
+        self.tree.column('three', width=140, minwidth=140)
+        self.tree.column('four', width=140, minwidth=140, stretch=True)
+        self.tree.column('five', width=140, minwidth=140, stretch=True)
 
-        columns = ["Author name", "Book name", "Id copy", "Page count", "Publisher"]
-        table = Table(labelFrame, columns=columns, sortable=False, drag_cols=False, drag_rows=False)
-        
-        for col in columns:
-            table.heading(col, text=col)
-            table.column(col, width=140, stretch=True)
+        self.tree.heading('#0', text="Index",anchor=tk.W)
+        self.tree.heading('one',text="Author name",anchor=tk.W, command=lambda:SortStringColumn(self.tree, "one"))
+        self.tree.heading('two', text="Book name",anchor=tk.W, command=lambda:SortStringColumn(self.tree, "two"))
+        self.tree.heading('three', text="Сopy ID",anchor=tk.W, command=lambda:SortNumericColumn(self.tree, "three"))
+        self.tree.heading('four', text="Start",anchor=tk.W, command=lambda:SortDateColumn(self.tree, "four"))
+        self.tree.heading('five', text="End",anchor=tk.W, command=lambda:SortDateColumn(self.tree, "five"))
 
-        for i in range(len(issuanceList)):
-            table.insert('', 'end', iid=i,
-                        values=(issuanceList[i][2], issuanceList[i][1], issuanceList[i][0], issuanceList[i][3], issuanceList[i][4]))
+        sx = tk.Scrollbar(self.tableFrame, orient='horizontal', command=self.tree.xview)
+        sy = tk.Scrollbar(self.tableFrame, orient='vertical', command=self.tree.yview)
+        self.tree.configure(yscrollcommand=sy.set, xscrollcommand=sx.set)
 
-        # add scrollbars
-        sx = tk.Scrollbar(labelFrame, orient='horizontal', command=table.xview)
-        sy = tk.Scrollbar(labelFrame, orient='vertical', command=table.yview)
-        table.configure(yscrollcommand=sy.set, xscrollcommand=sx.set)
-
-        table.grid(sticky='ewns')
+        self.tree.grid(sticky='ewns')
         sx.grid(row=1, column=0, sticky='ew')
         sy.grid(row=0, column=1, sticky='ns')
+
+        issuanceList = self._controller.GetStudentIssuance()
+        self.FillTable(issuanceList)
 
         button = tk.Button(self, text="Back",
             command=lambda:self._controller.BackToStudentPage())
         button.place(relx=0.4, rely=0.80, relwidth=0.25, relheight=0.1)
             
-    # def Notify(self):
-    #     if (self._model._isAuthorizated):
-    #         self._controller.SendData(id=self._model._userId)
-    #         self._controller.OpenStudentPage()
-    #         self.ClearErrorLabel()
-    #     else:
-    #         self.error.config(text=self._model._message)
-    #     self.ClearFields()
-
-    # def ClearFields(self):
-    #     self.studentIdField.delete(0, len(self.studentIdField.get()))
-    #     self.passwordField.delete(0, len(self.passwordField.get()))
-
-    # def ClearErrorLabel(self):
-    #     self.error.config(text='') 
-
     def updateView(self) :
         self._controller.GetStudentIssuance(self.id)
 
     def recieve_data(self, **data):
         self.id = data['id']
+
+    def FillTable(self, val):
+        for i in range(len(val)):
+            self.tree.insert('', 'end', iid=i, text = i,
+            values=(val[i][0], val[i][1], val[i][2], str(val[i][3]), str(val[i][4])))

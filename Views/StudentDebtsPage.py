@@ -3,6 +3,7 @@ from tkinter import *
 from CustomWidets.ComboboxAutocomplete import Combobox_Autocomplete
 from Controllers.StudentDebtsController import StudentDebtsController
 from tkinter import ttk
+from Utils.SortingUtil import SortDateColumn, SortNumericColumn, SortStringColumn
 
 class StudentDebtsPage(tk.Frame):
     
@@ -28,22 +29,21 @@ class StudentDebtsPage(tk.Frame):
         self.userInfoFrame.place(relx=0.1,rely=0.225,relwidth=0.8,relheight=0.05)
 
         self.tree = ttk.Treeview(self.tableFrame)
-        self.tree["columns"]=("one","two","three", "four")
-        self.tree.column("#0", width=140, minwidth=140, stretch=True)
+        self.tree["columns"]=("one","two","three", "four", "five")
+        self.tree.column('#0', width=0, minwidth=140, stretch=False)
         self.tree.column("one", width=140, minwidth=140, stretch=True)
-        self.tree.column("two", width=140, minwidth=140)
-        self.tree.column("three", width=140, minwidth=140, stretch=True)
+        self.tree.column("two", width=140, minwidth=140, stretch=True)
+        self.tree.column("three", width=140, minwidth=140)
         self.tree.column("four", width=140, minwidth=140, stretch=True)
+        self.tree.column("five", width=140, minwidth=140, stretch=True)
         self.tree.place_forget()
 
-        self.tree.heading("#0",text="Author name",anchor=tk.W)
-        self.tree.heading("one", text="Book name",anchor=tk.W)
-        self.tree.heading("two", text="Id copy",anchor=tk.W)
-        self.tree.heading("three", text="Start",anchor=tk.W)
-        self.tree.heading("four", text="End",anchor=tk.W)
-
-
-
+        self.tree.heading('#0', text="Index",anchor=tk.W)
+        self.tree.heading("one",text="Author name",anchor=tk.W, command=lambda:SortStringColumn(self.tree, "one"))
+        self.tree.heading("two", text="Book name",anchor=tk.W, command=lambda:SortStringColumn(self.tree, "two"))
+        self.tree.heading("three", text="Id copy",anchor=tk.W, command=lambda:SortNumericColumn(self.tree, "three"))
+        self.tree.heading("four", text="Start",anchor=tk.W, command=lambda:SortDateColumn(self.tree, "four"))
+        self.tree.heading("five", text="End",anchor=tk.W, command=lambda:SortDateColumn(self.tree, "five"))
 
         sx = tk.Scrollbar(self.tableFrame, orient='horizontal', command=self.tree.xview)
         sy = tk.Scrollbar(self.tableFrame, orient='vertical', command=self.tree.yview)
@@ -70,8 +70,8 @@ class StudentDebtsPage(tk.Frame):
 
     def FillTable(self, val):
         for i in range(len(val)):
-            self.tree.insert('', 'end', iid=i, text = val[i][2],
-            values=(val[i][1], val[i][0], val[i][3], val[i][4]))
+            self.tree.insert('', 'end', iid=i, text = i,
+            values=(val[i][0], val[i][1], val[i][2], val[i][3], val[i][4]))
 
     def GetCopiesIdFromTable(self):
         selectedIndexes =self.tree.selection()
