@@ -31,7 +31,7 @@ class AddBookModel(AbstractModel):
 
         try:
             self.CheckFields(fieldsMap)
-            idCopy = db.InsertBook(isbn, bookName, author, pageCount, publisher)
+            idCopy = db.AddBook(isbn, bookName, author, pageCount, publisher)
             self._addedSuccessfuly = True
             self._description = "Book successfully added. Id copy = " + str(idCopy)
         except (FormatError) as e:

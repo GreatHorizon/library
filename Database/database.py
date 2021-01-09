@@ -40,54 +40,69 @@ class DatabaseManager:
         if (GetPasswordPart(actualPassword) != encodedPassword):
             raise AuthorizationError("Incorrect login or password")
 
-    def InsertBook(self, isbn, bookName, author, pageCount, publisher) :
-
-        self.__cursor.execute('SELECT author.name FROM author ' + 
-            'INNER JOIN author_has_book on author.id_author = author_has_book.id_author ' +
-            'INNER JOIN book on book.id_book = author_has_book.id_book ' +
-            'WHERE isbn = %s', (str(isbn),))
-
-        if self.__cursor.rowcount != 0 and self.__cursor.fetchone()[0] != author:
+    def AddBook(self, isbn, bookName, author, pageCount, publisher) :
+        existedAuthor = self.GetBookAuthor(isbn)
+        if existedAuthor != None and existedAuthor[0] != author:
             raise AddBookError('This isbn already belongs to other author')
 
-        self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
-        if self.__cursor.rowcount == 0:
-            # if author does not exists, we need to create him
-            self.__cursor.execute("INSERT INTO author (name) VALUES (%s)", (str(author),))
-            self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
-        authorId = self.__cursor.fetchone()[0]
+        authorId = self.GetAuthorId(author)
+        if authorId == None:
+            authorId = self.CreateAuthor(author)
 
-        # need to check, if author has book with this name but different isbn
+        existedBook = self.GetAuthorsBook(authorId[0], bookName)
+        if existedBook != None:
+           if existedBook[0] != isbn:
+               raise AddBookError("Author cant have books with same names and different isbn")
+
+        book = self.GetBook(isbn)
+        if book == None:
+            bookId = self.CreateBook(isbn, bookName, authorId[0])
+        else:
+            if book[0] != bookName:
+                raise AddBookError("There is book with this isbn, but different name")
+            bookId = book[1]  
+
+        addedCopyId = self.InsertCopy(bookId, pageCount, publisher)
+        self.__connection.commit()
+        return addedCopyId
+    
+    def CreateAuthor(self, author):
+        self.__cursor.execute("INSERT INTO author (name) VALUES (%s) RETURNING id_author", (str(author),))
+        return self.__cursor.fetchone()
+
+    def GetAuthorId(self, author) :
+        self.__cursor.execute('SELECT id_author FROM author WHERE name = %s', (str(author),))
+        return self.__cursor.fetchone()
+
+    def GetBook(self, isbn) :
+        self.__cursor.execute('SELECT name, id_book FROM book WHERE isbn = %s', (str(isbn),))
+        return self.__cursor.fetchone()
+
+    def CreateBook(self, isbn, bookName, authorId):
+        self.__cursor.execute("INSERT INTO book (isbn, name) VALUES (%s, %s) RETURNING id_book", (str(isbn), str(bookName)))
+        bookId = self.__cursor.fetchone()[0] 
+        self.__cursor.execute("INSERT INTO author_has_book (id_book, id_author) VALUES (%s, %s)", (str(bookId), str(authorId)))
+        return bookId
+
+    def GetAuthorsBook(self, authorId, bookName):
         self.__cursor.execute('SELECT isbn FROM book ' +
             'INNER JOIN author_has_book on book.id_book = author_has_book.id_book ' +
             'INNER JOIN author on author.id_author = author_has_book.id_author ' + 
             'WHERE author.id_author = %s AND book.name = %s', (str(authorId), str(bookName)))
+        return self.__cursor.fetchone()
 
-        if self.__cursor.rowcount != 0:
-           if self.__cursor.fetchone()[0] != isbn:
-               raise AddBookError("Author cant have books with same names and different isbn")
+    def GetBookAuthor(self, isbn) :
+        self.__cursor.execute('SELECT author.name FROM author ' + 
+            'INNER JOIN author_has_book on author.id_author = author_has_book.id_author ' +
+            'INNER JOIN book on book.id_book = author_has_book.id_book ' +
+            'WHERE isbn = %s', (str(isbn),))
+        return self.__cursor.fetchone()
 
-        self.__cursor.execute('SELECT name, id_book FROM book WHERE isbn = %s', (str(isbn),))
-        if self.__cursor.rowcount == 0:
-            #if book does not exists we need to create it
-            self.__cursor.execute("INSERT INTO book (isbn, name) VALUES (%s, %s)", (str(isbn), str(bookName)))
-            self.__cursor.execute('SELECT id_book FROM book WHERE isbn = %s', (str(isbn),))
-            bookId = self.__cursor.fetchone()[0] 
-            self.__cursor.execute("INSERT INTO author_has_book (id_book, id_author) VALUES (%s, %s)", (str(bookId), str(authorId)))
-        else:
-            # if book name already exists
-            row = self.__cursor.fetchone()
-            if  row[0] != bookName:
-                #if book with different name and this isbn already exists - we cant create
-                raise AddBookError("There is book with this isbn, but different name")
-            bookId = row[1]  
+    def InsertCopy(self, bookId, pageСount, publisher) :
+        self.__cursor.execute("INSERT INTO copy (id_book, page_count, is_available, publisher)" + 
+        "VALUES (%s, %s, 1, %s) RETURNING id_copy", (str(bookId), str(pageСount), str(publisher)))
+        return self.__cursor.fetchone()[0]
 
-        self.__cursor.execute("INSERT INTO copy (id_book,page_count, is_available, publisher)" + 
-        "VALUES (%s, %s, 1, %s) RETURNING id_copy", (str(bookId), str(pageCount), str(publisher)))
-        addedCopyId = self.__cursor.fetchone()[0]
-        self.__connection.commit()
-        return addedCopyId
-        
     def InsertStudent(self, id, name, surname, birthday, phone, email):
         self.__cursor.execute('SELECT id_student FROM student WHERE id_student = %s', (id,))
         if (self.__cursor.rowcount != 0):
