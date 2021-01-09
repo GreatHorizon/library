@@ -85,14 +85,14 @@ class BookIssuePage(tk.Frame):
     
     def DisableBooksList(self):
         self.bookSelect.set('')
-        self.bookSelect.configure(state='disable', values=[])
+        self.bookSelect.config(state='disable', values=[])
 
     def DisableCopiesList(self):
         self.copySelect.set('')
-        self.copySelect.configure(state='disabled', values=[])
+        self.copySelect.config(state='disable', values=[])
   
     def EnableCopiesListAndFillValues(self, values):
-        self.copySelect.configure(state='readonly', values=values)
+        self.copySelect.config(state='readonly', values=values)
 
     def ClearMessageLabel(self):
         self.message.config(text='') 

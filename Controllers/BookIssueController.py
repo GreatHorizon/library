@@ -21,9 +21,6 @@ class BookIssueController:
         booksList = self._model.GetAuthorList(text)
         return booksList
 
-    # def GetAuthorsBookByName(self, name):
-    #     booksList = self._model.GetAuthorBooksByName(name)
-    #     print(booksList)
 
     def BackToAdminPage(self):
         from Views.AdminPage import AdminPage
@@ -31,14 +28,16 @@ class BookIssueController:
 
     def EnableBooksList(self, authorName):
         if (not authorName):
-            self._view.DisableBooksList()
             self._view.DisableCopiesList()
-        booksList = self._model.GetAuthorBooksByName(authorName)
-        if (len(booksList) == 0):
             self._view.DisableBooksList()
-            self._view.SetErrorMessage("There are no books of this author in library. Try another book.")
-        self._view.EnableBooksListAndFillValues(booksList)
-        self._view.SetErrorMessage("")
+        else:
+            booksList = self._model.GetAuthorBooksByName(authorName)
+            if (len(booksList) == 0):
+                self._view.DisableBooksList()
+                self._view.SetErrorMessage("There are no books of this author in library. Try another book.")
+            else:
+                self._view.EnableBooksListAndFillValues(booksList)
+                self._view.SetErrorMessage("")
 
     def EnableCopiesList(self, event):
         self._view.ClearMessageLabel()
@@ -46,7 +45,8 @@ class BookIssueController:
         if (len(copies) == 0):
             self._view.DisableCopiesList()
             self._view.SetErrorMessage("There are no copies in library. Try another copy.")
-        self._view.EnableCopiesListAndFillValues(copies)
+        else:
+            self._view.EnableCopiesListAndFillValues(copies)
 
     def CreateIssue(self, studentId, author, book, copy, start, end):
         try:

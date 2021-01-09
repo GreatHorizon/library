@@ -136,7 +136,6 @@ class DatabaseManager:
         self.__connection.commit()
 
     def GetStudentsInfoPart(self, textPart):
-        print(textPart)
         self.__cursor.execute("""
                     SELECT id_student FROM student
                     WHERE CAST(id_student AS VARCHAR) LIKE '%%{0}%%'
@@ -154,7 +153,6 @@ class DatabaseManager:
         return self.__cursor.fetchall()
 
     def GetAuthorList(self, text):
-        print(text)
         self.__cursor.execute("""
                 SELECT name FROM author WHERE name ILIKE '%%{0}%%'
         """.format(text))
@@ -239,8 +237,9 @@ class DatabaseManager:
         return self.__cursor.fetchone()
 
     def GetAuthorByName(self, name):
+        # can break something
         self.__cursor.execute("""
-                SELECT name FROM author WHERE name = %s
+                SELECT id_author FROM author WHERE name = %s
         """,
         (name,))
         return self.__cursor.fetchone()
@@ -285,6 +284,40 @@ class DatabaseManager:
         """,
         (idCopy,))
 
+    def UpdateAuthorBookName(self, idBook, newBookName):   
+        self.__cursor.execute("""
+                UPDATE book SET name = %s WHERE id_book = %s 
+        """,
+        (newBookName, idBook))
+
+    def GetIdBookByNameAndAuthorId(self, bookName, idAuthor):
+        self.__cursor.execute("""
+                SELECT book.id_book FROM author
+                INNER JOIN author_has_book ON author.id_author = author_has_book.id_author
+				INNER JOIN book ON book.id_book = author_has_book.id_book
+                WHERE author.id_author = %s AND book.name = %s
+        """,
+        (idAuthor, bookName))
+        return self.__cursor.fetchone()
+
+    def InsertNewAuthor(self, authorName):
+        self.__cursor.execute("""
+                INSERT INTO author (name) VALUES (%s) RETURNING id_author
+        """, (authorName,))
+        return self.__cursor.fetchone()
+
+    def UpdateBookNameById(self, newName, idBook):
+        self.__cursor.execute("""
+                UPDATE book SET name = %s WHERE id_book = %s 
+        """,
+        (newName, idBook))
+
+    def DeleteBookFromOldAuthor(self, oldAuthorId, idBook):
+        self.__cursor.execute("""
+                DELETE FROM author_has_book WHERE id_book = %s AND id_author = %s
+        """,
+        (idBook, oldAuthorId))
+
     def GetStudentIdByIssuedCopyId(self, idCopy):
         self.__cursor.execute("""
                 SELECT id_student FROM issue
@@ -292,11 +325,22 @@ class DatabaseManager:
         """, (idCopy,))
         return self.__cursor.fetchone()
 
+    def InsertBookToAuthor(self, idBook, idAuthor):
+        self.__cursor.execute("""
+                INSERT INTO author_has_book (id_book, id_author) VALUES (%s, %s)
+        """, (idBook, idAuthor))
+
+
+    def UpdateAuthorBook(self, idAuthorNew, idBookNew, oldAuthorId):
+        self.__cursor.execute("""
+                UPDATE author_has_book SET id_book = %s, id_author = %s WHERE id_author = %s AND id_book = %s 
+        """,
+        (idBookNew, idAuthorNew, oldAuthorId, idBookNew))
+
     def CommitChanges(self):
         self.__connection.commit()
 
 
     def __del__(self):
         self.__cursor.close()
-        self.__connection.commit()
         self.__connection.close()

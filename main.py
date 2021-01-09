@@ -14,7 +14,7 @@ class Window(tk.Tk):
         self.title("library")
 
         tk.Tk.geometry(self,'900x400') 
-
+ 
         self.switch_frame(StartPage, StartPageModel)
 
     def switch_frame(self, frame_class, model, *data):
@@ -28,5 +28,6 @@ class Window(tk.Tk):
         self._frame.pack(side="top", fill="both", expand = True)
         self._frame.grid_rowconfigure(0, weight=1)
         self._frame.grid_columnconfigure(0, weight=1)
+        
 app = Window()
 app.mainloop()
