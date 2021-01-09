@@ -10,7 +10,6 @@ class AddBookPage(tk.Frame):
         self._controller = AddBookController(master, self._model, self)
         self._model.Register(self)
 
-
         label = tk.Label(self, text="Add book")
         label.config(font=("Courier", 16))
         label.pack(pady=10, padx=10)

@@ -51,6 +51,9 @@ class AddBookModel(AbstractModel):
         if not str.isdigit(fieldsMap['isbn']) or (not len(fieldsMap['isbn']) == 10 and not len(fieldsMap['isbn']) == 13):
             raise FormatError('ISBN should be number with 10 or 13 digits')
         
+        if not str.isdigit(fieldsMap['pageCount']):
+            raise FormatError('Page count should be number')
+        
         if int(fieldsMap['pageCount']) > 10000 :
             raise FormatError('Page count cant be more than 10000')
 
