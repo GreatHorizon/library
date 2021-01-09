@@ -19,6 +19,10 @@ class EditBookController():
             self._view.SetMessageLabel("Book successfully edited", 'green')
         except NonExistentAuthor as e:
             self._view.SetMessageLabel(e.message, 'red')
+        except EmptyFieldError as e:
+            self._view.SetMessageLabel(e.message, 'red')
+        except Exception:
+            self._view.SetMessageLabel("Unexpected error", 'red')
 
     def GetAuthors(self, text):
         booksList = self._model.GetAuthorList(text)
