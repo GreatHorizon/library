@@ -28,7 +28,7 @@ class EditBookModel():
         return booksArray
 
     def EditBook(self, newAuthorName, oldAuthorName, newBookName, oldBookName):
-        CheckEmptyFields(newAuthorName, oldAuthorName, newBookName, oldBookName)
+        CheckEmptyFieldsOnBookEditing(newAuthorName, oldAuthorName, newBookName, oldBookName)
         db = DatabaseManager()
         if db.GetAuthorByName(oldAuthorName) is None:
             raise NonExistentAuthor("Author doesn't exists")
@@ -57,10 +57,35 @@ class EditBookModel():
                 db.UpdateAuthorBook(existingAuthor[0], idBook[0], oldAuthorId[0])
                 db.CommitChanges()
 
+    def GetBookCopies(self, name):
+        db = DatabaseManager()
+        copiesTuples = db.GetCopies(name)
+        copiesArray = []
+        for item in copiesTuples:
+            copiesArray.append(str(item[0]))
+        return copiesArray
 
-def CheckEmptyFields(newAuthorName, oldAuthorName, newBookName, oldBookName):
+    def GetCopyInfo(self, id):
+        db = DatabaseManager()
+        info = db.GetCopyInfoById(id)
+        return info
+
+    def ChangeBookCopyInfo(self, idCopy, newPagesCount, newPublisherName):
+        CheckEmptyFieldsOnCopyEditing
+        db = DatabaseManager()
+        db.UpdateCopyInfo(idCopy, newPagesCount, newPublisherName)
+        db.CommitChanges()
+
+
+def CheckEmptyFieldsOnBookEditing(newAuthorName, oldAuthorName, newBookName, oldBookName):
     if (IsEmpty(newAuthorName)
      or IsEmpty(oldAuthorName)
      or IsEmpty(newBookName)
      or IsEmpty(oldBookName)):
+        raise EmptyFieldError('There are empty fields')
+
+def CheckEmptyFieldsOnCopyEditing(idCopy, newPagesCount, newPublisherName):
+    if (IsEmpty(idCopy)
+     or IsEmpty(newPagesCount)
+     or IsEmpty(newPublisherName)):
         raise EmptyFieldError('There are empty fields')

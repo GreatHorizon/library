@@ -285,6 +285,19 @@ class DatabaseManager:
         (idCopy,))
         return self.__cursor.fetchone()
 
+    def GetCopyInfoById(self, id):
+        self.__cursor.execute("""
+                SELECT page_count, publisher FROM copy WHERE id_copy = %s
+        """,
+        (id,))
+        return self.__cursor.fetchone()
+
+    def UpdateCopyInfo(self, idCopy, newPagesCount, newPublisherName):
+        self.__cursor.execute("""
+                UPDATE copy SET page_count = %s, publisher = %s  WHERE id_copy = %s
+        """,
+        (newPagesCount, newPublisherName, idCopy))
+
     def GetCopyState(self, idCopy):
         self.__cursor.execute("""
            SELECT is_available FROM copy WHERE id_copy = %s
