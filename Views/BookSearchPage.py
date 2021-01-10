@@ -27,7 +27,7 @@ class BookSearchPage(tk.Frame):
         self.bookSelect.bind("<<ComboboxSelected>>", self.SearchStrategySelectedCallback)
         self.bookSelect.place(relx = 0.38, rely = 0.10, relheight = 0.05, relwidth = 0.25)
 
-        self.searchSelect = Combobox_Autocomplete(self, searchCallback=self._controller.GetSelectValues,
+        self.searchSelect = Combobox_Autocomplete(self, state='disabled', searchCallback=self._controller.GetSelectValues,
                                             callbackOnSelection=self.ShowSearchResult)
         self.searchSelect.place(relx = 0.38, rely = 0.20, relheight = 0.05, relwidth = 0.25)
         self.searchSelect.focus()
@@ -76,6 +76,7 @@ class BookSearchPage(tk.Frame):
 
     def SearchStrategySelectedCallback(self, event):
         self._controller.SetSearchStrategy(event)
+        self.searchSelect.config(state='normal')
 
     def ShowSearchResult(self, event) :
         self._controller.SearchBooks(event)

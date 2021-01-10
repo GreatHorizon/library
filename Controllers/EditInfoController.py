@@ -19,6 +19,7 @@ class EditInfoController:
             self._model.ChangeInfo(newEmail, newPhone)
             self._view.SetMessageLabel("Info successfully updated", "green")
             self._view.ShowStudentInfo()
+            self._view.ClearFields()
         except Exception as e:
             print(e)
             self._view.SetMessageLabel(e, "red")

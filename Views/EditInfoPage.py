@@ -68,3 +68,7 @@ class EditInfoPage(tk.Frame):
         self.birthdayLabel.config(text='Birthday: ' + str(studentInfo[2]))
         self.emailLabel.config(text='Email: ' + studentInfo[3])
         self.phoneLabel.config(text='Phone: ' + studentInfo[4])
+
+    def ClearFields(self):
+        self.newPhoneField.delete(0, tk.END)
+        self.newEmailField.delete(0, tk.END)

@@ -236,6 +236,7 @@ class DatabaseManager:
             raise UniquePhoneViolation("Phone is busy")
         
         self.__cursor.execute("UPDATE student SET phone = %s WHERE student.id_student = %s", (newPhone, studentId))
+        self.__connection.commit()
 
     def UpdateEmail(self, studentId, newEmail):
         self.__cursor.execute("SELECT id_student FROM student WHERE email = %s", (str(newEmail),))
@@ -243,6 +244,7 @@ class DatabaseManager:
             raise UniqueEmailViolation("Email is busy")
 
         self.__cursor.execute("UPDATE student SET email = %s WHERE student.id_student = %s", (newEmail, studentId))
+        self.__connection.commit()
 
     def GetStudentById(self, id):
         self.__cursor.execute("""
