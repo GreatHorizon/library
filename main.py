@@ -13,7 +13,8 @@ class Window(tk.Tk):
         self._frame = None
         self.title("library")
 
-        tk.Tk.geometry(self,'900x400') 
+        tk.Tk.geometry(self,'900x400')
+        self.resizable(width=False, height=False)
  
         self.switch_frame(StartPage, StartPageModel)
 

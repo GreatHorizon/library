@@ -11,4 +11,8 @@ class StudentIssuancePageController:
         self._master.switch_frame(StudentPage, StudentPageModel, self._model._studentId)
 
     def GetStudentIssuance(self):
-        return self._model.GetStudentIssuance()
+        studentIssuance = self._model.GetStudentIssuance()
+        if (len(studentIssuance) == 0):
+            self._view.ShowNoDataLabelWithText("You don't have issues yet.")
+        else:
+            self._view.FillTable(studentIssuance)

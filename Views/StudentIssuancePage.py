@@ -26,6 +26,7 @@ class StudentIssuancePage(tk.Frame):
 
         self.tree = ttk.Treeview(self.tableFrame)
         self.tree["columns"]=("one","two","three", "four", "five")
+
         self.tree.column('#0', width=0, minwidth=140, stretch=False)
         self.tree.column('one', width=140, minwidth=140, stretch=True)
         self.tree.column('two', width=140, minwidth=140, stretch=True)
@@ -44,12 +45,13 @@ class StudentIssuancePage(tk.Frame):
         sy = tk.Scrollbar(self.tableFrame, orient='vertical', command=self.tree.yview)
         self.tree.configure(yscrollcommand=sy.set, xscrollcommand=sx.set)
 
+        self.noDataLabel = tk.Label(self.tableFrame, background="white",text="")
+
         self.tree.grid(sticky='ewns')
         sx.grid(row=1, column=0, sticky='ew')
         sy.grid(row=0, column=1, sticky='ns')
 
-        issuanceList = self._controller.GetStudentIssuance()
-        self.FillTable(issuanceList)
+        self._controller.GetStudentIssuance()
 
         button = tk.Button(self, text="Back",
             command=lambda:self._controller.BackToStudentPage())
@@ -65,3 +67,10 @@ class StudentIssuancePage(tk.Frame):
         for i in range(len(val)):
             self.tree.insert('', 'end', iid=i, text = i,
             values=(val[i][0], val[i][1], val[i][2], str(val[i][3]), str(val[i][4])))
+
+    def HideNoDataLabel(self):
+        self.noDataLabel.place_forget()
+
+    def ShowNoDataLabelWithText(self, text):
+        self.noDataLabel.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.noDataLabel.config(text=text)

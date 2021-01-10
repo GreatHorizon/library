@@ -40,6 +40,8 @@ class AddBookModel(AbstractModel):
         except (AddBookError) as e:
             self._description = e
             self._addedSuccessfuly = False
+        except Exception as e: 
+            print(e)
 
         self.Notify()
 
