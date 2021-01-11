@@ -6,9 +6,10 @@ You can run it on Windows, Linux, MacOS.
 
 To run it you need:
 
-- Install python
+- Install Python
 - Install PostgreSQL
-- Install required dependencies
+- Install required dependencies: 
+```
   * tkinter
   
   * datetime
@@ -18,7 +19,8 @@ To run it you need:
   * dotenv
   
   * tkcalendar
+```
 - Create database and run library.sql
 - Write your database config into .end file
 
-Thats all. Good luck
+Thats all. Good luck!
