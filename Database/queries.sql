@@ -12,6 +12,7 @@ SELECT isbn FROM book
 INNER JOIN author_has_book on book.id_book = author_has_book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author
 WHERE author.id_author = 13 AND book.name = 'Тихий дон';
+
 CREATE INDEX IX_author_has_book_id_author
 ON author_has_book(id_author);
 
@@ -19,6 +20,7 @@ CREATE INDEX IX_book_isbn
 ON book(isbn);
 
 --3
+
 SELECT author.name, book.name, copy.id_copy, start, "end" FROM student
 INNER JOIN issue ON student.id_student = issue.id_student
 INNER JOIN copy ON copy.id_copy = issue.id_copy
@@ -57,6 +59,8 @@ INNER JOIN author_has_book on temp.id_book = author_has_book.id_book
 INNER JOIN author on author.id_author = author_has_book.id_author;
 
 --6
+
+
 SELECT book_name FROM author
 INNER JOIN author_has_book ON author.id_author = author_has_book.id_author
 INNER JOIN
@@ -90,3 +94,23 @@ SELECT id_student FROM student WHERE id_student = 1180501039;
 
 --12
 SELECT name FROM author WHERE name = 'Шолохов';
+
+
+CREATE INDEX IX_student_info
+ON student(id_student)
+INCLUDE(first_name, last_name, birthday, email, phone);
+
+CREATE INDEX IX_author_has_book_id_author
+ON author_has_book(id_author);
+
+CREATE INDEX IX_issue_id_student
+ON issue(id_student);
+
+CREATE INDEX IX_copy_id_book
+ON copy(id_book);
+
+CREATE INDEX IX_author_name
+ON author(name);
+
+
+

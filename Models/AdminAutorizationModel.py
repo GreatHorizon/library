@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
 from AuthorizationErrors import *
 from Models.AbstractModel import AbstractModel
-from FormatErrors import InvalidFormatForDigit
+from FormatErrors import InvalidFormatForDigit, EmptyFieldError
 from Utils.VerificaitionUtil import IsNumber
 
 class AdminAuthorizationModel:
@@ -24,8 +24,9 @@ class AdminAuthorizationModel:
     def VerifyAdmin(self, id, password):
         db = DatabaseManager()
         try:
-            IsNumber('1')
-            db.VerifyAdmin('1', 'admin')
+            self.CheckFields(id, password)
+            IsNumber(id)
+            db.VerifyAdmin(id, password)
             self._isAuthorizated = True
         except AuthorizationError as e:
             self._message = e.message
@@ -33,7 +34,14 @@ class AdminAuthorizationModel:
         except InvalidFormatForDigit as e:
             self._message = "Admin id should be number"
             self._isAuthorizated = False
+        except EmptyFieldError as e:
+            self._message = e.message
+            self._isAuthorizated = False
         self.Notify()
+
+    def CheckFields(self, id, password):
+        if not id or not password:
+            raise EmptyFieldError('All fields should be filled')
 
 
     
