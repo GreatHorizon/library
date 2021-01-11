@@ -3,9 +3,9 @@ import os
 sys.path.append(os.path.abspath('Database'))
 from database import DatabaseManager
 from AuthorizationErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class StudentIssuanceModel(AbstractModel):
+class StudentIssuanceModel(IModel):
     def __init__(self):
         self._observers = set()
         self._isAuthorizated = False

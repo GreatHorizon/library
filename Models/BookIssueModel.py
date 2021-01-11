@@ -6,11 +6,11 @@ sys.path.append(os.path.abspath('Utils'))
 from database import DatabaseManager
 from FormatErrors import *
 from IssuanceErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from VerificaitionUtil import *
 import psycopg2
 
-class BookIssueModel(AbstractModel):
+class BookIssueModel(IModel):
     def __init__(self):
         self._observers = set()
 

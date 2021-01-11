@@ -4,11 +4,11 @@ sys.path.append(os.path.abspath('Database'))
 sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
 from AuthorizationErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from FormatErrors import InvalidFormatForDigit
 from Utils.VerificaitionUtil import IsNumber
 
-class AdminAuthorizationModel:
+class AdminAuthorizationModel(IModel):
     def __init__(self):
         self._observers = set()
         self._isAuthorizated = False
@@ -24,8 +24,8 @@ class AdminAuthorizationModel:
     def VerifyAdmin(self, id, password):
         db = DatabaseManager()
         try:
-            IsNumber('1')
-            db.VerifyAdmin('1', 'admin')
+            IsNumber(id)
+            db.VerifyAdmin(id, password)
             self._isAuthorizated = True
         except AuthorizationError as e:
             self._message = e.message

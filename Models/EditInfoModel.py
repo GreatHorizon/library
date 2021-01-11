@@ -3,11 +3,11 @@ import sys
 import os
 sys.path.append(os.path.abspath('Database'))
 from database import DatabaseManager
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from Utils.VerificaitionUtil import ValidateEmail, ValidatePhone
 from FormatErrors import *
 
-class EditInfoModel(AbstractModel):
+class EditInfoModel(IModel):
     def __init__(self):
         self._observers = set()
         self._studentId = int()

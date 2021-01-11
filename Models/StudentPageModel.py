@@ -3,9 +3,9 @@ import sys
 import os
 sys.path.append(os.path.abspath('Database'))
 from database import DatabaseManager
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class StudentPageModel(AbstractModel):
+class StudentPageModel(IModel):
     def __init__(self):
         self._studentId = int()
 

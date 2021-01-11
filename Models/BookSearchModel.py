@@ -3,9 +3,9 @@ import os
 sys.path.append(os.path.abspath('Database'))
 sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class BookSearchModel(AbstractModel):
+class BookSearchModel(IModel):
     def __init__(self):
         self._observers = set()
         self._searchStrategy = self.SearchByBookNameStrategy
