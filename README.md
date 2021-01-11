@@ -19,4 +19,6 @@ To run it you need:
   
   * tkcalendar
 - Create database and run library.sql
-- Write your database data into .end file
+- Write your database config into .end file
+
+Thats all. Good luck
