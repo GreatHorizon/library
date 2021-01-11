@@ -1,6 +1,9 @@
 ## Desktop application for university library
 
-Our application can run on Windows, Linux, MacOS.
+Our application is for library management for Universities, Schools, or something like this.
+It makes work at the library much easier.
+You can run it on Windows, Linux, MacOS.
+
 To run it you need:
 
 - Install python
