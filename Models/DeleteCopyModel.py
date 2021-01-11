@@ -1,9 +1,9 @@
 
 from Database.database import DatabaseManager
 from DeleteBookErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from psycopg2.errors import *
-class DeleteCopyModel(AbstractModel):
+class DeleteCopyModel(IModel):
     def __init__(self):
         self._observers = set()
         self._isDeleted = False

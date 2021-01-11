@@ -3,9 +3,9 @@ import os
 sys.path.append(os.path.abspath('Database'))
 sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class StudentDebtsModel(AbstractModel):
+class StudentDebtsModel(IModel):
     def __init__(self):
         self._idStudent = int()
 

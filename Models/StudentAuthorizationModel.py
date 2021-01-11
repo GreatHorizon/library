@@ -4,12 +4,12 @@ sys.path.append(os.path.abspath('Database'))
 sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
 from AuthorizationErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from FormatErrors import InvalidFormatForDigit
 from Utils.VerificaitionUtil import IsNumber
 
 
-class StudentAuthorizationModel(AbstractModel):
+class StudentAuthorizationModel(IModel):
     def __init__(self):
         self._observers = set()
         self._isAuthorizated = False

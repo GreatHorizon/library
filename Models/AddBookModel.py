@@ -3,9 +3,9 @@ import os
 
 from database import DatabaseManager
 from AuthorizationErrors import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class AddBookModel(AbstractModel):
+class AddBookModel(IModel):
     def __init__(self):
         self._observers = set()
         self._addedSuccessfuly = False

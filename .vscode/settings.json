@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\Stas\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
+    "python.pythonPath": "env\\Scripts\\python.exe",
     "python.envFile": "C:\\dev\\library\\.env"
 }

@@ -5,12 +5,12 @@ sys.path.append(os.path.abspath('Errors'))
 from database import DatabaseManager
 from FormatErrors import *
 from RegistationError import *
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 from Utils.VerificaitionUtil import *
 import re
 from psycopg2.errors import *
 
-class RegisterStudentModel(AbstractModel):
+class RegisterStudentModel(IModel):
     def __init__(self):
         self._isRegistrated = False
         self._message = ''

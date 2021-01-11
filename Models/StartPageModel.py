@@ -1,6 +1,6 @@
 
 
-from Models.AbstractModel import AbstractModel
+from Models.AbstractModel import IModel
 
-class StartPageModel(AbstractModel):
+class StartPageModel(IModel):
     pass
