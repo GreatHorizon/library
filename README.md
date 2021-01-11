@@ -1,4 +1,4 @@
-## Desktop application for university library
+## Desktop application for library
 
 Our application is for library management for Universities, Schools, or something like this.
 It makes work at the library much easier.
