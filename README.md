@@ -10,4 +10,12 @@ To run it you need:
 - Install PostgreSQL
 - Install required dependencies
   * tkinter
+  
+  * datetime
+  
+  * psycopg2
+  
+  * dotenv
+  
+  * tkcalendar
 - Create database and run library.sql
