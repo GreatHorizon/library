@@ -9,4 +9,5 @@ To run it you need:
 - Install python
 - Install PostgreSQL
 - Install required dependencies
-- Create database and run library.sql file
+  * tkinter
+- Create database and run library.sql
