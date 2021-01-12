@@ -16,11 +16,12 @@ You can run it on Windows, Linux, MacOS.
   $ git clone https://github.com/GreatHorizon/library.git
   $ cd library
 ```
-- 1. Depending on your operating system install and create `virtualenv` from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment).
+- Installing required packages:
+  1. Depending on your operating system install and create `virtualenv` from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-   environments/#creating-a-virtual-environment).
   2. Activate your virtualenv how it said in the guide. 
   3. Install required packages by the following command:
 ```
-  pip install requests requirements.txt
+  pip install -r requirements.txt
 ```
 - Create database and run library.sql
 - Write your database config into .env file
