@@ -13,15 +13,15 @@ You can run it on Windows, Linux, MacOS.
 - Install PostgreSQL
 - Install required dependencies: 
 ```
-  tkinter
+  $ pip3 intall tkinter
   
-  datetime
+  $ pip3 intall psycopg2
   
-  psycopg2
+  $ pip3 intall dotenv
   
-  dotenv
-  
-  tkcalendar
+  $ pip3 intall tkcalendar
+    
+  $ pip3 intall datetime
 ```
 - Create database and run library.sql
 - Write your database config into .end file
