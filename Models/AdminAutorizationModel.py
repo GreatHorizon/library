@@ -7,6 +7,7 @@ from AuthorizationErrors import *
 from Models.AbstractModel import IModel
 from FormatErrors import InvalidFormatForDigit
 from Utils.VerificaitionUtil import IsNumber
+from FormatErrors import *
 
 class AdminAuthorizationModel(IModel):
     def __init__(self):
