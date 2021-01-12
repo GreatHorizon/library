@@ -1,11 +1,11 @@
-## Desktop application for library
+# Desktop application for library
 
 Our application is for library management for Universities, Schools, or something like this.
 It makes work at the library much easier.
 You can run it on Windows, Linux, MacOS.
+Technologies
 
 To run it you need:
-
 - Install Python
 - Install PostgreSQL
 - Install required dependencies: 
