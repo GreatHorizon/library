@@ -16,17 +16,11 @@ You can run it on Windows, Linux, MacOS.
   $ git clone https://github.com/GreatHorizon/library.git
   $ cd library
 ```
-- Install required dependencies: 
+- Install virtualenv from [this guide]https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
+  and active it.
 ```
-  $ pip3 intall tkinter
+  $ 
   
-  $ pip3 intall psycopg2
-  
-  $ pip3 intall dotenv
-  
-  $ pip3 intall tkcalendar
-    
-  $ pip3 intall datetime
 ```
 - Create database and run library.sql
 - Write your database config into .end file
