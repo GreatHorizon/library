@@ -22,5 +22,10 @@ To run it you need:
 ```
 - Create database and run library.sql
 - Write your database config into .end file
-
+```
+  DB_NAME=<your db name>
+  USER=<db user name>
+  HOST=<localhost>
+  PASSWORD=<your password>
+```
 Thats all. Good luck!
