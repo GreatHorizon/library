@@ -1,0 +1,15 @@
+appdirs==1.4.4
+certifi==2020.12.5
+chardet==4.0.0
+distlib==0.3.1
+filelock==3.0.12
+idna==2.10
+Pillow==8.1.0
+psycopg2==2.8.6
+python-dotenv==0.15.0
+requests==2.25.1
+rope==0.18.0
+six==1.15.0
+ttkwidgets==0.11.0
+urllib3==1.26.2
+virtualenv==20.3.0

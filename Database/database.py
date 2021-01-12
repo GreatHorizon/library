@@ -307,7 +307,6 @@ class DatabaseManager:
         (idCopy,))
         return self.__cursor.fetchone()
         
-
     def DeleteStudentIssue(self, idCopy):
         self.__cursor.execute("""
                 DELETE FROM issue WHERE id_copy = %s

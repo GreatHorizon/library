@@ -19,6 +19,5 @@ class StartPageController:
     def openStudentAuthorizationPage(self):
         self._master.switch_frame(StudentAuthorizationPage, StudentAuthorizationModel)
 
-
     def OpenBookSearchPage(self):
         self._master.switch_frame(BookSearchPage, BookSearchModel)
