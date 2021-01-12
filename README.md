@@ -11,7 +11,7 @@ You can run it on Windows, Linux, MacOS.
 ## To run it you need:
 - Install Python
 - Install PostgreSQL
-- Clone repo
+- Clone this repository
 ```
   $ git clone https://github.com/GreatHorizon/library.git
   $ cd library
