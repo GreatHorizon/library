@@ -8,7 +8,7 @@ You can run it on Windows, Linux, MacOS.
  * Python + Tkinter
  * PostgreSQL
 
-To run it you need:
+## To run it you need:
 - Install Python
 - Install PostgreSQL
 - Install required dependencies: 
@@ -31,4 +31,4 @@ To run it you need:
   HOST=<localhost>
   PASSWORD=<your password>
 ```
-Thats all. Good luck!
+##Thats all. Good luck!
