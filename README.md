@@ -17,7 +17,7 @@ You can run it on Windows, Linux, MacOS.
   $ cd library
 ```
 - Installing required packages:
-  1. Depending on your operating system install and create `virtualenv` from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-   environments/#creating-a-virtual-environment).
+  1. Depending on your operating system install and create **virtualenv** from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtualenvironments/#creating-a-virtual-environment).
   2. Activate your virtualenv how it said in the guide. 
   3. Install required packages by the following command:
 ```
