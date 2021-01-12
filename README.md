@@ -9,16 +9,16 @@ You can run it on Windows, Linux, MacOS.
  * PostgreSQL
 
 ## To run it you need:
-- Install Python
-- Install PostgreSQL
+- [Install Python](https://www.python.org/downloads/)
+- [Install PostgreSQL](https://www.postgresql.org/download/)
 - Clone this repository
 ```
   $ git clone https://github.com/GreatHorizon/library.git
   $ cd library
 ```
 - Installing required packages:
-  1. Depending on your operating system install and create **virtualenv** from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtualenvironments/#creating-a-virtual-environment).
-  2. Activate your virtualenv how it said in the guide. (Note that **(venv)** shows in the command line) 
+  1. Depending on your operating system install and create **virtualenv** from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment).
+  2. Activate your virtualenv how it said in the guide. (Note that **(env)** shows in the command line) 
   3. Install required packages by the following command:
 ```
   pip install -r requirements.txt
