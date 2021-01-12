@@ -31,4 +31,4 @@ You can run it on Windows, Linux, MacOS.
   HOST=<localhost>
   PASSWORD=<your password>
 ```
-##Thats all. Good luck!
+## Thats all. Good luck!
