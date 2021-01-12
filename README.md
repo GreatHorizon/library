@@ -11,6 +11,11 @@ You can run it on Windows, Linux, MacOS.
 ## To run it you need:
 - Install Python
 - Install PostgreSQL
+- Clone repo
+```
+  $ git clone https://github.com/GreatHorizon/library.git
+  $ cd library
+```
 - Install required dependencies: 
 ```
   $ pip3 intall tkinter
