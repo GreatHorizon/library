@@ -15,7 +15,6 @@ class Window(tk.Tk):
 
         tk.Tk.geometry(self,'900x400')
         self.resizable(width=False, height=False)
- 
         self.switch_frame(StartPage, StartPageModel)
 
     def switch_frame(self, frame_class, model, *data):

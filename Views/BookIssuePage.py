@@ -24,7 +24,6 @@ class BookIssuePage(tk.Frame):
         self.userSelect.place(relx = 0.38, rely = 0.165, relheight = 0.05, relwidth = 0.25)
         self.userSelect.focus()
 
-
         label2 = tk.Label(self, text="Select author")
         label2.place(relx = 0.25, rely = 0.25, relheight = 0.08)
 

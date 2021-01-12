@@ -66,7 +66,6 @@ class BookSearchPage(tk.Frame):
             command=lambda:self._controller.BackToStudentPage())
         button.place(relx=0.4, rely=0.85, relwidth=0.25, relheight=0.1)
 
-
     def HideNoBooksLabel(self):
         self.noBooksLabel.place_forget()
 

@@ -20,7 +20,6 @@ class AdminAuthorizationPage(tk.Frame):
         lb1 = Label(self,text="Admin id", fg='black')
         lb1.place(relx = 0.25, rely = 0.15, relheight = 0.08)
 
-        
         self.adminIdField = Entry(self, width = 30)
         self.adminIdField.place(relx = 0.35, rely = 0.15, relwidth = 0.3, relheight = 0.08)
 
@@ -50,6 +49,7 @@ class AdminAuthorizationPage(tk.Frame):
     def ClearFields(self):
         self.adminIdField.delete(0, len(self.adminIdField.get()))
         self.passwordField.delete(0, len(self.passwordField.get()))
+
     def ClearErrorLabel(self):
         self.error.config(text='')
 
