@@ -16,7 +16,7 @@ You can run it on Windows, Linux, MacOS.
   $ git clone https://github.com/GreatHorizon/library.git
   $ cd library
 ```
-- - Depending on your operating system install and create 'virtualenv' from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment).
+ - Depending on your operating system install and create `virtualenv` from [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment).
   - Activate your virtualenv how it said in the guide. 
   - Install required packages by the following command:
 ```
